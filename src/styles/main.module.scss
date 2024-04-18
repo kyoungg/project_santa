@@ -1,0 +1,6 @@
+//레이아웃 테스트용 입니다
+@import '../styles/global';
+
+.container {
+  @include setting;
+}
