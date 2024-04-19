@@ -1,0 +1,17 @@
+@import '../color';
+@import '../global';
+@import '../reset';
+
+
+.mainContainer{
+    @include flex-center-col;
+    @include setting;
+}
+.backBtn{
+    cursor: pointer;
+    padding-right: 0.2rem;
+}
+.containerRow{
+    @include flex-between-row;
+    width:100%;
+}

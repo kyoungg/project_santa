@@ -1,6 +1,10 @@
 .footer {
   display: flex;
-  width: 100vw;
+  width: 100%;
+  // width:100%;
+  position: absolute;
+  // bottom: 0px;
+  left : 0px;
   height: 8.875rem;
   background-color: rgba(124, 141, 114, 0.39);
   align-items: flex-start;
@@ -8,7 +12,7 @@
   padding-top: 2.063rem;
 
   //footer 하단 고정
-  position: relative;
+  // position: relative;
   //transform: translateY(-100%);
 
   p {
