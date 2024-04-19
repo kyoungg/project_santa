@@ -1,5 +1,6 @@
 @import '../../color';
 @import '../../global';
+@import '../../reset';
 
 .header {
   background-color: $green2;
@@ -7,6 +8,7 @@
   height: 3.125rem;
   top: 0;
   left: 0;
+  right: 0;
   bottom: 3.125rem;
   width: 100%;
 
@@ -62,7 +64,7 @@
   }
 }
 
-.hambergerBtn {
+.btn {
   all: unset;
   padding: 0.625rem;
 }
