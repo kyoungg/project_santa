@@ -1,0 +1,35 @@
+@import './global';
+@import './color';
+  // yellow | green1 | green2 | outline-green3 | square
+
+.chip{
+    background-color: $yellow;
+    padding:0.4rem 0.7rem;
+    border-radius:1.5rem;
+    @include font-subtitle2;
+    width:fit-content;
+}
+
+.yellow{
+    background-color: $yellow;
+}
+
+.green1{
+    background-color: $green1;
+}
+.green2{
+    background-color: $green2;
+}
+.green3{
+    background-color: $green3;
+    color:$white;
+}
+.outline-green3{
+    background-color: rgba($color: #fff, $alpha: 0);
+    border: 0.1rem solid $green3;
+    color:$green3;
+}
+.square{
+    background-color: $green2;
+    border-radius: 0.3rem;
+}

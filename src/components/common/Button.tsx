@@ -6,9 +6,8 @@ type Props = {
 };
 
 export const Button = ({ variant, onClick, children }: PropsWithChildren<Props>) => {
-  const buttonClass = variant ? `button ${variant}` : `button`;
   return (
-    <div className={buttonClass} onClick={onClick}>
+    <div className={`button ${variant}`} onClick={onClick}>
       {children}
     </div>
   );
