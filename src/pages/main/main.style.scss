@@ -1,25 +1,5 @@
 @import '../../styles/global';
 @import '../../styles/color';
-
-// slider.style
-.banner-container {
-  width: 100vw;
-  height: 400px;
-  border: solid red 1px;
-}
-.slider-button-wrapper {
-  @include flex-center-row;
-}
-.slider-box {
-  width: 100%;
-  white-space: no-warp;
-}
-.slide-item {
-  width: 80vw;
-  margin: 0 10vw 0 10vw;
-  display: inline-block;
-}
-
 //MainPage.style
 .container {
   @include setting;
@@ -72,6 +52,25 @@
 
 .absolute-more-button {
   cursor: pointer;
+}
+
+// slider.style
+.banner-container {
+  width: 100vw;
+  height: 400px;
+  border: solid red 1px;
+}
+.slider-button-wrapper {
+  @include flex-center-row;
+}
+.slider-box {
+  width: 100%;
+  white-space: no-warp;
+}
+.slide-item {
+  width: 80vw;
+  margin: 0 10vw 0 10vw;
+  display: inline-block;
 }
 
 // Thumbnail.tsx
