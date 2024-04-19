@@ -21,7 +21,7 @@ export default function SectionTitle({
         {moreButtonParams === undefined ? (
           ''
         ) : (
-          <p className={styles.absoluteMoreButton} id={`${moreButtonParams}`}>
+          <p className={styles.moreButton} id={`${moreButtonParams}`}>
             더보기 &gt;
           </p>
         )}
