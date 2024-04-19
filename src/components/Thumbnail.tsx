@@ -5,13 +5,14 @@ interface ThumnailProps {
   img: string;
   title: string;
   isHotTopic: boolean;
+  isIndexChip: boolean;
 }
-export default function Thumbnail({ img, title, isHotTopic }: ThumnailProps) {
+export default function Thumbnail({ img, title, isHotTopic, isIndexChip }: ThumnailProps) {
   // todo api 연결 후 map으로 출력, img 태그 변경
   return (
     <div className={styles.thumnailContainer}>
       <div className={styles.thumnailItemBox}>
-        <div className={styles.indexBadge}>1</div>
+        {isIndexChip ? <div className={styles.indexBadge}>1</div> : ''}
         {isHotTopic ? (
           <div className={styles.chipWrapper}>
             <IssueChip />
