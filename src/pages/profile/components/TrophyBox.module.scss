@@ -1,0 +1,32 @@
+@import '../../../styles/global';
+@import '../../../styles/color';
+@import './boxStyle';
+
+.container {
+  @include container-default;
+  width: 20.8rem;
+  height: 7.7rem;
+  background-color: #fcce67;
+}
+
+.title {
+  @include title-default;
+}
+
+.icon {
+  @include icon-default;
+}
+
+.trophyList {
+  flex: 1 1 0;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0 0.3rem;
+}
+
+.trophyImg {
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 50%;
+  padding: 0.5rem 0.6rem;
+}

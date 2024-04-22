@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoIosArrowBack } from 'react-icons/io';
 
-import logo from '../../../../public/images/logo.svg';
+import logo from '/images/logo.svg';
 import styles from '../../../styles/components/common/navigation.module.scss';
 import UserProfile from './UserProfile';
 

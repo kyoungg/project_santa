@@ -8,6 +8,7 @@ import GatheringMainPage from './pages/gathering/GatheringMainPage';
 import MainPage from './pages/main/MainPage';
 import RankPage from './pages/rank/RankPage';
 import { GatheringSearchPage } from './pages/gathering/GatheringSearchPage';
+import ProfilePage from './pages/profile/ProfilePage';
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,8 @@ const router = createBrowserRouter([
     errorElement: <> hi dveloper🙃 im error page </>,
     children: [
       { index: true, element: <MainPage /> },
-      { path: '/profile', element: <>프로필 페이지 입니다</> },
+      { path: '/profile', element: <ProfilePage /> },
+      { index: true, element: <MainPage /> },
       { path: '/rank', element: <RankPage /> },
       { path: '/challenge', element: <>챌린지 페이지 입니다</> },
       { path: '/gathering', element: <GatheringMainPage /> },

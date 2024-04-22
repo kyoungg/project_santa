@@ -1,5 +1,5 @@
-import githubLogo from '../../../public/images/github_logo.png';
-import logo from '../../../public/images/logo.svg';
+import githubLogo from '/images/github_logo.png';
+import logo from '/images/logo.svg';
 import styles from '../../styles/components/common/footer.module.scss';
 
 export default function Footer() {

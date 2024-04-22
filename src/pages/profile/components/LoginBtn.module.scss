@@ -1,0 +1,50 @@
+@import '../../../styles/global';
+@import '../../../styles/color';
+
+.container {
+  display: flex;
+  height: 3.4rem;
+  border: none;
+  border-radius: 10px;
+  background-color: #e1e1e1;
+  font-size: 0.93rem;
+  font-weight: 600;
+
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.company {
+  display: flex;
+  align-items: center;
+}
+
+.logoImg {
+  width: 2.1rem;
+  height: 2.1rem;
+  padding-right: 0.5rem;
+}
+
+.connect {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  background-color: white;
+  height: 1.9rem;
+  width: 4.4rem;
+  color: $blue;
+}
+
+.connected {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  background-color: white;
+  height: 1.9rem;
+  width: 4.4rem;
+  color: $black;
+}
