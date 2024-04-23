@@ -1,0 +1,106 @@
+@import '../../styles/global';
+@import '../../styles/color';
+@import '../../styles/reset';
+
+//RankPage.tsx
+.container {
+  @include setting;
+  @include flex-center-col;
+  justify-content: space-between;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+  padding: 0 1.6rem;
+  width: 100%;
+}
+
+.titleWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 11px;
+}
+.subtitleWrapper {
+  @include font-subtitle2;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: $gray1;
+  padding-bottom: 12px;
+}
+.title {
+  @include font-title;
+  font-size: 1.3rem;
+  font-weight: 700;
+  padding-left: 2px;
+}
+.userRankBoxTitle {
+  @include flex-center-row;
+  justify-content: space-between;
+  padding: 0 54px;
+  background-color: #eff5d7;
+  height: 32px;
+  div {
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+}
+
+.userRankItem {
+  @include flex-center-row;
+  justify-content: space-between;
+  padding: 10px 2rem;
+  gap: 20px;
+}
+
+.rankWrapper {
+  @include flex-center-row;
+  justify-content: space-between;
+  width: 2.8rem;
+}
+
+.userProfileImgContainer {
+  width: 1.7rem;
+  height: 1.7rem;
+  background-color: rgb(167, 167, 167);
+  border-radius: 50%;
+}
+//Top3UserRank.tsx
+.top3UserWrapper {
+  height: 250px;
+  margin-bottom: 40px;
+}
+
+.itemWrapper {
+  @include flex-center-row;
+  gap: 3.5rem;
+  height: 125px;
+}
+.userProfileWrapper {
+  @include flex-center-col;
+  gap: 8px;
+}
+
+.userProfileImgWrapper {
+  background-color: yellow;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+}
+
+.userNickname {
+  @include font-body2;
+  text-align: center;
+  color: $gray3;
+}
+
+.myScoreInfo {
+  @include flex-center-row;
+  justify-content: space-around;
+  background-color: white;
+  border-top: 12px solid #eff5d7;
+  height: 4rem;
+  width: 100%;
+}

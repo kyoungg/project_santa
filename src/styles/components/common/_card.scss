@@ -1,0 +1,28 @@
+@import '../../color.scss';
+@import '../../global';
+
+// variant?: 'green1' | 'green2' | 'green3' | 'yellow' ;
+
+.card{
+    width:20.8rem;
+    height:8.8rem;
+    background-color: gray;
+    border-radius: 0.6rem;
+    @include flex-center-col;
+    @include font-body1;
+}
+.green1{
+    background-color: #F5F7CE;
+    
+}
+
+.green2{
+    background-color: #EAEF9D;
+}
+.green3{
+    background-color: #C1D95F;
+}
+.yellow{
+    background-color: #FDE1A0;
+}
+

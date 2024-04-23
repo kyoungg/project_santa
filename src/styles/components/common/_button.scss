@@ -1,0 +1,46 @@
+// variant?: 'green1' | 'green3' | 'gray' | 'yellow' | 'rounded-outline' | 'rounded-color';
+@import '../../color.scss';
+@import '../../global';
+.button {
+    border: none;
+    border-radius: 0.6rem;
+    height:2.8rem;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    background-color: $green3;
+    font-weight: 700;
+    @include flex-center-col;
+}
+
+.green1{
+    background-color: $green1;
+    color:$green3;
+}
+.green3{
+    background-color: $green3;
+    color:$white;
+}
+.gray{
+    background-color: $gray1;
+    color:$white;
+}
+.yellow{
+    background-color: $yellow;
+    color:$white;
+}
+.rounded-outline{
+    width:15rem;
+    border: 0.1rem solid $green3;
+    background-color: rgba(0,0,0,0);
+    border-radius: 1.2rem;
+    font-weight: 500;
+}
+.rounded-color{
+    width:15rem;
+    border: 0.1rem solid $yellow;
+    background-color: $yellow;
+    border-radius: 1.2rem;
+    font-weight: 500;
+    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25));
+}

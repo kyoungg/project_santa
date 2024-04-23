@@ -1,0 +1,69 @@
+@import '../../../styles/global';
+@import '../../../styles/color';
+@import './boxStyle';
+
+.container {
+  @include container-default;
+  display: flex;
+  width: 9.7rem;
+  height: 21.6rem;
+  background-color: #eef2b1;
+}
+
+.title {
+  @include title-default;
+}
+
+.icon {
+  @include icon-default;
+}
+
+.records {
+  display: flex;
+  flex-direction: column;
+  padding: 0.3rem 0;
+  p {
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: 0 0.75rem 1rem;
+  }
+}
+
+.achievName {
+  font-size: 0.94rem;
+  color: $gray2;
+  font-weight: 600;
+  padding: 0.5rem 0.75rem;
+}
+
+.btnContainer {
+  display: flex;
+  height: 100%;
+  padding: 0 0.7rem 0.7rem 0.7rem;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.certificationBtn {
+  background: none;
+  width: 6.9rem;
+  height: 2.5rem;
+  border-radius: 20px;
+  border: none;
+  background-color: $green3;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 500;
+  box-shadow: 1px 1px 2px $gray2;
+}
+
+.imgContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mountainImg {
+  width: 5.2rem;
+}

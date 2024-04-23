@@ -1,0 +1,31 @@
+// SectionTitle.tsx
+@import '../global';
+@import '../color';
+@import '../reset';
+
+.sectionTitleWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 11px;
+}
+
+.subtitleWrapper {
+  @include font-subtitle2;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: $gray2;
+  border-bottom: 1px solid $gray1;
+  padding-bottom: 12px;
+}
+.title {
+  @include font-title;
+  font-size: 1.3rem;
+  font-weight: 700;
+  padding-left: 2px;
+}
+
+.moreButton {
+  cursor: pointer;
+}

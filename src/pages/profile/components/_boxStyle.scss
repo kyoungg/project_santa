@@ -1,0 +1,25 @@
+@mixin container-default {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 1px 1px 3px $gray2;
+}
+
+@mixin title-default {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 0.87rem;
+  padding: 0.5rem 0.75rem 0.3rem;
+  padding-bottom: 0.3rem;
+  justify-content: space-between;
+  a {
+    text-decoration: none;
+    color: black;
+  }
+}
+
+@mixin icon-default {
+  width: 1.2rem;
+  height: 1.2rem;
+}

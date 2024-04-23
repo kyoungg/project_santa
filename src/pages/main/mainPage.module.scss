@@ -1,0 +1,149 @@
+@import '../../styles/global';
+@import '../../styles/color';
+@import '../../styles/reset';
+
+//Main.page.tsx
+.container {
+  @include setting;
+  @include flex-center-col;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  padding: 0 1.6rem;
+  width: 100%;
+}
+
+.buttonWrapper {
+  @include flex-center-col;
+  padding: 10px 54px;
+}
+
+.sectionWrapper {
+  position: relative;
+  flex-direction: column;
+}
+
+.toggleWrapper {
+  position: absolute;
+  top: -1px;
+  left: 92px;
+}
+
+// SliderMainImgBanner.tsx
+.bannerContainer {
+  @include setting;
+  width: 100%;
+  height: 260px;
+  background-color: paleturquoise;
+}
+.sliderButtonWrapper {
+  @include flex-center-row;
+}
+.sliderBox {
+  width: 100%;
+  white-space: no-warp;
+}
+.slideItem {
+  width: 80vw;
+  display: inline-block;
+}
+//Toggle.tsx
+.toggle {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+
+  border: gray solid 1px;
+  width: 64px;
+  height: 26px;
+  border-radius: 16px;
+}
+
+.toggleHandler {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 42px;
+  height: 22px;
+  border-radius: 20px;
+  box-shadow: 2px 2px 0.3em $gray1;
+  margin: 3px;
+  background-color: $green3;
+  color: $white;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+//ClubList.tsx
+.clublistItemBox {
+  @include flex-center-row;
+  margin: 0px;
+  padding: 8px 0;
+  border-bottom: solid 1px $gray1;
+  cursor: pointer;
+}
+.chipPlace {
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.clubTitle {
+  @include font-subtitle2;
+  font-weight: 400;
+  width: 80%;
+  height: 18px;
+  padding-right: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+//RankList.tsx
+.rankItemWrapper {
+  display: flex;
+  justify-content: center;
+  height: 40px;
+}
+.userRank {
+  text-align: center;
+  width: 16px;
+  height: 20px;
+  font-weight: 500;
+  color: $gray3;
+}
+
+.profileImgWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 16px;
+}
+.userProfileImg {
+  width: 2rem;
+  height: 2rem;
+  background-color: aquamarine;
+  border-radius: 50%;
+}
+.userNickname {
+  @include font-body2;
+  width: 160px;
+  text-align: start;
+  margin: 0 auto;
+}
+
+.userScore {
+  @include font-body1;
+  width: 60px;
+  font-weight: 600;
+  color: $gray2;
+}
+
+.rankItemWrapper {
+  @include flex-center-row;
+  padding: 2px 10px;
+  border-bottom: solid 1px $gray1;
+}

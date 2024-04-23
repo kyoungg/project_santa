@@ -1,0 +1,43 @@
+@import '../../../styles/color';
+
+.userProfile {
+  display: flex;
+  height: 6.25rem;
+  width: 12.5rem;
+  img {
+    position: relative;
+    width: 6.25rem;
+    height: 6.25rem;
+    border-radius: 50%;
+    left: 0.313rem;
+    z-index: 2;
+  }
+}
+
+.rankBox {
+  display: flex;
+  position: relative;
+  width: 6.25rem;
+  height: 6.25rem;
+  border-radius: 50%;
+  background-color: $green1;
+  right: 0.313rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  p {
+    font-size: 1rem;
+  }
+  p:nth-child(1) {
+    position: relative;
+    left: 0.2rem;
+  }
+}
+
+.textBox {
+  margin-top: 1.7rem;
+  p {
+    color: $gray3;
+    font-size: 1rem;
+  }
+}

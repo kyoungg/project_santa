@@ -1,5 +1,11 @@
 {
   "compilerOptions": {
+    /* public 경로 설정 - 김경혜 */
+    "baseUrl": "./",
+    "paths": {
+      "/*": ["./*", "./public/*"]
+    },
+
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],

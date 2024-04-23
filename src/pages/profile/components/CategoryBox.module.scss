@@ -1,0 +1,33 @@
+@import '../../../styles/global';
+@import '../../../styles/color';
+@import './boxStyle';
+
+.container {
+  @include container-default;
+  justify-content: space-between;
+  width: 9.7rem;
+  height: 9rem;
+  background-color: #cde17f;
+}
+
+.title {
+  @include title-default;
+}
+
+.icon {
+  @include icon-default;
+}
+
+.categoryList {
+  flex-direction: column;
+  padding: 0.75rem;
+  flex-wrap: wrap;
+  p {
+    padding: 0.12rem;
+    padding-right: 0.3rem;
+    display: inline-flex;
+    font-size: 0.93rem;
+    font-weight: 600;
+    font-style: italic;
+  }
+}

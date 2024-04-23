@@ -1,0 +1,17 @@
+@import '../../color.scss';
+@import '../../global';
+
+.container{
+    @include flex-center-row;
+    width:7.3rem;
+    justify-content: space-between
+}
+.image{
+    width:2.8rem;
+    height:2.8rem;
+    border-radius: 50%;
+}
+
+.font{
+    @include font-subtitle1;
+}
