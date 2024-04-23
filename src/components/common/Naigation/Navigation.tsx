@@ -4,7 +4,7 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoIosArrowBack } from 'react-icons/io';
 
 import logo from '/images/logo.svg';
-import styles from '../../../styles/components/common/navigation.module.scss';
+import styles from '/src/styles/components/common/navigation.module.scss';
 import UserProfile from './UserProfile';
 
 const NAVLIST = [
