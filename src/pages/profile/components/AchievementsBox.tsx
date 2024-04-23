@@ -41,10 +41,6 @@ const totalSummit = RECORD.length;
 export default function AchievementsBox() {
   const navigate = useNavigate();
 
-  const onClick = () => {
-    navigate('/산인증페이지');
-  };
-
   return (
     <div className={styles.container}>
       <div className={styles.title}>
@@ -60,11 +56,18 @@ export default function AchievementsBox() {
         <p>{totalSummit} 개</p>
       </div>
       <div className={styles.btnContainer}>
-        {/* <button className={styles.certificationBtn} onClick={onClick}>
+        <button
+          className={styles.certificationBtn}
+          onClick={() => {
+            navigate('/산인증페이지');
+          }}
+        >
           인증하기
-        </button> */}
+        </button>
+        <div className={styles.imgContainer}>
+          <img className={styles.mountainImg} src={mountain} />
+        </div>
       </div>
-      <img className={styles.mountainImg} src={mountain} />
     </div>
   );
 }
