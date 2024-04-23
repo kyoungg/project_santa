@@ -19,7 +19,7 @@ export default function MainRankList() {
   return (
     <div className={styles.rankListBox}>
       {MOCKUP_USER.map((user) => (
-        <div id={`${user.userId}`} className={styles.rankItemWrapper}>
+        <div key={`${user.userId}`} className={styles.rankItemWrapper}>
           <div className={styles.userRank}>{user.rank}</div>
           <div className={styles.profileImgWrapper}>
             <div className={styles.userProfileImg}>{user.userProfileImg}</div>

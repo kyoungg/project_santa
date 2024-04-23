@@ -18,7 +18,7 @@ export default function MainClubList() {
   return (
     <div>
       {MOCKUP_LIST.map((item) => (
-        <div className={styles.clublistItemBox}>
+        <div className={styles.clublistItemBox} key={item.id}>
           <div className={styles.chipPlace}>{item.isHotTopic ? <IssueChip /> : ''}</div>
           <p className={styles.clubTitle}>{item.title}</p>
         </div>
