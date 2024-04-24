@@ -50,7 +50,7 @@ export default function ProfilePage() {
           </div>
         </div>
       </div>
-      <div className={styles.buttom}>
+      <div className={styles.bottom}>
         <LoginBtn loginType={'kakao'} imgUrl={kakaoLogo} />
         <LoginBtn loginType={'google'} imgUrl={googleLogo} state={'연동하기'} />
         <button className={styles.withdrawalBtn}>회원 탈퇴</button>

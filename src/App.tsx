@@ -15,15 +15,18 @@ import { GatheringDetailPage } from './pages/gathering/GatheringDetailPage';
 import ProfilePage from './pages/profile/ProfilePage';
 import ChallengePage from './pages/challenge/ChallengePage';
 import TrophyPage from './pages/trophy/TrophyPage';
+import FindAccountPage from './pages/user/find/FindAccountPage';
+import FindPasswordPage from './pages/user/find/FindPasswordPage';
+import CategotyPage from './pages/user/CategoryPage';
+import ErrorPage from './pages/error/ErrorPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
-    errorElement: <> hi dveloper🙃 im error page </>,
+    errorElement: <ErrorPage />,
     children: [
       { index: true, element: <MainPage /> },
-      { path: '/profile', element: <ProfilePage /> },
       { path: '/rank', element: <RankPage /> },
       { path: '/challenge', element: <ChallengePage /> },
       { path: '/gathering', element: <GatheringMainPage /> },
@@ -35,8 +38,10 @@ const router = createBrowserRouter([
       { path: '/gathering/post', element: <PostPage /> },
       { path: '/gathering/detail', element: <GatheringDetailPage /> },
       { path: '/trophy', element: <TrophyPage /> },
-      { path: '/find_password', element: <>비번찾기</> },
-      { path: '/find_account', element: <>계정찾기</> },
+      { path: '/profile', element: <ProfilePage /> },
+      { path: '/user/find_account', element: <FindAccountPage /> },
+      { path: '/user/find_password', element: <FindPasswordPage /> },
+      { path: '/user/category', element: <CategotyPage /> },
     ],
   },
   {
