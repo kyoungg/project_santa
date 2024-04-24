@@ -19,6 +19,7 @@ import FindAccountPage from './pages/user/find/FindAccountPage';
 import FindPasswordPage from './pages/user/find/FindPasswordPage';
 import CategoryPage from './pages/user/category/CategoryPage';
 import ErrorPage from './pages/error/ErrorPage';
+import LoginPage from './pages/login/LoginPage';
 
 const router = createBrowserRouter([
   {
@@ -46,7 +47,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/login',
-    element: <>로그인 페이지 입니다</>,
+    element: <LoginPage />,
   },
 ]);
 

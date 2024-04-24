@@ -15,7 +15,7 @@ const NAVLIST = [
   { title: '진행중인 챌린지', path: paths.CHALLENGE },
   { title: '내 모임 바로가기', path: paths.GATHERING },
   { title: '실시간 채팅', path: '/livechat' },
-  { title: '회원가입', path: paths.JOIN },
+  { title: '로그인', path: paths.LOGIN },
 ];
 
 export default function Navigation({ back }: { back: boolean }) {
