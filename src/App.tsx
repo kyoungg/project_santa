@@ -17,7 +17,7 @@ import ChallengePage from './pages/challenge/ChallengePage';
 import TrophyPage from './pages/trophy/TrophyPage';
 import FindAccountPage from './pages/user/find/FindAccountPage';
 import FindPasswordPage from './pages/user/find/FindPasswordPage';
-import CategotyPage from './pages/user/CategoryPage';
+import CategoryPage from './pages/user/category/CategoryPage';
 import ErrorPage from './pages/error/ErrorPage';
 
 const router = createBrowserRouter([
@@ -41,7 +41,7 @@ const router = createBrowserRouter([
       { path: '/profile', element: <ProfilePage /> },
       { path: '/user/find_account', element: <FindAccountPage /> },
       { path: '/user/find_password', element: <FindPasswordPage /> },
-      { path: '/user/category', element: <CategotyPage /> },
+      { path: '/user/category', element: <CategoryPage /> },
     ],
   },
   {
