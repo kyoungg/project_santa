@@ -1,0 +1,81 @@
+@import '../global';
+@import '../color';
+@import '../reset';
+
+.gatheringDetailContainer{
+    @include flex-center-col;
+    @include setting;
+
+}
+.infoContainer{
+    width:100%;
+    margin:1rem 0;
+
+}
+.containerRow{
+    @include flex-between-row;
+    width:100%;
+    justify-content: start;
+    gap:2rem;
+    margin-bottom:1rem;
+}
+.containerCol{
+    @include flex-between-col;
+    width:100%;
+    gap:1rem;
+}
+.imageContainer{
+    width:7.6rem;
+    height:7.6rem;
+    background-color: $white2;
+}
+.topInfoContainer{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height:7.6rem;
+    padding:1rem 0;
+    
+}
+.iconTextContainer{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+
+}
+.textarea{
+    width:100%;
+    background-color: $green1;
+    border-radius: 2rem;
+    height:13.3rem;
+    padding:1.5rem;
+    box-sizing: border-box;
+}
+.tagContainer{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width:100%;
+    gap:0.5rem;
+}
+.subtitle1{
+    @include font-subtitle1;
+}
+.memberContainer{
+    display:flex;
+    flex-direction:column;
+    justify-content: flex-start;
+    width:100%;
+    margin-top:0.8rem;
+}
+
+.profileListContainer{
+    display:flex;
+    gap:2rem;
+    flex-wrap: nowrap;
+    width:100%;
+    overflow-x : auto;
+    padding:0.2rem 0;
+
+}

@@ -1,0 +1,15 @@
+.profileContainer{
+    display:flex;
+    flex-direction:column;
+    gap:0.5rem;
+    margin-top:1rem;
+}
+
+.imgContainer{
+    width:2.8rem;
+    height:2.8rem;
+    // border-radius: 50%;
+    img{
+        border-radius: 50%;
+    }
+}

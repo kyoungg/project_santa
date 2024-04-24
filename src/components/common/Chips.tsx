@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react';
 import '../../styles/_chips.scss';
 type Props = {
   // yellow | green1 | green2 | outline-green3 | square
-  variant?: 'green1' | 'green2' | 'green3' | 'yellow' | 'outline-green3' | 'square';
+  variant?: 'green1' | 'green2' | 'green3' | 'yellow' | 'outline-green3' | 'square-green2' | 'square-green3';
   onClick?: React.MouseEventHandler<HTMLDivElement>;
 };
 

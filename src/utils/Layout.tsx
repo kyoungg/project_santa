@@ -4,7 +4,7 @@ import Navigation from '../components/common/Naigation/Navigation';
 import TabBar from '../components/common/Naigation/TabBar';
 import Footer from '../components/common/Footer';
 
-const INCLUDE_TAB_BAR_PATH = ['/', '/rank'];
+const INCLUDE_TAB_BAR_PATH = ['/rank', '/challenge', '/gathering', '/gathering/search'];
 const INCLUDE_FOOTER_PATH = ['/', '/rank'];
 
 //나중에 nav 컴포넌트 안에서 제어하기

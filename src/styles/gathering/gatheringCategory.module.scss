@@ -1,0 +1,31 @@
+@import '../color';
+@import '../global';
+@import '../reset';
+
+.scrollContainer{
+    width:100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.categoryContainer{
+    display:flex;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    overflow-x: scroll;
+    gap:0.5rem;
+}
+
+
+::-webkit-scrollbar {
+    display: block;
+    height:0.1rem;
+    color: rgba(1,1,1,0);
+}
+// ::-webkit-scrollbar-track, ::-webkit-scrollbar-button {
+//     display: none;
+// }
+// ::-webkit-scrollbar-thumb {
+//     background-color: $gray1;
+//     width:0.5rem;
+// }

@@ -1,7 +1,6 @@
 .footer {
   display: flex;
   width: 100%;
-  // width:100%;
   position: absolute;
   left: 0;
   right: 0;
@@ -10,10 +9,9 @@
   align-items: flex-start;
   justify-content: center;
   padding-top: 2.063rem;
-
   //footer 하단 고정
   // position: relative;
-  //transform: translateY(-100%);
+  // transform: translateY(-100%);
 
   p {
     color: #636363;

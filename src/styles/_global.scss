@@ -1,17 +1,19 @@
 @mixin setting {
   @media (min-width: 300px) {
     width: 100vw;
-    // height: 100vh;
+    height: 100%;
     padding: 2rem;
     padding-top: 5.125rem;
     box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
   }
   @media (min-width: 390px) {
     width: 390px;
-    // height: 100vh;
+    height: 100%;
     padding: 2rem;
     padding-top: 5.125rem;
     box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
   }
 }
 @mixin flex-center-col {
@@ -68,8 +70,9 @@
 body {
   margin: 0;
   font-family: 'Noto Sans KR', sans-serif;
-  height: 100%;
-  width: 100vw;
+  height: 100%;  
+  width: 100%;
+
   font-size: 16px;
   @include flex-center-col;
 }
