@@ -1,10 +1,10 @@
-@import '../../../styles/color';
-@import '../../../styles/global';
+@import '/src/styles/color';
+@import '/src/styles/global';
 
 .tabBarContainer {
   background-color: #eef5d4;
   width: 100%;
-  height: 5.438rem;
+  height: 5.4rem;
 
   //하단 고정
   left: 0;
@@ -14,7 +14,7 @@
   z-index: 500;
 
   ul {
-    height: 5.438rem;
+    height: 5.4rem;
     display: flex;
     margin: 0;
   }
@@ -38,5 +38,5 @@
 }
 
 .icon {
-  font-size: 1.875rem;
+  font-size: 1.87rem;
 }

@@ -4,10 +4,18 @@ import Navigation from '../components/common/Naigation/Navigation';
 import TabBar from '../components/common/Naigation/TabBar';
 import Footer from '../components/common/Footer';
 
-const INCLUDE_TAB_BAR_PATH = ['/', '/rank'];
+const INCLUDE_TAB_BAR_PATH = ['/rank', '/gathering', '/gathering/search'];
 const INCLUDE_FOOTER_PATH = ['/', '/rank'];
 
-const INCLUDE_BACK_BTN_PATH = ['/profile', '/livechat', '/join'];
+//나중에 nav 컴포넌트 안에서 제어하기
+const INCLUDE_BACK_BTN_PATH = [
+  '/livechat',
+  '/join',
+  '/trophy',
+  '/user/find_password',
+  '/user/find_account',
+  '/user/category',
+];
 
 export default function Layout() {
   const path = useLocation().pathname;

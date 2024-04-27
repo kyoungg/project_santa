@@ -4,17 +4,18 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoIosArrowBack } from 'react-icons/io';
 
 import logo from '/images/logo.svg';
-import styles from '../../../styles/components/common/navigation.module.scss';
+import styles from '/src/styles/components/common/navigation.module.scss';
 import UserProfile from './UserProfile';
+import paths from '/src/utils/path';
 
 const NAVLIST = [
-  { title: '내 프로필', path: '/profile' },
-  { title: '랭킹', path: '/rank' },
-  { title: '진행중인 챌린지', path: '/challenge' },
-  { title: '내 모임 바로가기', path: '/gathering' },
+  { title: '메인', path: '/' },
+  { title: '내 프로필', path: paths.PROFILE },
+  { title: '랭킹', path: paths.RANK },
+  { title: '진행중인 챌린지', path: paths.CHALLENGE },
+  { title: '내 모임 바로가기', path: paths.GATHERING },
   { title: '실시간 채팅', path: '/livechat' },
-  { title: '모임 만들기', path: '/createclub' },
-  { title: '회원가입', path: '/join' },
+  { title: '로그인', path: paths.LOGIN },
 ];
 
 export default function Navigation({ back }: { back: boolean }) {
@@ -40,6 +41,13 @@ export default function Navigation({ back }: { back: boolean }) {
 
   const onClick = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('user_email');
+    navigate('/');
   };
 
   const HambergerBtn = () => {
@@ -78,12 +86,15 @@ export default function Navigation({ back }: { back: boolean }) {
             <div className={styles.linkBox}>
               <ul>
                 {NAVLIST.map((item) => (
-                  <li>
+                  <li key={item.title}>
                     <Link to={item.path} onClick={onClick}>
                       {item.title}
                     </Link>
                   </li>
                 ))}
+                <li className={styles.logoutBtn} onClick={handleLogout}>
+                  로그아웃
+                </li>
               </ul>
             </div>
           </div>

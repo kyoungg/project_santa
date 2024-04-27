@@ -2,6 +2,9 @@ import { Link } from 'react-router-dom';
 import { SearchInput } from '../../components/common/Input';
 import styles from '../../styles/gathering/gatheringSearch.module.scss';
 import { IoChevronBack } from 'react-icons/io5';
+// import { SearchKeyword } from './components/SearchKeyword';
+// import { SearchList } from './components/SearchList';
+import { SearchNoResult } from './components/SearchNoResults';
 
 export function GatheringSearchPage() {
   return (
@@ -12,6 +15,9 @@ export function GatheringSearchPage() {
         </Link>
         <SearchInput placeholder="모임을 검색해보세요" />
       </div>
+      {/* <SearchKeyword /> */}
+      {/* <SearchList /> */}
+      <SearchNoResult keyword="반갑습니다" />
     </div>
   );
 }

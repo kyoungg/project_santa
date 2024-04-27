@@ -1,4 +1,4 @@
-@import '../../../styles/color';
+@import '/src/styles/color';
 
 .userProfile {
   display: flex;
@@ -9,7 +9,7 @@
     width: 6.25rem;
     height: 6.25rem;
     border-radius: 50%;
-    left: 0.313rem;
+    left: 0.3rem;
     z-index: 2;
   }
 }
@@ -21,7 +21,7 @@
   height: 6.25rem;
   border-radius: 50%;
   background-color: $green1;
-  right: 0.313rem;
+  right: 0.3rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;

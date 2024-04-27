@@ -1,0 +1,58 @@
+@import '/src/styles/global';
+@import '/src/styles/color';
+
+.container {
+  @include setting;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 0 3.4rem;
+}
+
+.myTrophyBtn {
+  height: 1.75rem;
+  width: 8.9rem;
+  border: none;
+  background-color: $green3;
+  border-radius: 20px;
+  color: white;
+  font-size: 0.6rem;
+  font-weight: 600;
+}
+
+.middle {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-bottom: 1.25rem;
+}
+
+.clickedBtn {
+  // width: 7.8rem;
+  border: none;
+  border-bottom: solid $green3 0.15rem;
+  background-color: white;
+  padding: 0 0.9rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: $green3;
+}
+
+.nomalBtn {
+  // width: 7.8rem;
+  border: none;
+  background-color: white;
+  padding: 0 0.9rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: $gray1;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

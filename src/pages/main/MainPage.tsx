@@ -8,7 +8,16 @@ import UserRankList from './components/MainRankList';
 
 import styles from './mainPage.module.scss';
 
+import { useQuery } from '@tanstack/react-query';
+import { getMeetings } from '/src/services/meeting';
+import { useEffect } from 'react';
+
 export default function Main() {
+  const { data } = useQuery({ queryKey: ['meetings'], queryFn: getMeetings });
+  useEffect(() => {
+    console.log(data?.data);
+  }, [data]);
+
   return (
     <div className={styles.container}>
       <SliderMainImgBanner />
