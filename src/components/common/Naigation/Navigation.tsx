@@ -43,6 +43,13 @@ export default function Navigation({ back }: { back: boolean }) {
     setIsOpen(!isOpen);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('user_email');
+    navigate('/');
+  };
+
   const HambergerBtn = () => {
     return (
       <button onClick={onClick} className={styles.btn}>
@@ -79,12 +86,15 @@ export default function Navigation({ back }: { back: boolean }) {
             <div className={styles.linkBox}>
               <ul>
                 {NAVLIST.map((item) => (
-                  <li>
+                  <li key={item.title}>
                     <Link to={item.path} onClick={onClick}>
                       {item.title}
                     </Link>
                   </li>
                 ))}
+                <li className={styles.logoutBtn} onClick={handleLogout}>
+                  로그아웃
+                </li>
               </ul>
             </div>
           </div>

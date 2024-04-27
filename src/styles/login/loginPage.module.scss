@@ -1,0 +1,113 @@
+@import '../global';
+@import '../color';
+
+.container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.loginContainer {
+  @include setting;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 2.8rem;
+  background-color: #eaef9d;
+}
+
+.textContainer {
+  @include flex-center-col;
+  padding-top: 5rem;
+  .text {
+    color: $green3;
+    @include font-title;
+    font-size: 2rem;
+  }
+  .description {
+    color: $gray2;
+    @include font-subtitle2;
+    padding: 0.6rem 0;
+  }
+}
+
+.middleContainer {
+  @include flex-center-col;
+}
+
+.inputContainer {
+  @include flex-center-col;
+  width: 18rem;
+  height: 2.5rem;
+  display: flex;
+  flex-direction: row;
+  border-radius: 1.2rem;
+  margin: 1rem 0;
+  background-color: $white;
+  justify-content: space-evenly;
+
+  input {
+    width: 70%;
+    height: 100%;
+    border: none;
+    background: none;
+    outline: none;
+  }
+}
+
+.loginBtn {
+  width: 18rem;
+  height: 2.5rem;
+  background-color: $green3;
+  border: none;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 1.2rem;
+  cursor: pointer;
+  color: white;
+  @include font-subtitle2;
+}
+
+.loginMenuContainer {
+  @include flex-center-row;
+  margin: 0.8rem 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  color: $green3;
+  cursor: pointer;
+}
+
+.verticalLine {
+  width: 1px;
+  height: 1rem;
+  background: $green3;
+}
+
+.siginText {
+  color: $red2;
+}
+
+.socialLoginContainer {
+  @include flex-center-col;
+  @include font-body2;
+  color: $green3;
+  div {
+    margin: 0.3rem 0;
+  }
+}
+
+.socialLoginIcon {
+  @include flex-center-row;
+  img {
+    width: 3.75rem;
+    height: 3.75rem;
+    margin: 0 5px;
+  }
+}
+
+.errorMessage {
+  @include flex-center-col;
+  color: $red2;
+  padding-bottom: 12px;
+  font-size: 0.9rem;
+}

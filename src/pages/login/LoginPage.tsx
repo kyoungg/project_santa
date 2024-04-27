@@ -1,76 +1,87 @@
-//loginPage
 import { useState } from 'react';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
 
+import styles from '/src/styles/login/loginPage.module.scss';
+import googleIcon from '/images/google.svg';
+import kakaoIcon from '/images/kakao.png';
 import { IoMailOutline } from 'react-icons/io5';
 import { IoLockOpenOutline } from 'react-icons/io5';
-import '../../styles/login/loginStyle.scss';
+import { postUserLogin, getUserInfo } from '../../services/userApi';
 
 function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [loginData, setLoginData] = useState({
+    email: '',
+    password: '',
+  });
 
-  const loginData = { email: email, password: password };
   const navigate = useNavigate();
 
-  type LoginForm = {
-    email: string;
-    password: string;
-  };
-
-  const postLogin = useMutation({
-    mutationFn: (loginData: LoginForm) => axios.post(`http://43.200.136.37:8080/api/users/sign-in`, loginData),
+  const { mutate, isError } = useMutation({
+    mutationFn: () => postUserLogin(loginData),
     onSuccess: (data) => {
-      localStorage.setItem('access', data.data.accessToken);
-      localStorage.setItem('refresh', data.data.refreshToken);
+      localStorage.setItem('access_token', data.accessToken);
+      localStorage.setItem('refresh_token', data.refreshToken);
+      refetch();
       navigate('/');
     },
-    onError: (data) => {
-      console.log('아임 에러!!!!', data);
-      alert('로그인 다시 시도해주세유 :(');
+    onError: (error) => {
+      console.log('login error', error);
     },
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const { refetch } = useQuery({
+    queryKey: ['userInfo'],
+    queryFn: getUserInfo,
+    select: (data) => data.data,
+    staleTime: Infinity,
+    enabled: false,
+  });
+
+  const handleLoginSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    postLogin.mutate(loginData);
+    //유효성 검사 필요
+    mutate(loginData);
   };
 
   return (
-    <div className="login-container">
-      <div className="login-text-container">
-        <div className="login-text">LOGIN</div>
-        <div className="login-description">로그인 하시면 더 다양한 기능을 이용하실 수 있습니다</div>
-      </div>
-      <div className="input-container">
-        <form onSubmit={handleSubmit}>
-          <div className="email input-container">
-            <IoMailOutline className="mail-icon" />
-            <input type="email" onChange={(e) => setEmail(e.target.value)}></input>
-          </div>
-          <div className="password input-container">
-            <IoLockOpenOutline />
-            <input type="password" onChange={(e) => setPassword(e.target.value)}></input>
-          </div>
-          <button type="submit" className="login-btn">
-            로그인
-          </button>
-        </form>
-        <div className="login-menu-container">
-          <div>아이디 찾기</div>
-          <div className="vertical-line"></div>
-          <div>비밀번호 찾기</div>
-          <div className="vertical-line"></div>
-          <div>회원가입</div>
+    <div className={styles.container}>
+      <div className={styles.loginContainer}>
+        <div className={styles.textContainer}>
+          <div className={styles.text}>LOGIN</div>
+          <div className={styles.description}>로그인 하시면 더 다양한 기능을 이용하실 수 있습니다</div>
         </div>
-      </div>
-      <div className="social-login-container">
-        <div>소셜 계정으로 로그인</div>
-        <div className="social-login-icon">
-          <div>kakao</div>
-          <div>google</div>
+        <div className={styles.middleContainer}>
+          <form onSubmit={handleLoginSubmit}>
+            <div className={styles.inputContainer}>
+              <IoMailOutline />
+              <input type="text" onChange={(e) => setLoginData({ ...loginData, email: e.target.value })} />
+            </div>
+            <div className={styles.inputContainer}>
+              <IoLockOpenOutline />
+              <input type="password" onChange={(e) => setLoginData({ ...loginData, password: e.target.value })} />
+            </div>
+            <div className={styles.errorMessage}>
+              <p>{isError && '아이디 또는 비밀번호를 다시 확인 해 주세요.'}</p>
+            </div>
+            <button type="submit" className={styles.loginBtn}>
+              로그인
+            </button>
+          </form>
+          <div className={styles.loginMenuContainer}>
+            <div>아이디 찾기</div>
+            <div className={styles.verticalLine}></div>
+            <div>비밀번호 찾기</div>
+            <div className={styles.verticalLine}></div>
+            <div className={styles.siginText}>회원가입</div>
+          </div>
+        </div>
+        <div className={styles.socialLoginContainer}>
+          <div>소셜 계정으로 로그인</div>
+          <div className={styles.socialLoginIcon}>
+            <img src={kakaoIcon} />
+            <img src={googleIcon} />
+          </div>
         </div>
       </div>
     </div>
