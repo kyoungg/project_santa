@@ -22,7 +22,7 @@ function LoginPage() {
     onSuccess: (data) => {
       localStorage.setItem('access_token', data.accessToken);
       localStorage.setItem('refresh_token', data.refreshToken);
-      refetch();
+      // refetch();
       navigate('/');
     },
     onError: (error) => {
@@ -30,13 +30,13 @@ function LoginPage() {
     },
   });
 
-  const { refetch } = useQuery({
-    queryKey: ['userInfo'],
-    queryFn: getUserInfo,
-    select: (data) => data.data,
-    staleTime: Infinity,
-    enabled: false,
-  });
+  // const { refetch } = useQuery({
+  //   queryKey: ['userInfo'],
+  //   queryFn: getUserInfo,
+  //   select: (data) => data.data,
+  //   staleTime: Infinity,
+  //   enabled: false,
+  // });
 
   const handleLoginSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

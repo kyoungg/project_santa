@@ -20,6 +20,7 @@ import FindPasswordPage from './pages/user/find/FindPasswordPage';
 import CategoryPage from './pages/user/category/CategoryPage';
 import ErrorPage from './pages/error/ErrorPage';
 import LoginPage from './pages/login/LoginPage';
+import { PrivateRoutes, PublicRoutes } from './utils/routes';
 
 const router = createBrowserRouter([
   {
@@ -29,9 +30,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <MainPage /> },
       { path: '/rank', element: <RankPage /> },
-      { path: '/challenge', element: <ChallengePage /> },
       { path: '/gathering', element: <GatheringMainPage /> },
-      { path: '/join', element: <JoinPage /> },
       { path: '/livechat', element: <>실시간 채팅 페이지 입니다</> },
       { path: '/gathering', element: <GatheringMainPage /> },
       { path: '/gathering/search', element: <GatheringSearchPage /> },
@@ -39,15 +38,25 @@ const router = createBrowserRouter([
       { path: '/gathering/post', element: <PostPage /> },
       { path: '/gathering/detail', element: <GatheringDetailPage /> },
       { path: '/trophy', element: <TrophyPage /> },
-      { path: '/profile', element: <ProfilePage /> },
       { path: '/user/find_account', element: <FindAccountPage /> },
       { path: '/user/find_password', element: <FindPasswordPage /> },
       { path: '/user/category', element: <CategoryPage /> },
+      {
+        element: <PrivateRoutes />,
+        children: [
+          { path: '/profile', element: <ProfilePage /> },
+          { path: '/challenge', element: <ChallengePage /> },
+        ],
+      },
     ],
   },
   {
-    path: '/login',
-    element: <LoginPage />,
+    path: '/',
+    element: <PublicRoutes />,
+    children: [
+      { path: '/login', element: <LoginPage /> },
+      { path: '/join', element: <JoinPage /> },
+    ],
   },
 ]);
 

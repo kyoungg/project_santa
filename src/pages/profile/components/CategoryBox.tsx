@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
+// import { useQuery } from '@tanstack/react-query';
+// import { getCategory } from '/src/services/categoryApi';
 
 import { FaGear } from 'react-icons/fa6';
 import styles from './CategoryBox.module.scss';
-import paths from '/src/utils/path';
+import { paths } from '/src/utils/path';
 
 const CATEGORY = ['출사', '힐링', '아마추어'];
 
@@ -16,8 +18,8 @@ export default function CategoryBox() {
         </Link>
       </div>
       <div className={styles.categoryList}>
-        {CATEGORY.map((item) => {
-          return <p>#{item}</p>;
+        {CATEGORY.map((category, index) => {
+          return <p key={index}>#{category}</p>;
         })}
       </div>
     </div>

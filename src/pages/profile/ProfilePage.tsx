@@ -1,14 +1,14 @@
 import { Button } from '../../components/common/Button';
+import { useQuery } from '@tanstack/react-query';
 
 import AchievementsBox from './components/AchievementsBox';
-import CategoryBox from './components/CategotyBox';
+import CategoryBox from './components/CategoryBox';
 import GatheringBox from './components/GatheringBox';
 import TrophyBox from './components/TrophyBox';
 import styles from './profile.module.scss';
 import LoginBtn from './components/LoginBtn';
 import kakaoLogo from '/images/kakao.png';
 import googleLogo from '/images/google.svg';
-import { useQuery } from '@tanstack/react-query';
 import { getUserInfo } from '/src/services/userApi';
 
 export default function ProfilePage() {
@@ -16,9 +16,11 @@ export default function ProfilePage() {
     queryKey: ['userInfo'],
     queryFn: getUserInfo,
     select: (data) => data.data,
+    staleTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
 
-  //유저 권한 => 세션에 토큰이 들어있는지 확인
   const onClick = () => {
     alert('버튼 클릭됨!');
   };
