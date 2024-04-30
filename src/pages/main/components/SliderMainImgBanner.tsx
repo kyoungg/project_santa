@@ -18,8 +18,8 @@ const SliderMainImgBanner = () => {
   // todo api연결
   const getSliderItemList = MOCKUP;
 
-  const [SliderItemList, setSliderItemList] = useState(getSliderItemList);
-  const [scrollState, setScrollState] = useState(0);
+  const [SliderItemList, _setSliderItemList] = useState(getSliderItemList);
+  const [_scrollState, setScrollState] = useState(0);
 
   let count = 0;
 
@@ -33,7 +33,9 @@ const SliderMainImgBanner = () => {
     <div className={styles.bannerContainer}>
       <div className={styles.sliderButtonWrapper}>
         <div className={styles.preButton}>이전</div>
-        <div className={styles.nextButton}>다음</div>
+        <div className={styles.nextButton} onClick={nextButton}>
+          다음
+        </div>
       </div>
       <ul className={styles.sliderBox}>
         {MOCKUP.map((item) => (

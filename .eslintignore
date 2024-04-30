@@ -1,0 +1,13 @@
+yarn.lock
+public
+vite.config.js
+README.md
+Dockerfile
+.nvmrc
+.vscode
+.idea
+.yarn
+.pnp.*
+test.tsx
+package-lock.json
+package.json
