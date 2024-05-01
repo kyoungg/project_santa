@@ -10,6 +10,7 @@ export function ParticipatingGroupPage() {
   const data = [
     {
       leaderId: '23333',
+      meetingId: 1123,
       title: '한라산 등반 모임',
       content: '한라산에서 함께 등산하실 분',
       tag: '힐링',
@@ -21,6 +22,7 @@ export function ParticipatingGroupPage() {
     },
     {
       leaderId: '2333411',
+      meetingId: 1234,
       title: '한라산 등반 모임',
       content: '한라산에서 함께 등산하실 분',
       tag: '힐링',
@@ -44,7 +46,7 @@ export function ParticipatingGroupPage() {
         </div>
         {data.map((item) => (
           <div
-            key={item.leaderId}
+            key={item.meetingId}
             className={`${styles.width100} ${styles.bgLightYellow} ${styles.borderRadius} ${styles.padding}`}
           >
             <GatheringList

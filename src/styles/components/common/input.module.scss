@@ -26,7 +26,7 @@
     border-radius: 0;
 }
 
-.search-input-container{
+.searchInputContainer{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -36,7 +36,7 @@
     border: 0.1rem solid $green3;
     border-radius:0.6rem;
 
-    .search-input{
+    .searchInput{
         width:100%;
         border:none;
         height:2.5rem;

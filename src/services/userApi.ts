@@ -20,7 +20,7 @@ interface UserInfo {
 }
 
 export const postUserLogin = async (loginData: LoginData) => {
-  const response = await api.post<LoginResponse>('/api/users/sign-in', loginData);
+  const response = await api.post<LoginResponse>('users/sign-in', loginData);
   return response.data;
 };
 

@@ -5,6 +5,7 @@
 .mainContainer{
     @include flex-between-col;
     @include setting;
+    
 }
 .inputContainer{
     display:flex;
@@ -24,7 +25,7 @@
 .containerCol{
     display: flex;
     flex-direction: column;
-    gap:0.5rem;
+    gap:1rem;
     justify-content: space-between;
 }
 .containerRow{

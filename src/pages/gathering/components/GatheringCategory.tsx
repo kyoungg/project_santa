@@ -1,29 +1,32 @@
-import { useState } from 'react';
 import { Chips } from '../../../components/common/Chips';
 import styles from '../../../styles/gathering/gatheringCategory.module.scss';
+import { useCategoryStore } from '/src/store/store';
+import type { GatheringCategory } from '/src/services/gatheringApi';
 
 export function GatheringCategory() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [categoryList, setCategoryList] = useState([
+  const { category, setCategory } = useCategoryStore();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, react-hooks/exhaustive-deps
+  const categoryList: GatheringCategory[] = [
     '맞춤추천',
-    '백패킹',
+    '등산',
     '힐링',
     '정상깨기',
     '출사',
     '식도락',
-    'ff',
-    'ddddd',
-    'dddddd',
-  ]);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+    '백패킹',
+    '기타',
+  ];
+
   return (
     <div className={styles.scrollContainer}>
       <div className={styles.categoryContainer}>
-        {categoryList.map((item, index) => (
+        {categoryList.map((item) => (
           <Chips
-            variant={`${item == categoryList[selectedIndex] ? 'square-green3' : 'square-green2'}`}
+            key={item}
+            variant={`${item == category ? 'square-green3' : 'square-green2'}`}
             onClick={() => {
-              setSelectedIndex(index);
+              setCategory(item);
             }}
           >
             {item}

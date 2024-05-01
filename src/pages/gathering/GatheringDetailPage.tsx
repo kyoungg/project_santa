@@ -64,7 +64,7 @@ export function GatheringDetailPage() {
           </div>
           <div className={styles.tagContainer}>
             {data.tags.map((item, index) => (
-              <div key={`${data.leaderId}-${index}`}>
+              <div key={`${data.meetingId}-${index}`}>
                 <Chips variant="outline-green3">{item}</Chips>
               </div>
             ))}
