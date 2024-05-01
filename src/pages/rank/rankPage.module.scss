@@ -61,7 +61,7 @@
   width: 2.8rem;
 }
 
-.userProfileImgContainer {
+.profileImgContainer {
   width: 1.7rem;
   height: 1.7rem;
   background-color: rgb(167, 167, 167);
@@ -78,12 +78,12 @@
   gap: 3.5rem;
   height: 125px;
 }
-.userProfileWrapper {
+.profileWrapper {
   @include flex-center-col;
   gap: 8px;
 }
 
-.userProfileImgWrapper {
+.profileImgWrapper {
   background-color: yellow;
   width: 6rem;
   height: 6rem;

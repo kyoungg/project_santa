@@ -3,21 +3,22 @@ import { Button } from '../../components/common/Button';
 import SectionTitle from '../../components/SectionTitle';
 import Thumbnail from '../../components/Thumbnail';
 import Toggle from './components/Toggle';
-import ClubList from './components/MainClubList';
+import MeetingList from './components/MainMeetingList';
 import UserRankList from './components/MainRankList';
 
 import styles from './mainPage.module.scss';
 
-import { useQuery } from '@tanstack/react-query';
 import { getMeetings } from '/src/services/meeting';
-import { useEffect } from 'react';
+import { getRanks } from '/src/services/ranks';
+
+import { useQuery } from '@tanstack/react-query';
+import { paths } from '/src/utils/path';
 
 export default function Main() {
-  const { data } = useQuery({ queryKey: ['meetings'], queryFn: getMeetings });
-  useEffect(() => {
-    console.log(data?.data);
-  }, [data]);
+  const { data: meetings } = useQuery({ queryKey: ['meetings'], queryFn: getMeetings });
+  const { data: ranks } = useQuery({ queryKey: ['ranks'], queryFn: getRanks });
 
+  if (!meetings || !ranks) return <>Loading...</>;
   return (
     <div className={styles.container}>
       <SliderMainImgBanner />
@@ -31,7 +32,7 @@ export default function Main() {
           <SectionTitle
             title="챌린지 둘러보기"
             subtitle="업적을 달설할 수 있는 챌린지를 확인해보세요!"
-            goToListPageParams="1"
+            goToPage={paths.CHALLENGE}
           />
           <Thumbnail img="이미지" title="막걸리 한잔" isHotTopic={true} isIndexChip={true} />
         </div>
@@ -40,13 +41,13 @@ export default function Main() {
             <div className={styles.toggleWrapper}>
               <Toggle />
             </div>
-            <SectionTitle title="신규 모임" subtitle="현재 진행중인 모임을 확인해보세요." goToListPageParams="2" />
-            <ClubList />
+            <SectionTitle title="신규 모임" subtitle="현재 진행중인 모임을 확인해보세요." goToPage={paths.GATHERING} />
+            <MeetingList meetings={meetings} />
           </div>
         </div>
         <div>
-          <SectionTitle title="랭킹🏅" subtitle="이달의 랭킹을 확인해보세요!" goToListPageParams="3" />
-          <UserRankList />
+          <SectionTitle title="랭킹🏅" subtitle="이달의 랭킹을 확인해보세요!" goToPage={paths.RANK} />
+          <UserRankList ranks={ranks} />
         </div>
       </div>
     </div>

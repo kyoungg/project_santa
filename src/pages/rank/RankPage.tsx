@@ -1,61 +1,64 @@
 import Top3UserRank from './components/Top3UserRank';
-
 import styles from './rankPage.module.scss';
 
+// import { useQuery } from '@tanstack/react-query';
+// import { getRanks } from '/src/services/ranks';
+
 interface UserRankInfo {
-  userId: string;
+  rankId: string;
   rank: number;
-  userProfileImg: string;
-  userNickname: string;
-  userScore: number;
+  profileImg: string;
+  nickname: string;
+  score: number;
 }
 
 const MOCKUP_USER: UserRankInfo[] = [
   {
-    userId: '123124',
+    rankId: '123124',
     rank: 1,
-    userProfileImg: '',
-    userNickname: '산타대통령',
-    userScore: 13414,
+    profileImg: '',
+    nickname: '산타대통령',
+    score: 13414,
   },
   {
-    userId: '1231f24',
+    rankId: '123124',
     rank: 2,
-    userProfileImg: '',
-    userNickname: '산타대통령',
-    userScore: 13414,
+    profileImg: '',
+    nickname: '산타대통령',
+    score: 13414,
   },
   {
-    userId: '1231d24',
+    rankId: '123124',
+    rank: 3,
+    profileImg: '',
+    nickname: '산타대통령',
+    score: 13414,
+  },
+  {
+    rankId: '123124',
     rank: 4,
-    userProfileImg: '',
-    userNickname: '산타대통령',
-    userScore: 13414,
+    profileImg: '',
+    nickname: '산타대통령',
+    score: 13414,
   },
   {
-    userId: '123g124',
+    rankId: '123124',
     rank: 5,
-    userProfileImg: '',
-    userNickname: '산타대통령',
-    userScore: 13414,
+    profileImg: '',
+    nickname: '산타대통령',
+    score: 13414,
   },
   {
-    userId: '12312a4',
+    rankId: '123124',
     rank: 6,
-    userProfileImg: '',
-    userNickname: '산타대통령',
-    userScore: 13414,
-  },
-  {
-    userId: '1231a24',
-    rank: 7,
-    userProfileImg: '',
-    userNickname: '산타대통령',
-    userScore: 13414,
+    profileImg: '',
+    nickname: '산타대통령',
+    score: 13414,
   },
 ];
 
 export default function RankPage() {
+  // const { _data } = useQuery({ queryKey: ['rank'], queryFn: getRanks });
   return (
     <div className={styles.container}>
       <div className={styles.flex}>
@@ -73,22 +76,22 @@ export default function RankPage() {
         </div>
         <div className={styles.userRankListWrapper}>
           {MOCKUP_USER.map((user) => (
-            <div className={styles.userRankItem} key={user.userId}>
+            <div className={styles.userRankItem} key={user.rankId}>
               <div className={styles.rankWrapper}>
                 <div className={styles.userRank}>{user.rank}</div>
-                <div className={styles.userProfileImgContainer}>{user.userProfileImg}</div>
+                <div className={styles.profileImgContainer}>{user.profileImg}</div>
               </div>
-              <div className={styles.userNickname}>{user.userNickname}</div>
-              <div className={styles.userScore}>{user.userScore}</div>
+              <div className={styles.userNickname}>{user.nickname}</div>
+              <div className={styles.userScore}>{user.score}</div>
             </div>
           ))}
         </div>
       </div>
       <div className={styles.myScoreInfo}>
         <div className={styles.userRank}>1등</div>
-        <div className={styles.userProfileImg}></div>
-        <div className={styles.userNickname}>진채영</div>
-        <div className={styles.userScore}>9999</div>
+        <div className={styles.profileImg}></div>
+        <div className={styles.nickname}>진채영</div>
+        <div className={styles.score}>9999</div>
       </div>
     </div>
   );
