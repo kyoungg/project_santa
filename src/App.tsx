@@ -38,14 +38,21 @@ const router = createBrowserRouter([
       { path: '/gathering/post', element: <PostPage /> },
       { path: '/gathering/detail', element: <GatheringDetailPage /> },
       { path: '/trophy', element: <TrophyPage /> },
-      { path: '/user/find_account', element: <FindAccountPage /> },
-      { path: '/user/find_password', element: <FindPasswordPage /> },
-      { path: '/user/category', element: <CategoryPage /> },
+
       {
         element: <PrivateRoutes />,
         children: [
           { path: '/profile', element: <ProfilePage /> },
           { path: '/challenge', element: <ChallengePage /> },
+          { path: '/user/category', element: <CategoryPage /> },
+        ],
+      },
+      {
+        element: <PublicRoutes />,
+        children: [
+          { path: '/join', element: <JoinPage /> },
+          { path: '/user/find_account', element: <FindAccountPage /> },
+          { path: '/user/find_password', element: <FindPasswordPage /> },
         ],
       },
     ],
@@ -53,10 +60,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <PublicRoutes />,
-    children: [
-      { path: '/login', element: <LoginPage /> },
-      { path: '/join', element: <JoinPage /> },
-    ],
+    children: [{ path: '/login', element: <LoginPage /> }],
   },
 ]);
 

@@ -8,7 +8,11 @@ const USERANK = 7777;
 const PUBLIC_IMG = 'https://cdn.pixabay.com/photo/2016/05/24/16/48/mountains-1412683_1280.png';
 
 export default function UserProfile() {
-  const { data: userInfo, isSuccess } = useQuery({
+  const {
+    data: userInfo,
+    isFetched,
+    isError,
+  } = useQuery({
     queryKey: ['userInfo'],
     queryFn: getUserInfo,
     select: (data) => data.data,
@@ -17,17 +21,19 @@ export default function UserProfile() {
     refetchOnWindowFocus: false,
   });
 
+  const Success = isFetched && !isError;
+
   return (
     <div className={styles.profileContainer}>
       <div className={styles.userProfile}>
-        <img src={isSuccess ? userInfo?.image : PUBLIC_IMG} />
+        <img src={Success ? userInfo?.image : PUBLIC_IMG} />
         <div className={styles.rankBox}>
           <p>내 랭킹🏅</p>
-          {isSuccess ? <p>{USERANK}</p> : ''}
+          {Success ? <p>{USERANK}</p> : ''}
         </div>
       </div>
       <div className={styles.textBox}>
-        <p>반갑습니다 {isSuccess ? userInfo.nickname : '비회원'}님!</p>
+        <p>반갑습니다 {Success ? userInfo?.nickname : '비회원'}님!</p>
         <p>오늘도 즐거운 등산 되세요😄</p>
       </div>
     </div>

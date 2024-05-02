@@ -15,6 +15,7 @@ const INCLUDE_BACK_BTN_PATH = [
   '/user/find_password',
   '/user/find_account',
   '/user/category',
+  '/join',
 ];
 
 export default function Layout() {

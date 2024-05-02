@@ -11,7 +11,7 @@ type Props = {
   date: string;
   isLast?: boolean;
   setPage?: React.Dispatch<React.SetStateAction<number>>;
-  onClick: () => void
+  onClick: () => void;
 };
 export function GatheringList({
   title,

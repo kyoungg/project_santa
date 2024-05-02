@@ -22,7 +22,7 @@ interface CategoryItem {
   name: string;
 }
 
-export default function Category() {
+export default function CategoryPage() {
   const name = '엘리스';
 
   return (
