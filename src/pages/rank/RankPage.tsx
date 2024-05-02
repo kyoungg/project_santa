@@ -1,64 +1,65 @@
 import Top3UserRank from './components/Top3UserRank';
 import styles from './rankPage.module.scss';
 
-// import { useQuery } from '@tanstack/react-query';
-// import { getRanks } from '/src/services/ranks';
+import { useEffect, useState, useCallback } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { getRankUsers, getMyRank } from '/src/services/ranks';
+import useIntersectionObserver from '/src/hooks/useIntersectionObserver';
 
-interface UserRankInfo {
-  rankId: string;
-  rank: number;
-  profileImg: string;
-  nickname: string;
-  score: number;
-}
-
-const MOCKUP_USER: UserRankInfo[] = [
-  {
-    rankId: '123124',
-    rank: 1,
-    profileImg: '',
-    nickname: '산타대통령',
-    score: 13414,
-  },
-  {
-    rankId: '123124',
-    rank: 2,
-    profileImg: '',
-    nickname: '산타대통령',
-    score: 13414,
-  },
-  {
-    rankId: '123124',
-    rank: 3,
-    profileImg: '',
-    nickname: '산타대통령',
-    score: 13414,
-  },
-  {
-    rankId: '123124',
-    rank: 4,
-    profileImg: '',
-    nickname: '산타대통령',
-    score: 13414,
-  },
-  {
-    rankId: '123124',
-    rank: 5,
-    profileImg: '',
-    nickname: '산타대통령',
-    score: 13414,
-  },
-  {
-    rankId: '123124',
-    rank: 6,
-    profileImg: '',
-    nickname: '산타대통령',
-    score: 13414,
-  },
-];
+import { Rank } from '/src/services/ranks';
+import { UserProfile_small } from '/src/components/common/UserProfile_small';
 
 export default function RankPage() {
-  // const { _data } = useQuery({ queryKey: ['rank'], queryFn: getRanks });
+  const [page, setPage] = useState(0);
+  const [ranks, setRanks] = useState<Rank[]>([]);
+
+  const { data: myRank } = useQuery({ queryKey: ['myrank'], queryFn: getMyRank });
+
+  const {
+    data: fetchData,
+    isLoading,
+    isFetching,
+    isFetched,
+    isError,
+  } = useQuery({
+    queryKey: ['rank', page],
+    queryFn: () => getRankUsers(page, 10),
+    select: (data) => {
+      return {
+        content: data.content,
+        totalPages: data.totalPages,
+        last: data.last,
+      };
+    },
+  });
+
+  const handleIntersect = useCallback(() => {
+    if (isLoading && isFetching) return;
+    if (isFetched && !isError) {
+      setPage((prev) => prev + 1);
+    }
+  }, [isLoading, isFetched, isFetching, isError]);
+
+  const { targetRef } = useIntersectionObserver<HTMLDivElement>(handleIntersect);
+
+  useEffect(() => {
+    const isSuccess = isFetched && !isError;
+    if (isSuccess && fetchData) {
+      setRanks(ranks.concat(fetchData.content));
+    }
+  }, [isFetched, isError, fetchData]);
+
+  useEffect(() => {
+    if (fetchData?.last) {
+      targetRef.current = null;
+    }
+  }, [fetchData]);
+
+  // useEffect(() => {
+  //   console.log('------page change-----');
+  //   console.log(page);
+  // }, [page]);
+
   return (
     <div className={styles.container}>
       <div className={styles.flex}>
@@ -69,30 +70,41 @@ export default function RankPage() {
           </div>
         </div>
         <Top3UserRank />
+        <div className={styles.myScoreInfo}>
+          <div className={styles.userRank}>{myRank?.rank}</div>
+          <div className={styles.profileImg}>
+            <UserProfile_small name={`${myRank?.nickname}`} imageUrl={`${myRank?.image}`} />
+          </div>
+          <div className={styles.nickname}>{myRank?.nickname}님</div>
+          <div className={styles.score}>{myRank?.score}</div>
+        </div>
         <div className={styles.userRankBoxTitle}>
           <div>순위</div>
           <div>닉네임</div>
           <div>점수</div>
         </div>
         <div className={styles.userRankListWrapper}>
-          {MOCKUP_USER.map((user) => (
-            <div className={styles.userRankItem} key={user.rankId}>
-              <div className={styles.rankWrapper}>
-                <div className={styles.userRank}>{user.rank}</div>
-                <div className={styles.profileImgContainer}>{user.profileImg}</div>
-              </div>
-              <div className={styles.userNickname}>{user.nickname}</div>
-              <div className={styles.userScore}>{user.score}</div>
-            </div>
-          ))}
+          {ranks ? (
+            <>
+              {ranks?.map((user) => (
+                <div className={styles.userRankItem} key={user.id}>
+                  <div className={styles.rankWrapper}>
+                    <div className={styles.userRank}>{user.rank}</div>
+                    <div className={styles.profileImgContainer}>
+                      <UserProfile_small name={`${user.nickname}`} imageUrl={`${user.image}`} />
+                    </div>
+                  </div>
+                  <div className={styles.userNickname}>{user.nickname}</div>
+                  <div className={styles.userScore}>{user.score}</div>
+                </div>
+              ))}
+            </>
+          ) : (
+            <>Loading..</>
+          )}
         </div>
       </div>
-      <div className={styles.myScoreInfo}>
-        <div className={styles.userRank}>1등</div>
-        <div className={styles.profileImg}></div>
-        <div className={styles.nickname}>진채영</div>
-        <div className={styles.score}>9999</div>
-      </div>
+      <div className={styles.scrollbox} ref={targetRef} />
     </div>
   );
 }
