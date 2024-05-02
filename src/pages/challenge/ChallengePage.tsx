@@ -12,7 +12,7 @@ export default function ChallengePage() {
   const { data: allchallenge } = useQuery({
     queryKey: ['allChallenge'],
     queryFn: getAllChallenge,
-    select: (data) => data.data.content,
+    select: (data) => data.data,
     staleTime: Infinity,
     refetchOnMount: false,
     refetchOnWindowFocus: false,

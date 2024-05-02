@@ -10,22 +10,25 @@ type Props = {
   attendance: number;
   date: string;
   isLast?: boolean;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
+  setPage?: React.Dispatch<React.SetStateAction<number>>;
+  onClick: () => void
 };
 export function GatheringList({
   title,
   content,
   tag,
-  imageUrl,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // imageUrl,
   mountain,
   capacity,
   attendance,
   date,
   isLast,
   setPage,
+  onClick,
 }: Props) {
   const { targetRef } = useIntersectionObserver<HTMLDivElement>(() => {
-    if (isLast) {
+    if (isLast && setPage) {
       setPage((prev) => prev + 1);
     }
   });
@@ -41,6 +44,7 @@ export function GatheringList({
           _ref = null;
         }
       }}
+      onClick={onClick}
     >
       <div className={styles.image}>이미지</div>
 

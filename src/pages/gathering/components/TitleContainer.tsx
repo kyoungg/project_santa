@@ -3,7 +3,7 @@ import styles from '../../../styles/gathering/gatheringMain.module.scss';
 import { IoChevronBack } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 export interface TitleContainerProps {
-  title: string;
+  title: string | undefined;
 }
 export function TitleContainer(props: TitleContainerProps) {
   return (

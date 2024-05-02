@@ -4,6 +4,7 @@ import { IoCheckmarkCircleSharp } from 'react-icons/io5';
 
 import { GatheringList } from './GatheringList';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type Participant = {
   userId: number; // 예시로 숫자 타입을 사용하였습니다. 실제 타입에 맞게 수정해주세요.
@@ -27,6 +28,7 @@ type gatheringDataType = {
 export function SearchList({ gatheringData }: { gatheringData: gatheringDataType[] }) {
   const [showInProgress, setShowInProgress] = useState(false);
   const [sortByLatest, setSortByLatest] = useState(true);
+  const navigate = useNavigate();
   function clickShowInProgress() {
     setShowInProgress(!showInProgress);
   }
@@ -71,6 +73,7 @@ export function SearchList({ gatheringData }: { gatheringData: gatheringDataType
             capacity={item.headcount}
             attendance={item.participants.length}
             date={item.date}
+            onClick={() => navigate(`/gathering/detail?meetingid=${item.meetingId}`)}
           />
         </div>
       ))}

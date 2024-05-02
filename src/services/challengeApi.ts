@@ -13,5 +13,5 @@ interface Challenge {
 }
 
 export const getAllChallenge = async () => {
-  return await api.get('/api/challenges');
+  return await api.get<Challenge>('/api/challenges');
 };

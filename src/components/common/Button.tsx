@@ -3,13 +3,14 @@ import styles from '../../styles/components/common/button.module.scss';
 
 type Props = {
   variant: 'green1' | 'green3' | 'gray' | 'yellow' | 'rounded-outline' | 'rounded-color';
-  onClick?: React.MouseEventHandler<HTMLDivElement>;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  type?:"button" | "submit" | "reset" | undefined
 };
 
-export const Button = ({ variant, onClick, children }: PropsWithChildren<Props>) => {
+export const Button = ({ variant, onClick, children,type }: PropsWithChildren<Props>) => {
   return (
-    <div className={`${styles.button} ${styles[variant]}`} onClick={onClick}>
+    <button className={`${styles.button} ${styles[variant]}`} onClick={onClick} type={type}>
       {children}
-    </div>
+    </button>
   );
 };

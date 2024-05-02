@@ -1,11 +1,11 @@
 import { api } from './api';
 
-interface LoginData {
+export interface LoginData {
   email: string;
   password: string;
 }
 
-interface LoginResponse {
+export interface LoginResponse {
   grantType: string;
   accessToken: string;
   refreshToken: string;

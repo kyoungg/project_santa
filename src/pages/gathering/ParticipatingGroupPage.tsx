@@ -4,9 +4,11 @@ import { IoCheckmarkCircleSharp } from 'react-icons/io5';
 import { useState } from 'react';
 import { GatheringList } from './components/GatheringList';
 import { TitleContainer } from './components/TitleContainer';
+import { useNavigate } from 'react-router-dom';
 
 export function ParticipatingGroupPage() {
   const [showInProgress, setShowInProgress] = useState(false);
+  const navigate = useNavigate();
   const data = [
     {
       leaderId: '23333',
@@ -58,6 +60,7 @@ export function ParticipatingGroupPage() {
               capacity={item.capacity}
               attendance={item.attendance}
               date={item.date}
+              onClick={() => navigate(`/gathering/detail?meetingid=${item.meetingId}`)}
             />
           </div>
         ))}

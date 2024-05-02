@@ -54,20 +54,36 @@ export type GatheringCategory = '맞춤추천' | '등산' | '힐링' | '식도�
 export function getGatheringListByCategory(category: GatheringCategory, page?: number, size?: number) {
   return api.get<GatheringListResponse>(`meetings/category-search?category=${category}&page=${page}&size=${size}`);
 }
-type GatheringData = {
-  meetingName: string;
-  categoryName: string;
-  mountainName: string;
-  description: string;
-  headcount: number;
-  date: string;
-  tags: string[];
-  image: string;
-};
-export async function postGathering(data: GatheringData) {
+
+export async function postGathering(data: FormData) {
   await api.post('meetings', data);
 }
 
 export async function getGatheringSearchResult(tag: string) {
   return await api.get(`meetings/tag-search?tag=${tag}`);
+}
+
+type GatheringDetailType = {
+  meetingId: number,
+  leaderId: number,
+  userEmail: string,
+  meetingName: string,
+  categoryName: string,
+  mountainName: string,
+  description: string,
+  headcount: number,
+  date: string,
+  tags: string[],
+  image: string,
+  imageFile: string,
+  participants: [
+    {
+      userId: number,
+      userName: string,
+      userImage: string
+    }
+  ]
+}
+export function getGatheringDetailById(meetingId: string) {
+  return api.get<GatheringDetailType>(`meetings/${meetingId}`)
 }

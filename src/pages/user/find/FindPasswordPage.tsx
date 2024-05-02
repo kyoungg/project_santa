@@ -38,9 +38,9 @@ export default function FindPasswordPage() {
             placeholder={`'-'를 제외하고 입력 해 주세요.`}
           ></Input>
         </form>
-        <div className={styles.submitBtn}>
-          <Button children={'확인'} />
-        </div>
+      </div>
+      <div className={styles.submitBtn}>
+        <Button variant="green3" children={'인증 하기'} />
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import { IoSearch } from 'react-icons/io5';
 import { Button } from '../../components/common/Button';
 import styles from '../../styles/gathering/gatheringMain.module.scss';
 import Thumbnail from '../../components/Thumbnail';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { GatheringCategory } from './components/GatheringCategory';
 import { useEffect, useState } from 'react';
 import { getGatheringListByCategory, GatheringListByCategory } from '/src/services/gatheringApi';
@@ -16,9 +16,8 @@ const PAGE_SIZE = 4;
 
 function GatheringMainPage() {
   const { category } = useCategoryStore();
-
+  const navigate = useNavigate();
   const [page, setPage] = useState(0);
-
   const [gatheringList, setGatheringList] = useState<GatheringListByCategory[]>([]);
   const {
     data: GatheringListByCategory,
@@ -79,7 +78,7 @@ function GatheringMainPage() {
         <GatheringCategory />
         <div className={styles.gatheringList}>
           {gatheringList?.map((item: GatheringListByCategory, index) => (
-            <div key={`${item.meetingId}-${item.leaderId}`}>
+            <div key={`${item.meetingId}-${item.leaderId}-${index}`}>
               <GatheringList
                 title={item.meetingName}
                 content={item.description}
@@ -95,6 +94,7 @@ function GatheringMainPage() {
                   gatheringList.length === index + 1
                 }
                 setPage={setPage}
+                onClick={() => navigate(`/gathering/detail?meetingid=${item.meetingId}`)}
               />
             </div>
           ))}

@@ -6,7 +6,7 @@ import { IoCalendarClearOutline } from 'react-icons/io5';
 import { Button } from '../../components/common/Button';
 import { IoImageOutline } from 'react-icons/io5';
 import { DatePickerComponent } from '../../components/common/DatePickerComponent';
-import { ChangeEvent, useEffect, useRef, useState } from 'react'; // ChangeEvent 추가
+import { ChangeEvent, useEffect, useState } from 'react'; // ChangeEvent 추가
 import { IoCloseOutline } from 'react-icons/io5';
 import { useMutation } from '@tanstack/react-query';
 import { postGathering } from '/src/services/gatheringApi';
@@ -16,79 +16,56 @@ export function PostPage() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [tag, setTag] = useState<string[]>([]);
   const [tagValue, setTagValue] = useState<string>();
-  const [imgFile, setImgFile] = useState<string>('');
+  const [imgFileUrl, setImgFileUrl] = useState<string>('');
+  const [imgFile, setImgFile] = useState<File | null>(null);
+  let gatheringFormData = new FormData();
   const [postData, setPostData] = useState({
     meetingName: '',
     categoryName: '',
     mountainName: '',
     description: '',
-    headcount: 0,
+    headcount: '',
     date: '',
     tags: [''],
-    image: '',
+    image: null,
   });
 
   function handleCategoryInput(e: ChangeEvent<HTMLSelectElement>) {
     const value = e.target.value;
     let category = '';
-    if (value === 'healing') {
-      category = '힐링';
-    } else if (value == 'hiking') {
-      category = '맞춤추천';
-    } else if (value === 'peak') {
-      category = '정상깨기';
-    } else if (value === 'photo') {
-      category = '출사';
-    } else if (value === 'food') {
-      category = '식도락';
-    } else if (value === 'camping') {
-      category = '캠핑';
-    } else if (value === 'others') {
-      category = '기타';
-    }
-    const newData = { ...postData };
-    newData.categoryName = category;
-    setPostData(newData);
+    category = value;
+    // gatheringFormData.append('categoryName',category)
+    setPostData(prevData => ({ ...prevData, categoryName: category }));
   }
   function handleMountainInput(e: ChangeEvent<HTMLInputElement>) {
-    const newData = { ...postData };
-    newData.mountainName = e.target.value;
-    setPostData(newData);
+    // gatheringFormData.append('mountainName',e.target.value)
+
+    setPostData(prevData => ({ ...prevData, mountainName: e.target.value }));
   }
   function handleGatheringNameInput(e: ChangeEvent<HTMLInputElement>) {
-    const newData = { ...postData };
-    newData.meetingName = e.target.value;
-    setPostData(newData);
+    // gatheringFormData.append('meetingName',e.target.value);
+
+    setPostData(prevData => ({ ...prevData, meetingName: e.target.value }));
   }
   function handleParticipantsInput(e: ChangeEvent<HTMLInputElement>) {
-    const newData = { ...postData };
-    newData.headcount = Number(e.target.value);
-    setPostData(newData);
+    // gatheringFormData.append('headcount',e.target.value);
+
+    setPostData(prevData => ({ ...prevData, headcount: e.target.value }))
   }
   function handleDescriptionInput(e: ChangeEvent<HTMLTextAreaElement>) {
-    const newData = { ...postData };
-    newData.description = e.target.value;
-    setPostData(newData);
+    // gatheringFormData.append('description',e.target.value);
+
+    setPostData(prevData => ({ ...prevData, description: e.target.value }))
   }
   useEffect(() => {
-    const newData = { ...postData };
-    newData.tags = tag;
-    setPostData(newData);
+    setPostData(prevData => ({ ...prevData, tags: tag }))
   }, [tag]);
-
-  useEffect(() => {
-    const newData = { ...postData };
-    // newData.image = imgFile;
-    newData.image = 'img';
-    setPostData(newData);
-  }, [imgFile]);
 
   const handleDateChange = (date: Date) => {
     if (date) {
       setSelectedDate(date);
-      const newData = { ...postData };
-      newData.date = formattingDate(date);
-      setPostData(newData);
+      // gatheringFormData.append('date', formattingDate(date))
+      setPostData(prevData => ({ ...prevData, date: formattingDate(date) }))
     }
   };
 
@@ -125,16 +102,16 @@ export function PostPage() {
   function handleImageUpload(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files && e.target.files[0];
     if (file) {
+      setImgFile(file);
       const reader = new FileReader();
       reader.readAsDataURL(file);
 
       reader.onload = () => {
         console.log(typeof reader.result);
         if (reader.result !== null && typeof reader.result === 'string') {
-          setImgFile(reader.result);
+          setImgFileUrl(reader.result);
         }
       };
-
       console.log(file);
     }
   }
@@ -144,27 +121,36 @@ export function PostPage() {
   });
 
   function handleCreateBtn() {
-    console.log(postData);
-    mutate(postData);
+    gatheringFormData.append('categoryName', postData.categoryName)
+    gatheringFormData.append('mountainName', postData.mountainName)
+    gatheringFormData.append('meetingName', postData.meetingName);
+    gatheringFormData.append('headcount', postData.headcount);
+    gatheringFormData.append('description', postData.description);
+    postData.tags.forEach((tagItem, index) => {
+      gatheringFormData.append(`tags[${index}]`, tagItem)
+    })
+    gatheringFormData.append('date', postData.date)
+
+    gatheringFormData.forEach((value, key) => {
+      console.log(`${key}: ${value}`);
+    });
+    if (imgFile) {
+      gatheringFormData.append('image', imgFile); // 이미지 파일 추가
+    }
+    mutate(gatheringFormData);
   }
   return (
     <div className={styles.mainContainer}>
       <TitleContainer title="모임 만들기" />
-      <div className={styles.inputContainer}>
+      <form className={styles.inputContainer}>
         <div className={styles.containerRow}>
           <div className={`${styles.containerCol} ${styles.width60}`}>
             <GatheringCategorySelectBox onChange={handleCategoryInput} />
-            {/* <input
-              placeholder="카테고리"
-              className={styles.inputBox}
-              value={postData.categoryName}
-              onChange={handleCategoryInput}
-            /> */}
             <input
               placeholder="산"
               onClick={clickMountainSearch}
               className={styles.inputBox}
-              value={postData.mountainName}
+
               onChange={handleMountainInput}
             />
           </div>
@@ -177,8 +163,8 @@ export function PostPage() {
               onChange={handleImageUpload}
             />
             <label htmlFor="image" className={styles.center}>
-              {imgFile ? (
-                <img src={imgFile} className={styles.image}></img>
+              {imgFileUrl ? (
+                <img src={imgFileUrl} className={styles.image}></img>
               ) : (
                 <IoImageOutline size="2rem" color="#7f7f7f" />
               )}
@@ -186,18 +172,18 @@ export function PostPage() {
           </div>
         </div>
         <input
+          name='meetingName'
           type="text"
           placeholder="모임이름"
           className={styles.inputBox}
-          value={postData.meetingName}
           onChange={handleGatheringNameInput}
         />
         <textarea
+          name='description'
           rows={10}
           cols={33}
           className={styles.textarea}
           placeholder="모임 목적을 설명하세요"
-          value={postData.description}
           onChange={handleDescriptionInput}
         />
         <div>
@@ -209,9 +195,9 @@ export function PostPage() {
               </div>
               <div className={`${styles.inputSettingWidth} ${styles.containerRow} ${styles.grayBack}`}>
                 <input
+                  name='headcount'
                   type="text"
                   className={styles.inputBox}
-                  value={postData.headcount}
                   onChange={handleParticipantsInput}
                 />
                 <div>명</div>
@@ -255,8 +241,8 @@ export function PostPage() {
             </div>
           </div>
         </div>
-      </div>
-      <Button variant="green3" onClick={handleCreateBtn}>
+      </form>
+      <Button type='submit' variant="green3" onClick={handleCreateBtn}>
         모임 만들기{' '}
       </Button>
     </div>
