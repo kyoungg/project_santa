@@ -22,45 +22,46 @@ import ErrorPage from './pages/error/ErrorPage';
 import LoginPage from './pages/login/LoginPage';
 import { PrivateRoutes, PublicRoutes } from './utils/routes';
 
+import { paths } from './utils/path';
+
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: paths.HOME,
     element: <Layout />,
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <MainPage /> },
-      { path: '/rank', element: <RankPage /> },
-      { path: '/gathering', element: <GatheringMainPage /> },
-      { path: '/livechat', element: <>실시간 채팅 페이지 입니다</> },
-      { path: '/gathering', element: <GatheringMainPage /> },
-      { path: '/gathering/search', element: <GatheringSearchPage /> },
-      { path: '/gathering/participate', element: <ParticipatingGroupPage /> },
-      { path: '/gathering/post', element: <PostPage /> },
-      { path: '/gathering/detail', element: <GatheringDetailPage /> },
-      { path: '/trophy', element: <TrophyPage /> },
+      { path: paths.RANK, element: <RankPage /> },
+      { path: paths.GATHERING, element: <GatheringMainPage /> },
+      { path: paths.LIVECHAT, element: <>실시간 채팅 페이지 입니다</> },
+      { path: paths.GETHERING_SEARCH, element: <GatheringSearchPage /> },
+      { path: paths.GETHERING_PARTICIPATE, element: <ParticipatingGroupPage /> },
+      { path: paths.GETHERING_POST, element: <PostPage /> },
+      { path: paths.GETHERING_DETAIL, element: <GatheringDetailPage /> },
+      { path: paths.TROPHY, element: <TrophyPage /> },
 
       {
         element: <PrivateRoutes />,
         children: [
-          { path: '/profile', element: <ProfilePage /> },
-          { path: '/challenge', element: <ChallengePage /> },
-          { path: '/user/category', element: <CategoryPage /> },
+          { path: paths.PROFILE, element: <ProfilePage /> },
+          { path: paths.CHALLENGE, element: <ChallengePage /> },
+          { path: paths.CATEGORY, element: <CategoryPage /> },
         ],
       },
       {
         element: <PublicRoutes />,
         children: [
-          { path: '/join', element: <JoinPage /> },
-          { path: '/user/find_account', element: <FindAccountPage /> },
-          { path: '/user/find_password', element: <FindPasswordPage /> },
+          { path: paths.JOIN, element: <JoinPage /> },
+          { path: paths.FIND_ACCOUNT, element: <FindAccountPage /> },
+          { path: paths.FIND_PASSWORD, element: <FindPasswordPage /> },
         ],
       },
     ],
   },
   {
-    path: '/',
+    path: paths.HOME,
     element: <PublicRoutes />,
-    children: [{ path: '/login', element: <LoginPage /> }],
+    children: [{ path: paths.LOGIN, element: <LoginPage /> }],
   },
 ]);
 
