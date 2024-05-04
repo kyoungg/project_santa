@@ -2,13 +2,13 @@ import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useState } from 'react';
 
 import styles from '/src/styles/join/join.module.scss';
 import { paths } from '/src/utils/path';
 import { Nickname, postDuplicateEmail, postDuplicateNickname, postJoin } from '/src/services/userApi';
 import { JoinData, Email } from '/src/services/userApi';
 import { joinSchema } from './joinSchema';
-import { useState } from 'react';
 
 function JoinPage() {
   const [checkEmail, setCheckEmail] = useState(false);

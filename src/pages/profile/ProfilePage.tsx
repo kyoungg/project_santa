@@ -10,8 +10,11 @@ import LoginBtn from './components/LoginBtn';
 import kakaoLogo from '/images/kakao.png';
 import googleLogo from '/images/google.svg';
 import { getUserInfo } from '/src/services/userApi';
+import { useNavigate } from 'react-router-dom';
+import { paths } from '/src/utils/path';
 
 export default function ProfilePage() {
+  const navigation = useNavigate();
   const { data: userInfo } = useQuery({
     queryKey: ['userInfo'],
     queryFn: getUserInfo,
@@ -21,17 +24,19 @@ export default function ProfilePage() {
     refetchOnWindowFocus: false,
   });
 
-  const onClick = () => {
-    alert('버튼 클릭됨!');
-  };
-
   return (
     <div className={styles.container}>
       <div className={styles.userInfo}>
         <img className={styles.userImg} src={userInfo?.image} />
         <div className={styles.userName}>{userInfo?.nickname}</div>
         <div className={styles.btn}>
-          <Button variant={'rounded-outline'} children={'프로필 수정'} onClick={onClick} />
+          <Button
+            variant={'rounded-outline'}
+            children={'프로필 수정'}
+            onClick={() => {
+              navigation(paths.PROFILE_EDIT);
+            }}
+          />
         </div>
       </div>
       <div className={styles.infoContainer}>

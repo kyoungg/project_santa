@@ -1,26 +1,17 @@
-import { useRef } from 'react';
-
 import { Card } from '/src/components/common/Card';
 import styles from './ChallengeList.module.scss';
-interface Category {
-  name: string;
-}
-interface Challenge {
-  id: number;
-  name: string;
-  description: string;
-  image: string;
-  clearStandard: number;
-  category: Category;
-}
-//: { data: Challenge[]; color: string }
+import { TotalChallenge } from '/src/services/challengeApi';
 
-export default function ChallengeList({ data, color }: { data: Challenge[]; color: 'green3' | 'yellow' }) {
-  const progressRef = useRef<HTMLDivElement | null>(null);
-
+export default function ChallengeList({
+  Challengedata,
+  color,
+}: {
+  Challengedata: TotalChallenge[];
+  color: 'green2' | 'yellow';
+}) {
   return (
     <>
-      {data.map((challenge) => {
+      {Challengedata.map((challenge) => {
         return (
           <div key={challenge.name} className={styles.gap}>
             <Card variant={color}>
@@ -30,15 +21,6 @@ export default function ChallengeList({ data, color }: { data: Challenge[]; colo
                   <div className={styles.introduce}>
                     <p className={styles.name}>{challenge.name}</p>
                     <p className={styles.description}>{challenge.description}</p>
-                  </div>
-                </div>
-                <div className={styles.bottom}>
-                  <div className={styles.progress} ref={progressRef}>
-                    <div
-                      className={styles.percentBar}
-                      data-color={color}
-                      style={{ width: `${challenge.clearStandard}%` }}
-                    />
                   </div>
                 </div>
               </div>

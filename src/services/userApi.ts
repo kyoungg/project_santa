@@ -43,6 +43,13 @@ interface UserInfo {
   image: string;
 }
 
+export interface EditData {
+  nickname: string;
+  phoneNumber: string;
+  image: string;
+  imageFile: string;
+}
+
 export const postUserLogin = async (loginData: LoginData) => {
   const response = await api.post<LoginResponse>('users/sign-in', loginData);
   return response.data;
@@ -50,6 +57,11 @@ export const postUserLogin = async (loginData: LoginData) => {
 
 export const getUserInfo = async () => {
   return await api.get<UserInfo>('users/my-info');
+};
+
+export const patchUserInfo = async (editData: EditData) => {
+  const response = await api.patch('users/my-info', editData);
+  return response.data;
 };
 
 export const postDuplicateEmail = async (email: Email) => {

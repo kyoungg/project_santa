@@ -5,6 +5,7 @@ import './styles/_global.scss';
 import './styles/_reset.scss';
 import { paths } from './utils/path';
 import Layout from './utils/Layout';
+import { PrivateRoutes, PublicRoutes } from './utils/routes';
 import JoinPage from './pages/join/JoinPage';
 import GatheringMainPage from './pages/gathering/GatheringMainPage';
 import MainPage from './pages/main/MainPage';
@@ -21,8 +22,10 @@ import FindPasswordPage from './pages/user/find/FindPasswordPage';
 import CategoryPage from './pages/user/category/CategoryPage';
 import ErrorPage from './pages/error/ErrorPage';
 import LoginPage from './pages/login/LoginPage';
-import { PrivateRoutes, PublicRoutes } from './utils/routes';
 import ResetPasswordPage from './pages/user/find/ResetPasswordPage';
+import VertifyMountainPage from './pages/user/mountain/VertifyMountainPage';
+import RecordMountainPage from './pages/user/mountain/RecordMountainPage';
+import ProfileEditPage from './pages/profile/edit/ProfileEditPage';
 
 const router = createBrowserRouter([
   {
@@ -38,14 +41,16 @@ const router = createBrowserRouter([
       { path: paths.GETHERING_PARTICIPATE, element: <ParticipatingGroupPage /> },
       { path: paths.GETHERING_POST, element: <PostPage /> },
       { path: paths.GETHERING_DETAIL, element: <GatheringDetailPage /> },
-      { path: paths.TROPHY, element: <TrophyPage /> },
-
+      { path: paths.PROFILE_EDIT, element: <ProfileEditPage /> },
       {
         element: <PrivateRoutes />,
         children: [
           { path: paths.PROFILE, element: <ProfilePage /> },
           { path: paths.CHALLENGE, element: <ChallengePage /> },
           { path: paths.CATEGORY, element: <CategoryPage /> },
+          { path: paths.MOUNTAIN_VERTIFY, element: <VertifyMountainPage /> },
+          { path: paths.MOUNTAIN_RECORD, element: <RecordMountainPage /> },
+          { path: paths.TROPHY, element: <TrophyPage /> },
         ],
       },
       {

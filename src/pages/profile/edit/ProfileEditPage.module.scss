@@ -1,0 +1,85 @@
+@import '/src/styles/global';
+@import '/src/styles/color';
+
+.container {
+  @include setting;
+}
+.top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.25rem;
+}
+.userInfo {
+  @include flex-center-col;
+  padding: 0.6rem 0 1.5rem;
+}
+
+.userImg {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+}
+
+.title {
+  @include font-title;
+  color: $green3;
+}
+
+.userName {
+  @include font-title;
+  padding: 0.75rem 0 0.8rem;
+}
+
+.label {
+  font-size: 0.8rem;
+  font-weight: 400;
+
+  margin-bottom: 0.3rem;
+}
+
+.imgEdit {
+  background-color: #dae89f;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 0.8rem 0;
+
+  input {
+    outline: none;
+    border-radius: 0.5rem;
+    border: 0.1rem solid #c3c3c3;
+
+    width: 100%;
+    height: 2.5rem;
+    padding: 0 0.5rem;
+
+    box-sizing: border-box;
+  }
+}
+
+.defaultinput {
+  border-bottom: 0.1rem solid #c3c3c3;
+  padding: 0.6rem 0 0.5rem;
+  margin-bottom: 18px;
+}
+
+.inputContainer {
+  margin: 0.8rem 0;
+}
+
+.errorMessage {
+  color: $red1;
+  @include font-body2;
+
+  padding-top: 3px;
+}
+
+.submitBtn {
+  padding: 1.4rem 0;
+}

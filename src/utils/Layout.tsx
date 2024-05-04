@@ -17,6 +17,7 @@ const INCLUDE_BACK_BTN_PATH = [
   '/user/reset-password',
   '/user/category',
   '/join',
+  '/mountain/record',
 ];
 
 export default function Layout() {

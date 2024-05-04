@@ -7,6 +7,8 @@
 .container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 
   width: 100%;
   height: 100%;
@@ -14,8 +16,9 @@
 
 .top {
   display: flex;
+  justify-content: center;
 
-  padding: 1.57rem 1.57rem 0;
+  padding: 0 1.57rem;
   img {
     width: 3.75rem;
     height: 3.75rem;
@@ -33,7 +36,7 @@
 }
 
 .name {
-  @include font-title;
+  font-size: 1.1rem;
   color: $black;
 }
 

@@ -28,7 +28,7 @@ interface Pageable {
   unpaged: boolean;
 }
 
-interface Challenges {
+export interface Challenges {
   content: Challenge[];
   pageable: Pageable;
   totalPages: number;
@@ -41,6 +41,30 @@ interface Challenges {
   first: boolean;
   empty: boolean;
 }
+
+export interface TotalChallenge {
+  id: 0;
+  name: string;
+  description: string;
+  image: string;
+  clearStandard: 0;
+  category: {
+    name: string;
+  };
+}
+
+export interface ProgressChallengeData {
+  completionDate: null | string;
+  progress: number;
+  challenge: {
+    name: number;
+    description: string;
+    image: string;
+    clearStandard: number;
+  };
+}
+
+//챌린지 페이지 무한스크롤 적용 후 삭제해야함
 export const getAllChallenge = async () => {
   return await api.get('challenges');
 };
@@ -51,8 +75,8 @@ export const getChallenges = async (): Promise<Challenges> => {
   return res.data;
 };
 
-export const getMyMountains = async () => {
-  return await api.get('users/mountains');
+export const getUserChallenge = async (completion: boolean) => {
+  return await api.get(`users/completion?completion=${completion}`);
 };
 
 export const getChallengeList = async (): Promise<ThumbnailChallenge[]> => {
