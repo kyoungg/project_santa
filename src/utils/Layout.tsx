@@ -12,9 +12,11 @@ const INCLUDE_BACK_BTN_PATH = [
   '/livechat',
   '/join',
   '/trophy',
-  '/user/find_password',
-  '/user/find_account',
+  '/user/find-password',
+  '/user/find-account',
+  '/user/reset-password',
   '/user/category',
+  '/join',
 ];
 
 export default function Layout() {

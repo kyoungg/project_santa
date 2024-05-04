@@ -4,10 +4,31 @@ import { IoCheckmarkCircleSharp } from 'react-icons/io5';
 
 import { GatheringList } from './GatheringList';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export function SearchList() {
+type Participant = {
+  userId: number; // 예시로 숫자 타입을 사용하였습니다. 실제 타입에 맞게 수정해주세요.
+  userImage: string;
+  userName: string;
+};
+
+type gatheringDataType = {
+  categoryName: string;
+  date: string;
+  description: string;
+  headcount: number;
+  image: string;
+  leaderId: number;
+  meetingId: number;
+  meetingName: string;
+  mountainName: string;
+  participants: Participant[];
+  tags: string[];
+};
+export function SearchList({ gatheringData }: { gatheringData: gatheringDataType[] }) {
   const [showInProgress, setShowInProgress] = useState(false);
   const [sortByLatest, setSortByLatest] = useState(true);
+  const navigate = useNavigate();
   function clickShowInProgress() {
     setShowInProgress(!showInProgress);
   }
@@ -18,30 +39,7 @@ export function SearchList() {
       setSortByLatest(false);
     }
   }
-  const gatheringData = [
-    {
-      leaderId: '12334',
-      title: '한라산에서 모일사람',
-      content: '안녕하세요',
-      tag: '힐링',
-      imageUrl: 'iiii',
-      mountain: '한라산',
-      capacity: 2,
-      attendance: 1,
-      date: '2023.03.23',
-    },
-    {
-      leaderId: '123222',
-      title: '222한라산에서 모일사람',
-      content: '22안녕하세요',
-      tag: '2힐링',
-      imageUrl: '2iiii',
-      mountain: '2한라산',
-      capacity: 5,
-      attendance: 4,
-      date: '2024.03.23',
-    },
-  ];
+
   return (
     <div className={styles.containerCol}>
       <div className={styles.containerRow}>
@@ -65,16 +63,17 @@ export function SearchList() {
         </div>
       </div>
       {gatheringData.map((item) => (
-        <div key={item.leaderId} className={styles.width100}>
+        <div key={item.meetingId} className={styles.width100}>
           <GatheringList
-            title={item.title}
-            content={item.content}
-            tag={item.tag}
-            imageUrl={item.imageUrl}
-            mountain={item.mountain}
-            capacity={item.capacity}
-            attendance={item.attendance}
+            title={item.meetingName}
+            content={item.description}
+            tag={item.categoryName}
+            imageUrl={item.image}
+            mountain={item.mountainName}
+            capacity={item.headcount}
+            attendance={item.participants.length}
             date={item.date}
+            onClick={() => navigate(`/gathering/detail?meetingid=${item.meetingId}`)}
           />
         </div>
       ))}
