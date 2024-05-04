@@ -1,0 +1,41 @@
+image: node:latest
+pages:
+  stage:
+    - build
+    - deploy
+  cache:
+    key:
+      files:
+        - package-lock.json
+      prefix: npm
+    paths:
+      - node_modules/
+  script:
+    - npm install
+    - npm run build
+    - cp -a dist/. public/
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+deploy-to-s3:
+  image: python:latest
+  stage: deploy
+  script:
+    - pip install awscli
+    - aws s3 sync build s3://d1xcphd0q4kb63.cloudfront.net/ --acl public-read
+  only:
+    - dev
+  when: manual
+
+purge:
+  image: python:latest
+  stage: deploy
+  script
+    - pip install awscli
+    - aws cloudfront create-invalidation --distribution-id $PROD_CLOUDFRONT_DIST --paths "/*"
+  only:
+    - dev
+  when: manual
