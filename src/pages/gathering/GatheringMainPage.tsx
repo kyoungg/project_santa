@@ -5,48 +5,44 @@ import { IoSearch } from 'react-icons/io5';
 import { Button } from '../../components/common/Button';
 import styles from '../../styles/gathering/gatheringMain.module.scss';
 import Thumbnail from '../../components/Thumbnail';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { GatheringCategory } from './components/GatheringCategory';
-import { useEffect, useState } from 'react';
-import { getGatheringListByCategory, GatheringListByCategory } from '/src/services/gatheringApi';
-import { useQuery } from '@tanstack/react-query';
-import { useCategoryStore } from '/src/store/store';
-
-const PAGE_SIZE = 4;
-
+import { api } from '/src/services/api';
+import { useEffect } from 'react';
 function GatheringMainPage() {
-  const { category } = useCategoryStore();
-  const navigate = useNavigate();
-  const [page, setPage] = useState(0);
-  const [gatheringList, setGatheringList] = useState<GatheringListByCategory[]>([]);
-  const {
-    data: GatheringListByCategory,
-    isFetched,
-    isError,
-  } = useQuery({
-    queryKey: ['gatheringListByCategory', page, category],
-    queryFn: () => getGatheringListByCategory(category, page, PAGE_SIZE),
-    select: (data) => {
-      return {
-        content: data.data.content,
-        totalPage: data.data.totalPages,
-      };
+  const data = [
+    {
+      leaderId: 1,
+      meetingName: '산악회',
+      categoryName: '등산',
+      mountainName: '북한산',
+      description: '북한산 등산 후 식사',
+      headcount: 15,
+      date: '2024-05-20',
+      tags: ['산행', '등산모임'],
+      image: 'image',
     },
-  });
+    {
+      leaderId: 2,
+      meetingName: '산악회2',
+      categoryName: '등산2',
+      mountainName: '북한산2',
+      description: '북한산 등산 후 식사2',
+      headcount: 15,
+      date: '2024-05-20',
+      tags: ['산행', '등산모임'],
+      image: 'image',
+    },
+  ];
+
+  async function fetchData() {
+    const response = await api.get('meetings');
+    console.log(response);
+  }
 
   useEffect(() => {
-    setGatheringList([]);
-    setPage(0);
-  }, [category]);
-
-  useEffect(() => {
-    const isSuccess = isFetched && !isError;
-    if (isSuccess && GatheringListByCategory) {
-      console.log('total page', GatheringListByCategory.totalPage);
-      setGatheringList((prevList) => [...prevList, ...GatheringListByCategory.content]);
-    }
-  }, [isFetched, isError, GatheringListByCategory]);
-
+    fetchData();
+  }, []);
   return (
     <div className={styles.gatheringContainer}>
       <div className={styles.container}>
@@ -77,8 +73,8 @@ function GatheringMainPage() {
         <SectionTitle title="모임 둘러보기" subtitle="산타의 모임을 둘러보세요!" />
         <GatheringCategory />
         <div className={styles.gatheringList}>
-          {gatheringList?.map((item: GatheringListByCategory, index) => (
-            <div key={`${item.meetingId}-${item.leaderId}-${index}`}>
+          {data.map((item) => (
+            <div key={item.leaderId}>
               <GatheringList
                 title={item.meetingName}
                 content={item.description}
@@ -86,19 +82,11 @@ function GatheringMainPage() {
                 mountain={item.mountainName}
                 imageUrl={item.image}
                 capacity={item.headcount}
-                attendance={item.participants.length}
+                attendance={item.headcount}
                 date={item.date}
-                isLast={
-                  GatheringListByCategory &&
-                  GatheringListByCategory?.totalPage >= page &&
-                  gatheringList.length === index + 1
-                }
-                setPage={setPage}
-                onClick={() => navigate(`/gathering/detail?meetingid=${item.meetingId}`)}
               />
             </div>
           ))}
-          {gatheringList?.length === 0 && <div>데이터가 없습니다.</div>}
         </div>
       </div>
     </div>

@@ -17,7 +17,7 @@ export function DatePickerComponent(props: DatePickerProps) {
           props.onChange(date); // 선택한 날짜를 부모 컴포넌트로 전달
         }
       }}
-      dateFormat="yyyy년 MM월 dd일"
+      dateFormat="yyyy-mm-dd"
     />
   );
 }

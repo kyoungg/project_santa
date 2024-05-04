@@ -1,32 +1,30 @@
 import styles from '../styles/components/sectionTitle.module.scss';
-import { Link } from 'react-router-dom';
+
 interface SectionTitleProps {
   title: string;
   subtitle: string;
-  goToPage?: string;
+  goToListPageParams?: string;
   isThereToggle?: boolean;
 }
 
-const SectionTitle = ({
+export default function SectionTitle({
   title = '챌린지 둘러보기',
   subtitle = '업적을 달설할 수 있는 챌린지를 확인해보세요!',
-  goToPage,
-}: SectionTitleProps) => {
+  goToListPageParams,
+}: SectionTitleProps) {
   return (
     <div className={styles.sectionTitleWrapper}>
       <p className={styles.title}>{title}</p>
       <div className={styles.subtitleWrapper}>
         <p className={styles.subtitle}>{subtitle}</p>
-        {goToPage === undefined ? (
+        {goToListPageParams === undefined ? (
           ''
         ) : (
-          <Link to={`${goToPage}`} className={styles.goToPageButton}>
+          <p className={styles.moreButton} id={`${goToListPageParams}`}>
             더보기 &gt;
-          </Link>
+          </p>
         )}
       </div>
     </div>
   );
-};
-
-export default SectionTitle;
+}

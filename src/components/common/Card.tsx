@@ -1,10 +1,11 @@
 import { PropsWithChildren } from 'react';
-import styles from '../../styles/components/common/card.module.scss';
+import '../../styles/components/common/_card.scss';
 
 type Props = {
-  variant: 'green1' | 'green2' | 'green3' | 'yellow';
+  variant?: 'green1' | 'green2' | 'green3' | 'yellow';
 };
 
 export const Card = ({ variant, children }: PropsWithChildren<Props>) => {
-  return <div className={`${styles.card} ${styles[variant]}`}>{children}</div>;
+  const cardClass = variant ? `card ${variant}` : `card`;
+  return <div className={cardClass}>{children}</div>;
 };

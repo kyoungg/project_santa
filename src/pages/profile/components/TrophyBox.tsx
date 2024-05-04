@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { GoTrophy } from 'react-icons/go';
 import styles from './TrophyBox.module.scss';
-import { paths } from '/src/utils/path';
+import paths from '/src/utils/path';
 
 interface Trophy {
   name: string;
@@ -48,8 +48,8 @@ export default function () {
         </Link>
       </div>
       <div className={styles.trophyList}>
-        {ACHIEVE_TROPHY.map((trophy) => {
-          return <img key={trophy.name} className={styles.trophyImg} src={trophy.img} />;
+        {ACHIEVE_TROPHY.map((item) => {
+          return <img className={styles.trophyImg} src={item.img} />;
         })}
       </div>
     </div>

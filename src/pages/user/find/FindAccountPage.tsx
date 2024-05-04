@@ -28,7 +28,7 @@ export default function FindAccountPage() {
           ></Input>
         </form>
         <div className={styles.submitBtn}>
-          <Button variant="green3" children={'확인'} />
+          <Button children={'확인'} />
         </div>
       </div>
     </div>

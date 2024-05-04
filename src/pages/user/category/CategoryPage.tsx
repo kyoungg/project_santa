@@ -1,54 +1,49 @@
-import { useQuery } from '@tanstack/react-query';
-import { getAllCategory } from '/src/services/categoryApi';
-
 import styles from './CategoryPage.module.scss';
 import { Button } from '/src/components/common/Button';
-import { getUserInfo } from '/src/services/userApi';
 
-const ICON = ['⛰️', '❓', '🌿', '🍽️', '👊🏻', '🎒', '📸', '🍁', '🌍'];
+const CATEGORY: CategoryItem[] = [
+  { icone: '🌿', name: '힐링' },
+  { icone: '🍁', name: '단풍' },
+  { icone: '👊🏻', name: '정상등반' },
+  { icone: '🎒', name: '백패킹' },
+  { icone: '📸', name: '출사' },
+  { icone: '🍽️', name: '식도락' },
+  { icone: '🌍', name: '플로깅' },
+];
 
-export default function CategoryPage() {
-  const { data: allCategoryData } = useQuery({
-    queryKey: ['allCategoryData'],
-    queryFn: getAllCategory,
-    select: (data) => data.data,
-    staleTime: Infinity,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
+const PHYSICAL: CategoryItem[] = [
+  { icone: '🌱', name: '비기너' },
+  { icone: '🪴', name: '아마추어' },
+  { icone: '🌳', name: '프로' },
+];
 
-  const { data: userInfo } = useQuery({
-    queryKey: ['userInfo'],
-    queryFn: getUserInfo,
-    select: (data) => data.data,
-    staleTime: Infinity,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
+interface CategoryItem {
+  icone: string;
+  name: string;
+}
 
-  const newCategoryData = allCategoryData?.map((caterory, index) => {
-    return { ...caterory, icon: ICON[index] };
-  });
+export default function Category() {
+  const name = '엘리스';
 
   return (
     <div className={styles.container}>
       <div className={styles.top}>
-        <h2>{userInfo?.nickname}님, 환영해요!</h2>
+        <h2>{name}님, 환영해요!</h2>
         <p>시작에 앞서 선호하시는 카테고리를 선택해주세요.</p>
       </div>
       <div className={styles.middle}>
         <div className={styles.categoryContainer}>
           <h3 className={styles.title}>목적</h3>
           <div className={styles.categoryList}>
-            {newCategoryData?.map((item) => (
+            {CATEGORY.map((item) => (
               <div key={item.name} className={styles.categoryBox}>
-                <p className={styles.icon}>{item.icon}</p>
+                <p className={styles.icon}>{item.icone}</p>
                 <p className={styles.name}>#{item.name}</p>
               </div>
             ))}
           </div>
         </div>
-        {/* <div className={styles.categoryContainer}>
+        <div className={styles.categoryContainer}>
           <h3 className={styles.title}>운동 능력</h3>
           <div className={styles.categoryList}>
             {PHYSICAL.map((item) => (
@@ -58,10 +53,10 @@ export default function CategoryPage() {
               </div>
             ))}
           </div>
-        </div> */}
+        </div>
       </div>
       <div className={styles.bottom}>
-        <Button variant="green1">이제 시작 해 볼까요?</Button>
+        <Button>이제 시작 해 볼까요?</Button>
       </div>
     </div>
   );

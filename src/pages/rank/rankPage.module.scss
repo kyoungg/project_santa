@@ -36,12 +36,6 @@
   font-weight: 700;
   padding-left: 2px;
 }
-
-.myprofileImgWrapper {
-  width: 2.8rem;
-  height: 2.8rem;
-}
-
 .userRankBoxTitle {
   @include flex-center-row;
   justify-content: space-between;
@@ -64,16 +58,15 @@
 .rankWrapper {
   @include flex-center-row;
   justify-content: space-between;
-  width: 4rem;
+  width: 2.8rem;
 }
 
-.profileImgWrapper {
-  width: 1.8rem;
-  height: 1.8rem;
+.userProfileImgContainer {
+  width: 1.7rem;
+  height: 1.7rem;
   background-color: rgb(167, 167, 167);
   border-radius: 50%;
 }
-
 //Top3UserRank.tsx
 .top3UserWrapper {
   height: 250px;
@@ -82,25 +75,19 @@
 
 .itemWrapper {
   @include flex-center-row;
-  gap: 5rem;
+  gap: 3.5rem;
   height: 125px;
 }
-.profileWrapper {
+.userProfileWrapper {
   @include flex-center-col;
   gap: 8px;
 }
 
-.top3userImgWrapper {
-  background-color: #dbdbdb;
-  width: 4.5rem;
-  height: 4.5rem;
+.userProfileImgWrapper {
+  background-color: yellow;
+  width: 6rem;
+  height: 6rem;
   border-radius: 50%;
-  overflow: hidden;
-  border: yellow 6px solid;
-}
-
-.userImg {
-  width: 100%;
 }
 
 .userNickname {
@@ -116,9 +103,4 @@
   border-top: 12px solid #eff5d7;
   height: 4rem;
   width: 100%;
-}
-
-.scrollbox {
-  width: 100%;
-  height: 20px;
 }

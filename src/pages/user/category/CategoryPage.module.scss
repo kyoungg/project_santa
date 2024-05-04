@@ -45,16 +45,13 @@
 .categoryBox {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-
   width: 4.4rem;
   height: 5rem;
-
   border-radius: 12px;
   box-shadow: 1px 1px 4px $gray2;
-
-  margin: 0 0.4rem 0.75rem;
+  align-items: center;
+  justify-content: space-around;
+  margin: 0 0.3rem 0.75rem;
 }
 
 .icon {

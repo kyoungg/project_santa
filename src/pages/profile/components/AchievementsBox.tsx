@@ -1,36 +1,45 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { getMyMountains } from '/src/services/challengeApi';
-
 import { PiMedal } from 'react-icons/pi';
+
 import styles from './Achievements.module.scss';
 import mountain from '/images/mountain.png';
 
-// interface Record {
-//   name: string;
-//   height: number;
-//   location: string;
-//   climbDate: string;
-// }
+interface Record {
+  name: string;
+  height: number;
+  location: string;
+  climbDate: string;
+}
 
-// const totalHeight = RECORD.reduce((prev, current) => {
-//   return prev + current.height;
-// }, 0);
+const RECORD: Record[] = [
+  {
+    name: '1',
+    height: 1050.9,
+    location: '강원도 홍천군~',
+    climbDate: '0417',
+  },
+  {
+    name: '2',
+    height: 1050.9,
+    location: '강원도 홍천군~',
+    climbDate: '0417',
+  },
+  {
+    name: '3',
+    height: 1050.9,
+    location: '강원도 홍천군~',
+    climbDate: '0417',
+  },
+];
 
-// const totalSummit = RECORD.length;
+const totalHeight = RECORD.reduce((prev, current) => {
+  return prev + current.height;
+}, 0);
+
+const totalSummit = RECORD.length;
 
 export default function AchievementsBox() {
   const navigate = useNavigate();
-
-  const { data: myMountains } = useQuery({
-    queryKey: ['allChallenge'],
-    queryFn: getMyMountains,
-    staleTime: Infinity,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
-
-  console.log('myMountains', myMountains?.data);
 
   return (
     <div className={styles.container}>
@@ -42,9 +51,9 @@ export default function AchievementsBox() {
       </div>
       <div className={styles.records}>
         <div className={styles.achievName}>총 높이</div>
-        {/* <p>{totalHeight.toFixed(1)} M</p> */}
+        <p>{totalHeight.toFixed(1)} M</p>
         <div className={styles.achievName}>정복한 정상</div>
-        {/* <p>{totalSummit} 개</p> */}
+        <p>{totalSummit} 개</p>
       </div>
       <div className={styles.btnContainer}>
         <button

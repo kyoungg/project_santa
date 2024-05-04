@@ -1,32 +1,22 @@
 import styles from '../rankPage.module.scss';
-import { Rank } from '/src/services/ranks';
 
-interface top3usersProps {
-  top3users: Rank[];
-}
-export default function Top3UserRank({ top3users }: top3usersProps) {
+export default function Top3UserRank() {
   return (
     <div className={styles.top3UserWrapper}>
       <div className={styles.itemWrapper}>
         <div className={styles.userProfileWrapper}>
-          <div className={styles.top3userImgWrapper}>
-            <img src={`${top3users[0].image}`} className={styles.userImg} />
-          </div>
-          <div className={styles.userNickname}>{top3users[0].nickname}</div>
+          <div className={styles.userProfileImgWrapper}></div>
+          <div className={styles.userNickname}>산타대통령</div>
         </div>
       </div>
       <div className={styles.itemWrapper}>
         <div className={styles.userProfileWrapper}>
-          <div className={styles.top3userImgWrapper}>
-            <img src={`${top3users[1].image}`} className={styles.userImg} />
-          </div>
-          <div className={styles.userNickname}>{top3users[1].nickname}</div>
+          <div className={styles.userProfileImgWrapper}></div>
+          <div className={styles.userNickname}>산타반장</div>
         </div>
         <div className={styles.userProfileWrapper}>
-          <div className={styles.top3userImgWrapper}>
-            <img src={`${top3users[2].image}`} className={styles.userImg} />
-          </div>
-          <div className={styles.userNickname}>{top3users[2].nickname}</div>
+          <div className={styles.userProfileImgWrapper}></div>
+          <div className={styles.userNickname}>산타대장</div>
         </div>
       </div>
     </div>
