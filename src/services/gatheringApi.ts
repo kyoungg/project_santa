@@ -1,9 +1,4 @@
 import { api } from './api';
-
-export async function getGatheringList() {
-  return await api.get('meetings');
-}
-
 export type GatheringListByCategory = {
   leaderId: number;
   meetingId: number;
@@ -50,20 +45,8 @@ interface GatheringListResponse {
   first: boolean;
   empty: boolean;
 }
-export type GatheringCategory = '맞춤추천' | '등산' | '힐링' | '식도락' | '정상깨기' | '백패킹' | '출사' | '기타';
-export function getGatheringListByCategory(category: GatheringCategory, page?: number, size?: number) {
-  return api.get<GatheringListResponse>(`meetings/category-search?category=${category}&page=${page}&size=${size}`);
-}
 
-export async function postGathering(data: FormData) {
-  await api.post('meetings', data);
-}
-
-export async function getGatheringSearchResult(tag: string) {
-  return await api.get(`meetings/tag-search?tag=${tag}`);
-}
-
-type GatheringDetailType = {
+export type GatheringDetailType = {
   meetingId: number,
   leaderId: number,
   userEmail: string,
@@ -84,6 +67,47 @@ type GatheringDetailType = {
     }
   ]
 }
+export type GatheringCategory = '맞춤추천' | '등산' | '힐링' | '식도락' | '정상깨기' | '백패킹' | '출사' | '기타';
+
+//모임 조회 api 
+export async function getGatheringList() {
+  return await api.get('meetings');
+}
+
+//카테고리별 모임 조회 api
+export function getGatheringListByCategory(category: GatheringCategory, page?: number, size?: number) {
+  return api.get<GatheringListResponse>(`meetings/category-search?category=${category}&page=${page}&size=${size}`);
+}
+
+//모임 생성 api 
+export async function postGathering(data: FormData) {
+  await api.post('meetings', data, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  }
+  );
+}
+
+//검색 결과 조회 api 
+export async function getGatheringSearchResult(tag: string) {
+  return await api.get(`meetings/tag-search?tag=${tag}`);
+}
+
+//모임 상세보기 api 
 export function getGatheringDetailById(meetingId: string) {
   return api.get<GatheringDetailType>(`meetings/${meetingId}`)
+}
+
+//모임 삭제 api 
+export function deleteGathering(meetingId: number) {
+  return api.delete(`meetings/${meetingId}`);
+}
+
+export function editGathering(meetingId: number, data: FormData) {
+  return api.patch(`meetings/${meetingId}`, data, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
 }

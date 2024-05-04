@@ -1,17 +1,18 @@
 import styles from '../../../styles/gathering/gatheringMain.module.scss';
 
 import { IoChevronBack } from 'react-icons/io5';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 export interface TitleContainerProps {
   title: string | undefined;
 }
 export function TitleContainer(props: TitleContainerProps) {
+  const navigate = useNavigate();
   return (
     <div className={styles.titleContainer}>
-      <Link className={styles.backBtn} to="/gathering">
+      <div className={styles.backBtn} onClick={() => navigate(-1)}>
         <IoChevronBack color="#498428" size={'1.5rem'} />
-      </Link>
-      <div>{props.title}</div>
+      </div>
+      <div className={styles.title}>{props.title}</div>
     </div>
   );
 }

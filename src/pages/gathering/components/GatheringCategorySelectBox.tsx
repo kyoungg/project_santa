@@ -3,10 +3,11 @@ import styles from '../../../styles/gathering/gatheringPostPage.module.scss';
 
 type GatheringCategorySelectBoxProps = {
   onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
+  defaultValue?: string;
 };
-export function GatheringCategorySelectBox({ onChange }: GatheringCategorySelectBoxProps) {
+export function GatheringCategorySelectBox({ defaultValue, onChange }: GatheringCategorySelectBoxProps) {
   return (
-    <select name="category" id="category" onChange={onChange} className={styles.selectBox}>
+    <select name="category" id="category" onChange={onChange} defaultValue={defaultValue} className={styles.selectBox}>
       <option value="등산">등산</option>
       <option value="힐링">힐링</option>
       <option value="정상깨기">정상깨기</option>

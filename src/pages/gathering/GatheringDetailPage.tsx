@@ -5,53 +5,84 @@ import { IoPersonOutline } from 'react-icons/io5';
 import { IoCalendarClearOutline } from 'react-icons/io5';
 import { Chips } from '../../components/common/Chips';
 import { VerticalProfile } from './components/VerticalProfile';
-import { Button } from '../../components/common/Button';
-import { useSearchParams } from 'react-router-dom';
+// import { Button, DeleteBtn, EditBtn } from '../../components/common/Button';
+import { Button, DeleteBtn, EditBtn } from '../../components/common/Button';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { getGatheringDetailById } from '/src/services/gatheringApi';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { deleteGathering, getGatheringDetailById } from '/src/services/gatheringApi';
+import { getUserInfo } from '/src/services/userApi';
 // import { api } from '/src/services/api';
 
 export function GatheringDetailPage() {
   const [searchParams] = useSearchParams();
-  const [meetingId, setMeetingId] = useState<string | null>('');
+  const [meetingId, setMeetingId] = useState<string>('');
+  const [isProfileClicked, setIsProfileClicked] = useState<Boolean[]>([])
+  const navigate = useNavigate();
   useEffect(() => {
+    const keyword = searchParams.get('meetingid');
+    if (keyword) {
+      setMeetingId(keyword);
+    } else {
+      setMeetingId('');
+    }
+  }, [searchParams])
 
-    setMeetingId(searchParams.get('meetingid'));
-
-
-  }, [])
-  /**
-   * @tanstack_react-query.js?v=da488e68:825 Query data cannot be undefined. Please make sure to return a value other than undefined from your query function. Affected query key: ["gatheringDetail",null]
-   * 이건 어떻게 ?????
-   */
-  const { data: gatheringDetail, isLoading, error } = useQuery({
+  //모임 상세 정보 api 
+  const { data: gatheringDetail } = useQuery({
     queryKey: ['gatheringDetail', meetingId],
     queryFn: () => {
-      if (meetingId) {
-        return getGatheringDetailById(meetingId);
-      }
+      return getGatheringDetailById(meetingId);
+
     },
     select: (data) => data?.data,
   })
 
+
   useEffect(() => {
-    console.log(gatheringDetail)
+    console.log(gatheringDetail);
+    const isProfileArray = new Array(gatheringDetail?.participants.length).fill(false);
+    setIsProfileClicked(isProfileArray);
   }, [gatheringDetail])
-  if (isLoading) {
-    return <div>Loading...</div>;
+  //유저 id정보 
+  const { data: userInfo } = useQuery({
+    queryKey: ['userInfo'],
+    queryFn: getUserInfo,
+    staleTime: Infinity
+  });
+
+  useEffect(() => {
+    console.log('userInfo', userInfo);
+  }, [userInfo])
+  //삭제 api 
+  const { mutate: deleteMutation } = useMutation({
+    mutationFn: deleteGathering
+  });
+
+
+  function handleEditGatheringDetail(meetingId: number) {
+    navigate(`/gathering/detail/edit?meetingid=${meetingId}`);
+  }
+  function handleDeleteGatheringDetail(meetingId: number) {
+    deleteMutation(meetingId);
   }
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
+  function handleReport(index: number) {
+    const newState = [...isProfileClicked];
+    newState[index] = !isProfileClicked[index];
+    setIsProfileClicked(newState);
   }
 
   return (
     <div className={styles.gatheringDetailContainer}>
       <TitleContainer title={gatheringDetail?.meetingName} />
       <div className={styles.infoContainer}>
+        <div className={`${styles.containerRow}  ${styles.deleteEditContainer}`}>
+          <EditBtn onClick={() => { if (gatheringDetail) handleEditGatheringDetail(gatheringDetail?.meetingId) }} />
+          <DeleteBtn onClick={() => { if (gatheringDetail) handleDeleteGatheringDetail(gatheringDetail?.meetingId) }} />
+        </div>
         <div className={styles.containerRow}>
-          <img src="/defaultProfile.png" className={styles.imageContainer}></img>
+          <img src={gatheringDetail?.image} className={styles.imageContainer}></img>
           <div className={styles.topInfoContainer}>
             <div className={styles.iconTextContainer}>
               <FaMountain />
@@ -81,9 +112,12 @@ export function GatheringDetailPage() {
           <div className={styles.memberContainer}>
             <div className={styles.subtitle1}>참여인원</div>
             <div className={styles.profileListContainer}>
-              {gatheringDetail?.participants.map((item) => (
-                <div key={`${item.userId} ${item.userName}`}>
-                  <VerticalProfile name={item.userName} imageUrl="/images/defaultProfile.png" />
+              {gatheringDetail?.participants.map((item, index) => (
+                <div className={styles.profileContainer}>
+                  <div key={`${item.userId} ${item.userName}`} onClick={() => handleReport(index)}>
+                    {isProfileClicked[index] && (<div className={styles.reportBtn}>신고</div>)}
+                    <VerticalProfile name={item.userName} imageUrl="/images/defaultProfile.png" />
+                  </div>
                 </div>
               ))}
             </div>

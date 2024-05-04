@@ -17,8 +17,7 @@ export function GatheringList({
   title,
   content,
   tag,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // imageUrl,
+  imageUrl,
   mountain,
   capacity,
   attendance,
@@ -46,8 +45,7 @@ export function GatheringList({
       }}
       onClick={onClick}
     >
-      <div className={styles.image}>이미지</div>
-
+      <img className={styles.image} src={imageUrl}></img>
       <div className={styles.textContainer}>
         <div className={styles.subtitle1}>{title}</div>
         <div className={`${styles.body2} ${styles.hidden}`}>{content}</div>

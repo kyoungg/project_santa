@@ -9,7 +9,7 @@ export default function GatheringBox() {
     <div className={styles.container}>
       <div className={styles.title}>
         <p>참여중인 모임</p>
-        <Link to={paths.GETHERING_PARTICIPATE}>
+        <Link to={paths.GATHERING_PARTICIPATE}>
           <FaUsers className={styles.icon} />
         </Link>
       </div>

@@ -61,6 +61,7 @@
 }
 .subtitle1{
     @include font-subtitle1;
+    
 }
 .memberContainer{
     display:flex;
@@ -77,5 +78,26 @@
     width:100%;
     overflow-x : auto;
     padding:0.2rem 0;
+
+}
+
+.deleteEditContainer{
+    justify-content: flex-end;
+    gap:0.5rem
+}
+.profileContainer{
+    position:relative;
+    padding:1rem 0;
+    @include flex-center-col
+}
+.reportBtn{
+    position:absolute;
+    top:0;
+    background-color: $green1;
+    width:2rem;;
+    padding:0.5rem;
+    border-radius: 0.4rem;
+    text-align: center;
+
 
 }

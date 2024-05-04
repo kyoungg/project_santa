@@ -9,6 +9,9 @@ const getAccessToken = () => {
 export const api = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
   withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json'
+  }
 });
 
 api.interceptors.request.use((config) => {
@@ -18,7 +21,6 @@ api.interceptors.request.use((config) => {
   if (userToken) {
     config.headers.Authorization = `Bearer ${userToken}`;
   }
-  config.headers['Content-Type'] = 'application/json';
 
   return config;
 });
