@@ -12,7 +12,7 @@ export default function MainRankList({ ranks }: Ranks) {
         <div key={`${rank.id}`} className={styles.rankItemWrapper}>
           <div className={styles.userRank}>{rank.rank}</div>
           <div className={styles.profileImgWrapper}>
-            <div className={styles.userProfileImg}>img넣기</div>
+            <img src={rank.image} className={styles.userImg} />
           </div>
           <div className={styles.userNickname}>{rank.nickname}</div>
           <div className={styles.userScore}>{rank.score}</div>

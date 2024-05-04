@@ -32,24 +32,50 @@
   left: 92px;
 }
 
-// SliderMainImgBanner.tsx
+// SliderBannerImg.tsx
+.sliderImgContainer {
+  width: 100vw;
+}
+
 .bannerContainer {
   @include setting;
-  width: 100%;
+  width: 100vw;
+  transform: translate(-100vw);
   height: 260px;
   background-color: paleturquoise;
+  overflow: hidden;
 }
+
 .sliderButtonWrapper {
   @include flex-center-row;
+  width: 100vw;
+  justify-content: space-between;
 }
+
+.sliderButton {
+  width: 100px;
+  border: 1px solid red;
+  background-color: red;
+  position: relative;
+  z-index: 999;
+}
+
 .sliderBox {
-  width: 100%;
+  width: 100vw;
   white-space: no-warp;
+  display: flex;
 }
 .slideItem {
   width: 80vw;
-  display: inline-block;
+  background-position: 50% 50%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  flex: none;
+  & img {
+    width: 30%;
+  }
 }
+
 //Toggle.tsx
 .toggle {
   display: flex;
@@ -117,17 +143,21 @@
 }
 
 .profileImgWrapper {
+  overflow: hidden;
+  background-color: rgb(144, 144, 144);
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0 16px;
 }
-.userProfileImg {
-  width: 2rem;
-  height: 2rem;
-  background-color: aquamarine;
-  border-radius: 50%;
+
+.userImg {
+  width: 100%;
 }
+
 .userNickname {
   @include font-body2;
   width: 160px;

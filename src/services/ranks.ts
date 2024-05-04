@@ -27,26 +27,27 @@ export interface RankPagination extends Rank, Pageable {
   totalPages: number;
 }
 
-export const getRanks = async (): Promise<Rank[]> => {
-  const url = `/ranks?size=5`;
+export const getMainPagesRanks = async (): Promise<Rank[]> => {
+  const url = `/ranks/rankings?page=0&size=5`;
   const res = await api.get(url);
-  console.log(res.data.content);
-  return res.data.content;
+  return res.data.rankings.content;
+};
+
+export const getTop3Ranks = async (): Promise<Rank[]> => {
+  const url = `/ranks/rankings?page=0&size=3`;
+  const res = await api.get(url);
+  return res.data.rankings.content;
 };
 
 export const getRankUsers = async (page: number = 0, size: number = 10): Promise<RankPagination> => {
   const url = `/ranks/rankings?page=${page}&size=${size}`;
   // const url = `/ranks/rankings`;
   const res = await api.get(url);
-  console.log('랭킹 페이지네이션 ---------------');
-  console.log(res.data.rankings);
   return res.data.rankings;
 };
 
 export const getMyRank = async (): Promise<Rank> => {
   const url = `/ranks/rankings`;
   const res = await api.get(url);
-  console.log('로그인 유저 랭킹 ---------------');
-  console.log(res.data.userRankings);
-  return res.data.userRankings;
+  return res.data.userRanking;
 };
