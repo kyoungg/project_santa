@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const MINUTES_IN_MS = 3 * 60 * 1000;
+const MINUTES_IN_MS = 1 * 60 * 1000;
 const INTERVAL = 1000;
 
 export default function Timer() {

@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import './styles/_global.scss';
 import './styles/_reset.scss';
+import { paths } from './utils/path';
 import Layout from './utils/Layout';
 import JoinPage from './pages/join/JoinPage';
 import GatheringMainPage from './pages/gathering/GatheringMainPage';
@@ -21,8 +22,7 @@ import CategoryPage from './pages/user/category/CategoryPage';
 import ErrorPage from './pages/error/ErrorPage';
 import LoginPage from './pages/login/LoginPage';
 import { PrivateRoutes, PublicRoutes } from './utils/routes';
-
-import { paths } from './utils/path';
+import ResetPasswordPage from './pages/user/find/ResetPasswordPage';
 
 const router = createBrowserRouter([
   {
@@ -54,6 +54,7 @@ const router = createBrowserRouter([
           { path: paths.JOIN, element: <JoinPage /> },
           { path: paths.FIND_ACCOUNT, element: <FindAccountPage /> },
           { path: paths.FIND_PASSWORD, element: <FindPasswordPage /> },
+          { path: paths.RESET_PASSWORD, element: <ResetPasswordPage /> },
         ],
       },
     ],

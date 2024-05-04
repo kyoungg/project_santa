@@ -1,32 +1,52 @@
-import { useQuery } from '@tanstack/react-query';
+// import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 import styles from './ChallengePage.module.scss';
 import { UserProfile_small } from '/src/components/common/UserProfile_small';
-//import ChallengeList from './components/ChallengeList';
+// import ChallengeList from './components/ChallengeList';
 import { paths } from '/src/utils/path';
-import { getAllChallenge } from '/src/services/challengeApi';
+// import { getAllChallenge } from '/src/services/challengeApi';
+
+const CHALLENGE = [
+  {
+    name: '11111',
+    imgUrl: 'https://cdn.pixabay.com/photo/2021/07/13/11/34/cat-6463284_1280.jpg',
+    description: '영차! 올라가봅시다!!',
+    progress: '20%',
+  },
+  {
+    name: '22222',
+    imgUrl: 'https://cdn.pixabay.com/photo/2021/07/13/11/34/cat-6463284_1280.jpg',
+    description: '영차! 올라가봅시다!!',
+    progress: '50%',
+  },
+  {
+    name: '3333',
+    imgUrl: 'https://cdn.pixabay.com/photo/2021/07/13/11/34/cat-6463284_1280.jpg',
+    description: '영차! 올라가봅시다!!',
+    progress: '90%',
+  },
+];
 
 export default function ChallengePage() {
-  const { data: allchallenge } = useQuery({
-    queryKey: ['allChallenge'],
-    queryFn: getAllChallenge,
-    select: (data) => data.data,
-    staleTime: Infinity,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
+  // const { data: allchallenge } = useQuery({
+  //   queryKey: ['allChallenge'],
+  //   queryFn: getAllChallenge,
+  //   select: (data) => data.data,
+  //   staleTime: Infinity,
+  //   refetchOnMount: false,
+  //   refetchOnWindowFocus: false,
+  // });
 
   const tabData = [
-    { button: '진행중인 챌린지', data: allchallenge, color: 'green1' },
-    { button: '시작 전 챌린지', data: allchallenge, color: 'yellow' },
+    { button: '진행중인 챌린지', data: CHALLENGE, color: 'green1' },
+    { button: '시작 전 챌린지', data: CHALLENGE, color: 'yellow' },
   ];
 
   const [openTab, setOpenTab] = useState(0);
   const navigate = useNavigate();
 
-  console.log(allchallenge);
   // const challengeList = allchallenge.content;
   // console.log(challengeList);
 
