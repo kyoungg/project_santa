@@ -8,6 +8,7 @@ import useIntersectionObserver from '/src/hooks/useIntersectionObserver';
 
 import { Rank } from '/src/services/ranks';
 
+// todo infiniteQuery() 적용해보기
 export default function RankPage() {
   const [page, setPage] = useState(0);
   const [ranks, setRanks] = useState<Rank[]>([]);
@@ -34,7 +35,7 @@ export default function RankPage() {
   });
 
   const handleIntersect = useCallback(() => {
-    if (isLoading && isFetching) return;
+    if (isFetching) return;
     if (isFetched && !isError) {
       setPage((prev) => prev + 1);
     }
