@@ -1,8 +1,10 @@
-image: node:latest
-pages:
-  stage:
-    - build
-    - deploy
+stages:
+  - build
+  - deploy
+  - purge
+
+build:
+  stage: build
   cache:
     key:
       files:
@@ -10,32 +12,32 @@ pages:
       prefix: npm
     paths:
       - node_modules/
+  before_script:
+    - source ~/.nvm/nvm.sh
+    - nvm use --lts
+    - echo "VITE_BASE_URL=$VITE_BASE_URL" >> .env
   script:
     - npm install
     - npm run build
     - cp -a dist/. public/
   artifacts:
     paths:
-      - public
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      - public/
 
 deploy-to-s3:
-  image: python:latest
   stage: deploy
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
   script:
-    - pip install awscli
-    - aws s3 sync build s3://d1xcphd0q4kb63.cloudfront.net/ --acl public-read
+    - aws s3 sync public/ s3://santa-front/
   only:
-    - dev
+    - main
   when: manual
 
 purge:
-  image: python:latest
-  stage: deploy
-  script
-    - pip install awscli
-    - aws cloudfront create-invalidation --distribution-id $PROD_CLOUDFRONT_DIST --paths "/*"
+  stage: purge
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
+  script:
+    - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DIST_ID --paths "/*"
   only:
-    - dev
+    - main
   when: manual
