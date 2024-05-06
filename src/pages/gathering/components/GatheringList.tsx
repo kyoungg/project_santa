@@ -1,6 +1,12 @@
 import styles from '../../../styles/gathering/gatheringList.module.scss';
 import useIntersectionObserver from '/src/hooks/useIntersectionObserver';
 type Props = {
+  gatheringInfo: GatheringInfoType;
+  isLast?: boolean;
+  setPage?: React.Dispatch<React.SetStateAction<number>>;
+  onClick: () => void;
+};
+type GatheringInfoType = {
   title: string;
   content: string;
   tag: string;
@@ -9,12 +15,10 @@ type Props = {
   capacity: number;
   attendance: number;
   date: string;
-  isLast?: boolean;
-  setPage?: React.Dispatch<React.SetStateAction<number>>;
-  onClick: () => void;
-};
-export function GatheringList({
-  title,
+}
+/**
+ * 
+ * @param param0 title,
   content,
   tag,
   imageUrl,
@@ -22,6 +26,10 @@ export function GatheringList({
   capacity,
   attendance,
   date,
+ * @returns 
+ */
+export function GatheringList({
+  gatheringInfo,
   isLast,
   setPage,
   onClick,
@@ -39,23 +47,21 @@ export function GatheringList({
         if (isLast) {
           console.log('ref 할당');
           targetRef.current = _ref;
-        } else {
-          _ref = null;
         }
       }}
       onClick={onClick}
     >
-      <img className={styles.image} src={imageUrl}></img>
+      <img className={styles.image} src={gatheringInfo.imageUrl}></img>
       <div className={styles.textContainer}>
-        <div className={styles.subtitle1}>{title}</div>
-        <div className={`${styles.body2} ${styles.hidden}`}>{content}</div>
+        <div className={styles.subtitle1}>{gatheringInfo.title}</div>
+        <div className={`${styles.body2} ${styles.hidden}`}>{gatheringInfo.content}</div>
         <div className={`${styles.infoContainer} ${styles.body2}`}>
-          <div className={styles.tag}>{tag}</div>
-          <div>{mountain}</div>
+          <div className={styles.tag}>{gatheringInfo.tag}</div>
+          <div>{gatheringInfo.mountain}</div>
           <div>
-            {attendance}/{capacity}(명)
+            {gatheringInfo.attendance}/{gatheringInfo.capacity}(명)
           </div>
-          <div>{date}</div>
+          <div>{gatheringInfo.date}</div>
         </div>
       </div>
     </div>

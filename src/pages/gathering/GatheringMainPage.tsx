@@ -19,6 +19,8 @@ function GatheringMainPage() {
   const navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [gatheringList, setGatheringList] = useState<GatheringListByCategory[]>([]);
+
+  //모임 목록 가져오기 
   const {
     data: GatheringListByCategory,
     isFetched,
@@ -34,6 +36,9 @@ function GatheringMainPage() {
     },
   });
 
+  //나의 모임 3개 이미지 
+
+  //인기 모임 3개 이미지 
   useEffect(() => {
     setGatheringList([]);
     setPage(0);
@@ -80,14 +85,18 @@ function GatheringMainPage() {
           {gatheringList?.map((item: GatheringListByCategory, index) => (
             <div key={`${item.meetingId}-${item.leaderId}-${index}`}>
               <GatheringList
-                title={item.meetingName}
-                content={item.description}
-                tag={item.categoryName}
-                mountain={item.mountainName}
-                imageUrl={item.image}
-                capacity={item.headcount}
-                attendance={item.participants.length}
-                date={item.date}
+                gatheringInfo={{
+                  title: item.meetingName,
+                  content: item.description,
+                  tag: item.categoryName,
+                  mountain: item.mountainName,
+                  imageUrl: item.image,
+                  capacity: item.headcount,
+                  attendance: item.participants.length,
+                  date: item.date,
+                }}
+
+
                 isLast={
                   GatheringListByCategory &&
                   GatheringListByCategory?.totalPage >= page &&

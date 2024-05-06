@@ -12,31 +12,39 @@ import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { deleteGathering, getGatheringDetailById } from '/src/services/gatheringApi';
 import { getUserInfo } from '/src/services/userApi';
+import { useUserInfo } from '/src/utils/useUserInfo';
 // import { api } from '/src/services/api';
 
 export function GatheringDetailPage() {
   const [searchParams] = useSearchParams();
-  const [meetingId, setMeetingId] = useState<string>('');
+  // const [meetingId, setMeetingId] = useState<string>('');
   const [isProfileClicked, setIsProfileClicked] = useState<Boolean[]>([])
   const navigate = useNavigate();
-  useEffect(() => {
-    const keyword = searchParams.get('meetingid');
-    if (keyword) {
-      setMeetingId(keyword);
-    } else {
-      setMeetingId('');
-    }
-  }, [searchParams])
+  // useEffect(() => {
+  //   const keyword = searchParams.get('meetingid');
+  //   if (keyword) {
+  //     setMeetingId(keyword);
+  //   } else {
+  //     setMeetingId('');
+  //   }
+  // }, [searchParams])
+  const meetingId = searchParams.get('meetingid');
 
   //모임 상세 정보 api 
   const { data: gatheringDetail } = useQuery({
     queryKey: ['gatheringDetail', meetingId],
     queryFn: () => {
-      return getGatheringDetailById(meetingId);
-
+      if (meetingId) {
+        return getGatheringDetailById(meetingId);
+      }
     },
     select: (data) => data?.data,
+    enabled: !!meetingId
   })
+
+  if (!meetingId) {
+    navigate(-1);
+  }
 
 
   useEffect(() => {
@@ -51,8 +59,12 @@ export function GatheringDetailPage() {
     staleTime: Infinity
   });
 
+  const currentUserName = useUserInfo((data) => data.name);
   useEffect(() => {
-    console.log('userInfo', userInfo);
+    // console.log('userInfo', userInfo);
+    //유저 인포 받아와서 작성한 사람에게만 삭제버튼 보이도록 한다.
+    console.log(currentUserName);
+    //유저 id를 가져와서 비교해야함 
   }, [userInfo])
   //삭제 api 
   const { mutate: deleteMutation } = useMutation({

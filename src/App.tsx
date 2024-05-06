@@ -28,6 +28,8 @@ import RecordMountainPage from './pages/user/mountain/RecordMountainPage';
 import ProfileEditPage from './pages/profile/edit/ProfileEditPage';
 import { GatheringDetailEditPage } from './pages/gathering/GatheringDetailEditPage';
 import { GatheringSearchResultPage } from './pages/gathering/GatheringSearchResultPage';
+import { AdminMainPage } from './pages/admin/AdminMainPage';
+import { AdminUserPage } from './pages/admin/AdminUserPage';
 
 const router = createBrowserRouter([
   {
@@ -47,6 +49,11 @@ const router = createBrowserRouter([
       { path: paths.GATHERING_POST, element: <PostPage /> },
       { path: paths.PROFILE_EDIT, element: <ProfileEditPage /> },
       { path: paths.TROPHY, element: <TrophyPage /> },
+      { path: paths.ADMIN, element: <AdminMainPage /> },
+      { path: paths.ADMIN_USER, element: <AdminUserPage /> },
+      { path: paths.ADMIN_REPORT, element: <AdminMainPage /> },
+      { path: paths.ADMIN_CATEGORY, element: <AdminMainPage /> },
+      { path: paths.ADMIN_CHALLENGE, element: <AdminMainPage /> },
       {
         element: <PrivateRoutes />,
         children: [

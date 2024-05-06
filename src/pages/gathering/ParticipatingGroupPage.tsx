@@ -52,14 +52,17 @@ export function ParticipatingGroupPage() {
             className={`${styles.width100} ${styles.bgLightYellow} ${styles.borderRadius} ${styles.padding}`}
           >
             <GatheringList
-              title={item.title}
-              content={item.content}
-              tag={item.tag}
-              imageUrl={item.imageUrl}
-              mountain={item.mountain}
-              capacity={item.capacity}
-              attendance={item.attendance}
-              date={item.date}
+              gatheringInfo={{
+                title: item.title,
+                content: item.content,
+                tag: item.tag,
+                imageUrl: item.imageUrl,
+                mountain: item.mountain,
+                capacity: item.capacity,
+                attendance: item.attendance,
+                date: item.date,
+              }}
+
               onClick={() => navigate(`/gathering/detail?meetingid=${item.meetingId}`)}
             />
           </div>

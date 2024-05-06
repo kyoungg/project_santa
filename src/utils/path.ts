@@ -21,6 +21,11 @@ export const paths = {
   CATEGORY: '/user/category',
   MOUNTAIN_VERTIFY: '/mountain/vertify',
   MOUNTAIN_RECORD: '/mountain/record',
+  ADMIN: '/admin',
+  ADMIN_USER: '/admin/user',
+  ADMIN_CHALLENGE: '/admin/challenge',
+  ADMIN_REPORT: '/admin/report',
+  ADMIN_CATEGORY: '/admin/category',
 } as const;
 
 export const NAVLIST = [

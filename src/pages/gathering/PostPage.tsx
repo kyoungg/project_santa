@@ -29,32 +29,10 @@ export function PostPage() {
     tags: [''],
     image: null,
   });
-
-  function handleCategoryInput(e: ChangeEvent<HTMLSelectElement>) {
-    const value = e.target.value;
-    // gatheringFormData.append('categoryName',category)
-    setPostData(prevData => ({ ...prevData, categoryName: value }));
+  function handleInput(key: string, e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
+    setPostData(prevData => ({ ...prevData, [key]: e.target.value }));
   }
-  function handleMountainInput(e: ChangeEvent<HTMLInputElement>) {
-    // gatheringFormData.append('mountainName',e.target.value)
 
-    setPostData(prevData => ({ ...prevData, mountainName: e.target.value }));
-  }
-  function handleGatheringNameInput(e: ChangeEvent<HTMLInputElement>) {
-    // gatheringFormData.append('meetingName',e.target.value);
-
-    setPostData(prevData => ({ ...prevData, meetingName: e.target.value }));
-  }
-  function handleParticipantsInput(e: ChangeEvent<HTMLInputElement>) {
-    // gatheringFormData.append('headcount',e.target.value);
-
-    setPostData(prevData => ({ ...prevData, headcount: e.target.value }))
-  }
-  function handleDescriptionInput(e: ChangeEvent<HTMLTextAreaElement>) {
-    // gatheringFormData.append('description',e.target.value);
-
-    setPostData(prevData => ({ ...prevData, description: e.target.value }))
-  }
   useEffect(() => {
     setPostData(prevData => ({ ...prevData, tags: tag }))
   }, [tag]);
@@ -143,13 +121,13 @@ export function PostPage() {
       <form className={styles.inputContainer}>
         <div className={styles.containerRow}>
           <div className={`${styles.containerCol} ${styles.width60}`}>
-            <GatheringCategorySelectBox onChange={handleCategoryInput} />
+            <GatheringCategorySelectBox onChange={(e) => handleInput('categoryName', e)} />
             <input
               placeholder="산"
               onClick={clickMountainSearch}
               className={styles.inputBox}
 
-              onChange={handleMountainInput}
+              onChange={(e) => handleInput('mountainName', e)}
             />
           </div>
           <div className={styles.imageContainer}>
@@ -174,7 +152,7 @@ export function PostPage() {
           type="text"
           placeholder="모임이름"
           className={styles.inputBox}
-          onChange={handleGatheringNameInput}
+          onChange={(e) => handleInput('meetingName', e)}
         />
         <textarea
           name='description'
@@ -182,7 +160,7 @@ export function PostPage() {
           cols={33}
           className={styles.textarea}
           placeholder="모임 목적을 설명하세요"
-          onChange={handleDescriptionInput}
+          onChange={(e) => handleInput('description', e)}
         />
         <div>
           <div className={styles.containerCol}>
@@ -196,7 +174,7 @@ export function PostPage() {
                   name='headcount'
                   type="text"
                   className={styles.inputBox}
-                  onChange={handleParticipantsInput}
+                  onChange={(e) => handleInput('headcount', e)}
                 />
                 <div>명</div>
               </div>

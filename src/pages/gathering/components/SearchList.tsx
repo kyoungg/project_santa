@@ -65,14 +65,17 @@ export function SearchList({ gatheringData }: { gatheringData: gatheringDataType
       {gatheringData.map((item) => (
         <div key={item.meetingId} className={styles.width100}>
           <GatheringList
-            title={item.meetingName}
-            content={item.description}
-            tag={item.categoryName}
-            imageUrl={item.image}
-            mountain={item.mountainName}
-            capacity={item.headcount}
-            attendance={item.participants.length}
-            date={item.date}
+            gatheringInfo={{
+
+              title: item.meetingName,
+              content: item.description,
+              tag: item.categoryName,
+              imageUrl: item.image,
+              mountain: item.mountainName,
+              capacity: item.headcount,
+              attendance: item.participants.length,
+              date: item.date,
+            }}
             onClick={() => navigate(`/gathering/detail?meetingid=${item.meetingId}`)}
           />
         </div>
