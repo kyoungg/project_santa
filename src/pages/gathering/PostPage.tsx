@@ -6,20 +6,42 @@ import { IoCalendarClearOutline } from 'react-icons/io5';
 import { Button } from '../../components/common/Button';
 import { IoImageOutline } from 'react-icons/io5';
 import { DatePickerComponent } from '../../components/common/DatePickerComponent';
-import { ChangeEvent, useEffect, useRef, useState } from 'react'; // ChangeEvent 추가
+import { ChangeEvent, useEffect, useState } from 'react'; // ChangeEvent 추가
 import { IoCloseOutline } from 'react-icons/io5';
+import { useMutation } from '@tanstack/react-query';
+import { postGathering } from '/src/services/gatheringApi';
+import { GatheringCategorySelectBox } from './components/GatheringCategorySelectBox';
 
 export function PostPage() {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [formatDate, setFormatDate] = useState('');
   const [tag, setTag] = useState<string[]>([]);
   const [tagValue, setTagValue] = useState<string>();
-  const [imgFile, setImgFile] = useState<string | null>(null);
+  const [imgFileUrl, setImgFileUrl] = useState<string>('');
+  const [imgFile, setImgFile] = useState<File | null>(null);
+  let gatheringFormData = new FormData();
+  const [postData, setPostData] = useState({
+    meetingName: '',
+    categoryName: '',
+    mountainName: '',
+    description: '',
+    headcount: '',
+    date: '',
+    tags: [''],
+    image: null,
+  });
+  function handleInput(key: string, e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
+    setPostData(prevData => ({ ...prevData, [key]: e.target.value }));
+  }
+
+  useEffect(() => {
+    setPostData(prevData => ({ ...prevData, tags: tag }))
+  }, [tag]);
 
   const handleDateChange = (date: Date) => {
     if (date) {
       setSelectedDate(date);
-      setFormatDate(formattingDate(date));
+      // gatheringFormData.append('date', formattingDate(date))
+      setPostData(prevData => ({ ...prevData, date: formattingDate(date) }))
     }
   };
 
@@ -33,7 +55,6 @@ export function PostPage() {
   function handleInputTag(e: ChangeEvent<HTMLInputElement>) {
     const inputValue = e.target.value;
     if (inputValue[inputValue.length - 1] === ' ') {
-      console.log(inputValue);
       setTag((prevTag) => {
         const newTag = [...prevTag, inputValue];
         return newTag;
@@ -54,34 +75,60 @@ export function PostPage() {
     setTag(newArr);
   }
 
-  useEffect(() => {
-    console.log(tag);
-  }, [tag]);
-
   function handleImageUpload(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files && e.target.files[0];
     if (file) {
+      setImgFile(file);
       const reader = new FileReader();
       reader.readAsDataURL(file);
 
       reader.onload = () => {
         console.log(typeof reader.result);
         if (reader.result !== null && typeof reader.result === 'string') {
-          setImgFile(reader.result);
+          setImgFileUrl(reader.result);
         }
       };
-
       console.log(file);
     }
+  }
+
+  const { mutate } = useMutation({
+    mutationFn: postGathering,
+  });
+
+  function handleCreateBtn() {
+    gatheringFormData.append('categoryName', postData.categoryName)
+    gatheringFormData.append('mountainName', postData.mountainName)
+    gatheringFormData.append('meetingName', postData.meetingName);
+    gatheringFormData.append('headcount', postData.headcount);
+    gatheringFormData.append('description', postData.description);
+    postData.tags.forEach((tagItem, index) => {
+      gatheringFormData.append(`tags[${index}]`, tagItem)
+    })
+    gatheringFormData.append('date', postData.date)
+
+    gatheringFormData.forEach((value, key) => {
+      console.log(`${key}: ${value}`);
+    });
+    if (imgFile) {
+      gatheringFormData.append('imageFile', imgFile); // 이미지 파일 추가
+    }
+    mutate(gatheringFormData);
   }
   return (
     <div className={styles.mainContainer}>
       <TitleContainer title="모임 만들기" />
-      <div className={styles.inputContainer}>
+      <form className={styles.inputContainer}>
         <div className={styles.containerRow}>
           <div className={`${styles.containerCol} ${styles.width60}`}>
-            <input placeholder="카테고리" className={styles.inputBox} />
-            <input placeholder="산" onClick={clickMountainSearch} className={styles.inputBox} />
+            <GatheringCategorySelectBox onChange={(e) => handleInput('categoryName', e)} />
+            <input
+              placeholder="산"
+              onClick={clickMountainSearch}
+              className={styles.inputBox}
+
+              onChange={(e) => handleInput('mountainName', e)}
+            />
           </div>
           <div className={styles.imageContainer}>
             <input
@@ -92,16 +139,29 @@ export function PostPage() {
               onChange={handleImageUpload}
             />
             <label htmlFor="image" className={styles.center}>
-              {imgFile ? (
-                <img src={imgFile} className={styles.image}></img>
+              {imgFileUrl ? (
+                <img src={imgFileUrl} className={styles.image}></img>
               ) : (
                 <IoImageOutline size="2rem" color="#7f7f7f" />
               )}
             </label>
           </div>
         </div>
-        <input type="text" placeholder="모임이름" className={styles.inputBox} />
-        <textarea rows={10} cols={33} className={styles.textarea} placeholder="모임 목적을 설명하세요" />
+        <input
+          name='meetingName'
+          type="text"
+          placeholder="모임이름"
+          className={styles.inputBox}
+          onChange={(e) => handleInput('meetingName', e)}
+        />
+        <textarea
+          name='description'
+          rows={10}
+          cols={33}
+          className={styles.textarea}
+          placeholder="모임 목적을 설명하세요"
+          onChange={(e) => handleInput('description', e)}
+        />
         <div>
           <div className={styles.containerCol}>
             <div className={styles.containerRow}>
@@ -110,7 +170,12 @@ export function PostPage() {
                 <div>정원</div>
               </div>
               <div className={`${styles.inputSettingWidth} ${styles.containerRow} ${styles.grayBack}`}>
-                <input type="text" className={styles.inputBox} />
+                <input
+                  name='headcount'
+                  type="text"
+                  className={styles.inputBox}
+                  onChange={(e) => handleInput('headcount', e)}
+                />
                 <div>명</div>
               </div>
             </div>
@@ -152,8 +217,10 @@ export function PostPage() {
             </div>
           </div>
         </div>
-      </div>
-      <Button variant="green3">모임 만들기 </Button>
+      </form>
+      <Button type='submit' variant="green3" onClick={handleCreateBtn}>
+        모임 만들기{' '}
+      </Button>
     </div>
   );
 }

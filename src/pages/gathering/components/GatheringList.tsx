@@ -1,5 +1,12 @@
 import styles from '../../../styles/gathering/gatheringList.module.scss';
+import useIntersectionObserver from '/src/hooks/useIntersectionObserver';
 type Props = {
+  gatheringInfo: GatheringInfoType;
+  isLast?: boolean;
+  setPage?: React.Dispatch<React.SetStateAction<number>>;
+  onClick: () => void;
+};
+type GatheringInfoType = {
   title: string;
   content: string;
   tag: string;
@@ -8,21 +15,53 @@ type Props = {
   capacity: number;
   attendance: number;
   date: string;
-};
-export function GatheringList({ title, content, tag, imageUrl, mountain, capacity, attendance, date }: Props) {
+}
+/**
+ * 
+ * @param param0 title,
+  content,
+  tag,
+  imageUrl,
+  mountain,
+  capacity,
+  attendance,
+  date,
+ * @returns 
+ */
+export function GatheringList({
+  gatheringInfo,
+  isLast,
+  setPage,
+  onClick,
+}: Props) {
+  const { targetRef } = useIntersectionObserver<HTMLDivElement>(() => {
+    if (isLast && setPage) {
+      setPage((prev) => prev + 1);
+    }
+  });
+
   return (
-    <div className={styles.gatheringListContainer}>
-      <div className={styles.image}>이미지 : {imageUrl}</div>
+    <div
+      className={styles.gatheringListContainer}
+      ref={(_ref) => {
+        if (isLast) {
+          console.log('ref 할당');
+          targetRef.current = _ref;
+        }
+      }}
+      onClick={onClick}
+    >
+      <img className={styles.image} src={gatheringInfo.imageUrl}></img>
       <div className={styles.textContainer}>
-        <div className={styles.subtitle1}>{title}</div>
-        <div className={styles.body2}>{content}</div>
+        <div className={styles.subtitle1}>{gatheringInfo.title}</div>
+        <div className={`${styles.body2} ${styles.hidden}`}>{gatheringInfo.content}</div>
         <div className={`${styles.infoContainer} ${styles.body2}`}>
-          <div className={styles.tag}>{tag}</div>
-          <div>{mountain}</div>
+          <div className={styles.tag}>{gatheringInfo.tag}</div>
+          <div>{gatheringInfo.mountain}</div>
           <div>
-            {attendance}/{capacity}(명)
+            {gatheringInfo.attendance}/{gatheringInfo.capacity}(명)
           </div>
-          <div>{date}</div>
+          <div>{gatheringInfo.date}</div>
         </div>
       </div>
     </div>

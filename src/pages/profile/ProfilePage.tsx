@@ -1,27 +1,20 @@
 import { Button } from '../../components/common/Button';
 
 import AchievementsBox from './components/AchievementsBox';
-import CategoryBox from './components/CategotyBox';
+import CategoryBox from './components/CategoryBox';
 import GatheringBox from './components/GatheringBox';
 import TrophyBox from './components/TrophyBox';
 import styles from './profile.module.scss';
 import LoginBtn from './components/LoginBtn';
 import kakaoLogo from '/images/kakao.png';
 import googleLogo from '/images/google.svg';
-import { useQuery } from '@tanstack/react-query';
-import { getUserInfo } from '/src/services/userApi';
+import { useNavigate } from 'react-router-dom';
+import { paths } from '/src/utils/path';
+import useUserInfo from '/src/hooks/useUserInfo';
 
 export default function ProfilePage() {
-  const { data: userInfo } = useQuery({
-    queryKey: ['userInfo'],
-    queryFn: getUserInfo,
-    select: (data) => data.data,
-  });
-
-  //유저 권한 => 세션에 토큰이 들어있는지 확인
-  const onClick = () => {
-    alert('버튼 클릭됨!');
-  };
+  const navigation = useNavigate();
+  const userInfo = useUserInfo();
 
   return (
     <div className={styles.container}>
@@ -29,7 +22,13 @@ export default function ProfilePage() {
         <img className={styles.userImg} src={userInfo?.image} />
         <div className={styles.userName}>{userInfo?.nickname}</div>
         <div className={styles.btn}>
-          <Button variant={'rounded-outline'} children={'프로필 수정'} onClick={onClick} />
+          <Button
+            variant={'rounded-outline'}
+            children={'프로필 수정'}
+            onClick={() => {
+              navigation(paths.PROFILE_EDIT);
+            }}
+          />
         </div>
       </div>
       <div className={styles.infoContainer}>

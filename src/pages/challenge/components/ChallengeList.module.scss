@@ -6,30 +6,37 @@
 }
 .container {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
   width: 100%;
   height: 100%;
-  flex-direction: column;
 }
 
 .top {
   display: flex;
-  padding: 1.57rem 1.57rem 0;
+  justify-content: center;
+
+  padding: 0 1.57rem;
   img {
     width: 3.75rem;
     height: 3.75rem;
+
     border-radius: 50%;
   }
 }
 
 .introduce {
-  padding: 0.3rem 0.9rem 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+
+  padding: 0.3rem 0.9rem 0.5rem;
 }
 
 .name {
-  @include font-title;
+  font-size: 1.1rem;
   color: $black;
 }
 
@@ -41,24 +48,29 @@
 .bottom {
   display: flex;
   justify-content: center;
+
   padding-top: 1.2rem;
 }
 
 .progress {
   width: 90%;
   height: 0.6rem;
+
   background-color: $white;
+
   border-radius: 25px;
 }
 
-.percentBar_g {
+.precentBar[data-color='green'] {
   height: 100%;
+
   border-radius: 25px;
   background-color: $green2;
 }
 
-.styles.percentBar_y {
+.percentBar {
   height: 100%;
+
   border-radius: 25px;
   background-color: $yellow;
 }

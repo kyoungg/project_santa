@@ -1,45 +1,42 @@
-import { useRef } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 import { Card } from '/src/components/common/Card';
 import styles from './ChallengeList.module.scss';
+import { TotalChallenge, getAllChallenge } from '/src/services/challengeApi';
 
-interface Challenge {
-  name: string;
-  imgUrl: string;
-  description: string;
-  progress: string;
-}
+export default function ChallengeList() {
+  const {
+    data: allChallenge,
+    isError,
+    isFetched,
+  } = useQuery({
+    queryKey: ['allChallenge'],
+    queryFn: getAllChallenge,
+    select: (data) => data.data.content,
+    staleTime: Infinity,
+  });
 
-export default function ChallengeBox({ data, color }: { data: Challenge[]; color: 'green1' | 'yellow' }) {
-  const progressRef = useRef<HTMLDivElement | null>(null);
-
+  const isSuccess = !isError && isFetched;
   return (
     <>
-      {data.map((item) => {
-        return (
-          <div className={styles.gap}>
-            <Card variant={color}>
-              <div className={styles.container}>
-                <div className={styles.top}>
-                  <img src={item.imgUrl} />
-                  <div className={styles.introduce}>
-                    <p className={styles.name}>{item.name}</p>
-                    <p className={styles.description}>{item.description}</p>
+      {isSuccess &&
+        allChallenge.map((challenge: TotalChallenge) => {
+          return (
+            <div key={challenge.name} className={styles.gap}>
+              <Card variant="yellow">
+                <div className={styles.container}>
+                  <div className={styles.top}>
+                    <img src={challenge.image} />
+                    <div className={styles.introduce}>
+                      <p className={styles.name}>{challenge.name}</p>
+                      <p className={styles.description}>{challenge.description}</p>
+                    </div>
                   </div>
                 </div>
-                <div className={styles.bottom}>
-                  <div className={styles.progress} ref={progressRef}>
-                    <div
-                      className={color == 'green1' ? styles.percentBar_g : styles.percentBar_y}
-                      style={{ width: `${item.progress}` }}
-                    />
-                  </div>
-                </div>
-              </div>
-            </Card>
-          </div>
-        );
-      })}
+              </Card>
+            </div>
+          );
+        })}
     </>
   );
 }

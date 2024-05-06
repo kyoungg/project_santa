@@ -1,25 +1,28 @@
 import axios from 'axios';
 
-const getUserToken = () => {
+const getAccessToken = () => {
   // 로컬 스토리지에서 토큰을 가져온다.
-  const userToken = localStorage.getItem('access_token');
-  return userToken;
+  const accessToken = localStorage.getItem('access_token');
+  return accessToken;
 };
 
 export const api = axios.create({
-  baseURL: 'http://43.200.136.37:8080/',
+  baseURL: import.meta.env.VITE_BASE_URL,
   withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json'
+  }
 });
 
 api.interceptors.request.use((config) => {
   // 로컬 스토리지에서 토큰을 가져온다.
-  const userToken = getUserToken();
+  const userToken = getAccessToken();
 
-  // 토큰이 있다면 헤더에 추가한다.
   if (userToken) {
     config.headers.Authorization = `Bearer ${userToken}`;
   }
-  config.headers['Content-Type'] = 'application/json';
 
   return config;
 });
+
+//interceptor 분리시 -> 로그인, 새로고침 해야 헤더에 토큰 적용되는 에러 발생함

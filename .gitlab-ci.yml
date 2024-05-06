@@ -1,0 +1,43 @@
+stages:
+  - build
+  - deploy
+  - purge
+
+build:
+  stage: build
+  cache:
+    key:
+      files:
+        - package-lock.json
+      prefix: npm
+    paths:
+      - node_modules/
+  before_script:
+    - source ~/.nvm/nvm.sh
+    - nvm use --lts
+    - echo "VITE_BASE_URL=$VITE_BASE_URL" >> .env
+  script:
+    - npm install
+    - npm run build
+    - cp -a dist/. public/
+  artifacts:
+    paths:
+      - public/
+
+deploy-to-s3:
+  stage: deploy
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
+  script:
+    - aws s3 sync public/ s3://santa-front/
+  only:
+    - main
+  when: manual
+
+purge:
+  stage: purge
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
+  script:
+    - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DIST_ID --paths "/*"
+  only:
+    - main
+  when: manual

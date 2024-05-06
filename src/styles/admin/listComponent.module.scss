@@ -1,0 +1,39 @@
+@import '../global';
+@import '../color';
+@import '../reset';
+.listContainer{
+    width:100%;
+    display: flex;
+    padding:1rem 0;
+    justify-content: space-between;
+    align-items: center;
+    gap:1rem;
+    width:100%;
+    border-bottom: 0.1rem solid $gray1;
+
+} 
+
+.colContainer{
+    @include flex-between-col;
+    gap:0.5rem;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.rowContainer{
+    @include flex-between-row;
+    gap:0.3rem;
+    justify-content: center;
+    align-items: center;
+    color:#E82C4B;
+    font-weight: 500;
+}
+
+.title{
+    @include font-title
+}
+.subtitle{
+    @include font-subtitle1
+}
+.body{
+    @include font-body1
+}

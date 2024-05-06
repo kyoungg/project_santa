@@ -1,68 +1,62 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { PiMedal } from 'react-icons/pi';
+import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { VertifyMountain, getMyMountains } from '/src/services/mountainAPi';
 
+import { PiMedal } from 'react-icons/pi';
 import styles from './Achievements.module.scss';
 import mountain from '/images/mountain.png';
+import { paths } from '/src/utils/path';
 
-interface Record {
-  name: string;
-  height: number;
-  location: string;
-  climbDate: string;
-}
-
-const RECORD: Record[] = [
-  {
-    name: '1',
-    height: 1050.9,
-    location: '강원도 홍천군~',
-    climbDate: '0417',
-  },
-  {
-    name: '2',
-    height: 1050.9,
-    location: '강원도 홍천군~',
-    climbDate: '0417',
-  },
-  {
-    name: '3',
-    height: 1050.9,
-    location: '강원도 홍천군~',
-    climbDate: '0417',
-  },
-];
-
-const totalHeight = RECORD.reduce((prev, current) => {
-  return prev + current.height;
-}, 0);
-
-const totalSummit = RECORD.length;
+const getTotalHeight = (data: VertifyMountain[]) => {
+  const totalHeight = data.reduce((prev, current) => {
+    return prev + current.mountain.height;
+  }, 0);
+  return totalHeight.toFixed(1);
+};
 
 export default function AchievementsBox() {
-  const navigate = useNavigate();
+  const navigation = useNavigate();
+
+  const {
+    data: myMountains,
+    isError,
+    isFetched,
+  } = useQuery({
+    queryKey: ['myMountains'],
+    queryFn: getMyMountains,
+    select: (data) => data.data.content,
+    staleTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
+
+  const SUCCESS = !isError && isFetched;
 
   return (
     <div className={styles.container}>
       <div className={styles.title}>
         <p>나의 기록</p>
-        <Link to="/나의업적페이지">
-          <PiMedal className={styles.icon} />
-        </Link>
+        <PiMedal
+          className={styles.icon}
+          onClick={() => {
+            navigation(paths.MOUNTAIN_RECORD);
+          }}
+        />
       </div>
       <div className={styles.records}>
         <div className={styles.achievName}>총 높이</div>
-        <p>{totalHeight.toFixed(1)} M</p>
+        <p>{SUCCESS ? getTotalHeight(myMountains) : 0} M</p>
         <div className={styles.achievName}>정복한 정상</div>
-        <p>{totalSummit} 개</p>
+        <p>{SUCCESS ? myMountains.length : 0} 개</p>
       </div>
       <div className={styles.btnContainer}>
         <button
           className={styles.certificationBtn}
           onClick={() => {
-            navigate('/산인증페이지');
+            navigation(paths.MOUNTAIN_VERTIFY);
           }}
         >
-          인증하기
+          인증하러 가기
         </button>
         <div className={styles.imgContainer}>
           <img className={styles.mountainImg} src={mountain} />
