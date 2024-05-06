@@ -57,6 +57,14 @@ export default function Navigation({ back }: { back: boolean }) {
     );
   };
 
+  const handleAuth = () => {
+    if (isLogin) {
+      return logout();
+    } else {
+      return navigate(paths.LOGIN);
+    }
+  };
+
   return (
     <header className={styles.header}>
       <nav className={isOpen ? styles.darkBg : ''}>
@@ -76,20 +84,9 @@ export default function Navigation({ back }: { back: boolean }) {
                     </Link>
                   </li>
                 ))}
-                {isLogin ? (
-                  <li className={styles.logoutBtn} onClick={logout}>
-                    로그아웃
-                  </li>
-                ) : (
-                  <li
-                    className={styles.logoutBtn}
-                    onClick={() => {
-                      navigate(paths.LOGIN);
-                    }}
-                  >
-                    로그인
-                  </li>
-                )}
+                <li className={styles.logoutBtn} onClick={handleAuth}>
+                  {!isLogin ? '로그인' : '로그아웃'}
+                </li>
               </ul>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
 import styles from './VertifyMountainPage.module.scss';
-import useGeolocation from '/src/hooks/useGeolocatuon';
+import useGeolocation from '/src/hooks/useGeolocation';
 import { VertifyData, postVertifyMountain } from '/src/services/mountainAPi';
 import SuccessImg from '/images/mountaun_success.png';
 import loadingImg from '/images/mountain_loding.png';

@@ -1,3 +1,4 @@
+// import axios from 'axios';
 import { api } from './api';
 export interface LoginData {
   email: string;
@@ -35,12 +36,14 @@ export interface LoginResponse {
   refreshToken: string;
 }
 
-interface UserInfo {
+export interface UserInfo {
+  id: number;
   email: string;
   nickname: string;
   name: string;
   phoneNumber: string;
   image: string;
+  accumulatedHeight: number;
 }
 
 export interface EditData {
@@ -50,18 +53,24 @@ export interface EditData {
   imageFile: string;
 }
 
+// 소셜 로그인 api
+
 export const postUserLogin = async (loginData: LoginData) => {
   const response = await api.post<LoginResponse>('users/sign-in', loginData);
   return response.data;
 };
 
 export const getUserInfo = async () => {
-  return await api.get<UserInfo>('users/my-info');
+  const result = await api.get<UserInfo>('users/my-info');
+  return result.data;
 };
 
-export const patchUserInfo = async (editData: EditData) => {
-  const response = await api.patch('users/my-info', editData);
-  return response.data;
+export const patchUserInfo = async (editData: FormData) => {
+  await api.patch('users/my-info', editData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 };
 
 export const postDuplicateEmail = async (email: Email) => {

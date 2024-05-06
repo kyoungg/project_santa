@@ -1,5 +1,4 @@
 import { Button } from '../../components/common/Button';
-import { useQuery } from '@tanstack/react-query';
 
 import AchievementsBox from './components/AchievementsBox';
 import CategoryBox from './components/CategoryBox';
@@ -9,20 +8,13 @@ import styles from './profile.module.scss';
 import LoginBtn from './components/LoginBtn';
 import kakaoLogo from '/images/kakao.png';
 import googleLogo from '/images/google.svg';
-import { getUserInfo } from '/src/services/userApi';
 import { useNavigate } from 'react-router-dom';
 import { paths } from '/src/utils/path';
+import useUserInfo from '/src/hooks/useUserInfo';
 
 export default function ProfilePage() {
   const navigation = useNavigate();
-  const { data: userInfo } = useQuery({
-    queryKey: ['userInfo'],
-    queryFn: getUserInfo,
-    select: (data) => data.data,
-    staleTime: Infinity,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
+  const userInfo = useUserInfo();
 
   return (
     <div className={styles.container}>

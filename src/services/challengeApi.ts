@@ -69,14 +69,14 @@ export const getAllChallenge = async () => {
   return await api.get('challenges');
 };
 
+export const getUserChallenge = async (completion: boolean) => {
+  return await api.get(`users/completion?completion=${completion}`);
+};
+
 export const getChallenges = async (): Promise<Challenges> => {
   const url = `challenges?page=${0}&size=${10}`;
   const res = await api.get(url);
   return res.data;
-};
-
-export const getUserChallenge = async (completion: boolean) => {
-  return await api.get(`users/completion?completion=${completion}`);
 };
 
 export const getChallengeList = async (): Promise<ThumbnailChallenge[]> => {

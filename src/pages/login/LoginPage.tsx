@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -101,8 +101,12 @@ function LoginPage() {
         <div className={styles.socialLoginContainer}>
           <div>소셜 계정으로 로그인</div>
           <div className={styles.socialLoginIcon}>
-            <img src={kakaoIcon} />
-            <img src={googleIcon} />
+            <Link to="http://ec2-43-200-136-37.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/kakao">
+              <img src={kakaoIcon} />
+            </Link>
+            <Link to="http://ec2-43-200-136-37.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/google">
+              <img src={googleIcon} />
+            </Link>
           </div>
         </div>
       </div>

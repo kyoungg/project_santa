@@ -2,16 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 
 import styles from './TrophyPage.module.scss';
 import trophyImg from '/images/trophyImg.png';
-import { getUserInfo } from '/src/services/userApi';
 import { ProgressChallengeData, getUserChallenge } from '/src/services/challengeApi';
+import useUserInfo from '/src/hooks/useUserInfo';
 
 export default function TrophyPage() {
-  const { data: userInfo } = useQuery({
-    queryKey: ['userInfo'],
-    queryFn: getUserInfo,
-    select: (data) => data.data,
-    staleTime: Infinity,
-  });
+  const userInfo = useUserInfo();
 
   const {
     data: sucessChallenge,

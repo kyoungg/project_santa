@@ -13,6 +13,9 @@
 .userInfo {
   @include flex-center-col;
   padding: 0.6rem 0 1.5rem;
+  .label {
+    padding-top: 0.6rem;
+  }
 }
 
 .userImg {
@@ -82,4 +85,13 @@
 
 .submitBtn {
   padding: 1.4rem 0;
+}
+
+.inputFile {
+  display: none;
+}
+
+.inputImgLabel {
+  @include font-subtitle2;
+  color: $blue;
 }

@@ -1,44 +1,81 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useEffect, useState } from 'react';
 
-import { EditData, getUserInfo, patchUserInfo } from '/src/services/userApi';
+import { EditData, patchUserInfo } from '/src/services/userApi';
 import styles from './ProfileEditPage.module.scss';
 import { Button } from '/src/components/common/Button';
 import { profileEditSchema } from './profileEditSchema';
+import useUserInfo from '/src/hooks/useUserInfo';
+import { paths } from '/src/utils/path';
+import { useNavigate } from 'react-router-dom';
 
 export default function ProfileEditPage() {
-  //const queryClient = useQueryClient();
+  const [imgPreview, setImgPreview] = useState('');
+  const queryClient = useQueryClient();
+  const navigation = useNavigate();
 
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(profileEditSchema),
     mode: 'onChange',
   });
 
-  const { data: userInfo } = useQuery({
-    queryKey: ['userInfo'],
-    queryFn: getUserInfo,
-    select: (data) => data.data,
-    staleTime: Infinity,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
+  const userInfo = useUserInfo();
 
-  const { mutate } = useMutation<Response, Error, EditData>({
-    mutationKey: ['duplicateNickName'],
-    mutationFn: (editData) => patchUserInfo(editData),
+  useEffect(() => {
+    if (userInfo?.nickname) setValue('nickname', userInfo.nickname);
+    if (userInfo?.phoneNumber) setValue('phoneNumber', userInfo.phoneNumber);
+    if (userInfo?.image) setValue('image', userInfo.image);
+  }, [userInfo]);
+
+  const { mutate } = useMutation<Response, Error, FormData>({
+    //@ts-expect-error 김경혜...11
+    mutationFn: (formData) => patchUserInfo(formData),
     onSuccess: () => {
-      //queryClient.invalidateQueries(['userInfo']);
+      queryClient.invalidateQueries({ queryKey: ['userInfo'] });
+      navigation(paths.PROFILE);
+    },
+    onError: () => {
+      alert('다시 시도 해 주세요.');
     },
   });
 
+  //유저가 새로 등록한 이미지 파일
+  const newImg = watch('imageFile');
+  useEffect(() => {
+    if (newImg && newImg.length > 0) {
+      const file = newImg[0];
+      //@ts-expect-error 김경혜...222
+      const imgUrl = URL.createObjectURL(file);
+      // setValue('image', imgUrl);
+      setImgPreview(imgUrl);
+    }
+  }, [newImg]);
+
+  // 데이터를 formData로 변환해주는 함수
+  function createFormData(editData: EditData) {
+    const form = new FormData();
+
+    form.append('image', editData.image);
+    form.append('imageFile', newImg[0]);
+    form.append('nickname', editData.nickname);
+    form.append('phoneNumber', editData.phoneNumber);
+
+    return form;
+  }
+
   const onSubmit = (editData: EditData) => {
-    console.log(editData);
-    mutate(editData);
+    console.log('요청보낼 데이터', editData);
+    const formData = createFormData(editData);
+    console.log(formData);
+    mutate(formData);
   };
 
   return (
@@ -48,9 +85,18 @@ export default function ProfileEditPage() {
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.userInfo}>
-          <img className={styles.userImg} src={userInfo?.image} />
+          <img className={styles.userImg} src={imgPreview !== '' ? imgPreview : userInfo?.image} />
           <div className={styles.label}>
-            <input type="file" accept="image/*" placeholder="이미지" {...register('imageFile')} />
+            <label className={styles.inputImgLabel}>
+              이미지 변경
+              <input
+                type="file"
+                accept="image/*"
+                placeholder="이미지"
+                {...register('imageFile')}
+                className={styles.inputFile}
+              />
+            </label>
           </div>
         </div>
         <div className={styles.defaultContainer}>
@@ -61,18 +107,14 @@ export default function ProfileEditPage() {
         </div>
 
         <div className={styles.inputContainer}>
-          <div className={styles.label} {...register('nickname')}>
-            닉네임
-          </div>
-          <input type="text" />
+          <div className={styles.label}>닉네임</div>
+          <input type="text" {...register('nickname')} />
           {errors.nickname && <p className={styles.errorMessage}>{errors.nickname?.message}</p>}
         </div>
 
         <div className={styles.inputContainer}>
-          <div className={styles.label} {...register('phoneNumber')}>
-            핸드폰 번호
-          </div>
-          <input type="text" />
+          <div className={styles.label}>핸드폰 번호</div>
+          <input type="text" {...register('phoneNumber')} />
           {errors.phoneNumber && <p className={styles.errorMessage}>{errors.phoneNumber?.message}</p>}
         </div>
         <div className={styles.submitBtn}>

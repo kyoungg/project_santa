@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './FindPasswordPage.module.scss';
 import { Button } from '/src/components/common/Button';
 import { verifySchema } from './findUserSchema';
-import { Email, VertifyData, postDuplicateEmail, postEmail, postVertifyEmail } from '/src/services/userApi';
+import { VertifyData, postDuplicateEmail, postEmail, postVertifyEmail } from '/src/services/userApi';
 import Timer from './Timer';
 import { paths } from '/src/utils/path';
 
@@ -28,9 +28,8 @@ export default function FindPasswordPage() {
   });
 
   //이메일 전송 후 버튼 disable 구현 필요
-  const { mutate: sendEmail, isSuccess } = useMutation<Response, Error, Email>({
-    mutationKey: ['sendEmail'],
-    mutationFn: (email) => postEmail(email),
+  const { mutate: sendEmail, isSuccess } = useMutation({
+    mutationFn: postEmail,
   });
 
   const { mutate: isDuplicateEmail } = useMutation<boolean, Error, string>({
@@ -53,9 +52,8 @@ export default function FindPasswordPage() {
     },
   });
 
-  const { mutate: vertifyEmail } = useMutation<Response, Error, VertifyData>({
-    mutationKey: ['vertifyEmail'],
-    mutationFn: (vetrtifyData) => postVertifyEmail(vetrtifyData),
+  const { mutate: vertifyEmail } = useMutation({
+    mutationFn: postVertifyEmail,
     onSuccess: (res) => {
       if (!res) {
         return setError('authNumber', {

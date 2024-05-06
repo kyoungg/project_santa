@@ -3,7 +3,7 @@ import { getAllCategory } from '/src/services/categoryApi';
 
 import styles from './CategoryPage.module.scss';
 import { Button } from '/src/components/common/Button';
-import { getUserInfo } from '/src/services/userApi';
+import useUserInfo from '/src/hooks/useUserInfo';
 
 const ICON = ['⛰️', '❓', '🌿', '🍽️', '👊🏻', '🎒', '📸', '🍁', '🌍'];
 
@@ -17,14 +17,7 @@ export default function CategoryPage() {
     refetchOnWindowFocus: false,
   });
 
-  const { data: userInfo } = useQuery({
-    queryKey: ['userInfo'],
-    queryFn: getUserInfo,
-    select: (data) => data.data,
-    staleTime: Infinity,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
+  const userInfo = useUserInfo();
 
   const newCategoryData = allCategoryData?.map((caterory, index) => {
     return { ...caterory, icon: ICON[index] };
