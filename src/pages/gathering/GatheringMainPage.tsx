@@ -4,7 +4,7 @@ import { UserProfile_small } from '../../components/common/UserProfile_small';
 import { IoSearch } from 'react-icons/io5';
 import { Button } from '../../components/common/Button';
 import styles from '../../styles/gathering/gatheringMain.module.scss';
-import Thumbnail from '../../components/Thumbnail';
+// import Thumbnail from '../../components/Thumbnail';
 import { Link, useNavigate } from 'react-router-dom';
 import { GatheringCategory } from './components/GatheringCategory';
 import { useEffect, useState } from 'react';
@@ -65,13 +65,13 @@ function GatheringMainPage() {
       </div>
       <div className={styles.container}>
         <SectionTitle title="인기 모임" subtitle="현재 진행중인 챌린지/모임을 확인해보세요!" isThereToggle={false} />
-        <Thumbnail img="/images/profile.png" title="한라산 등반" isHotTopic={false} isIndexChip={false} />
+        {/* <Thumbnail img="/images/profile.png" title="한라산 등반" isHotTopic={false} isIndexChip={false} /> */}
       </div>
       <div className={styles.container}>
         <Link to={'/gathering/participate'} className={styles.width100}>
           <SectionTitle title="나의 모임" subtitle="참여중인 모임을 확인해보세요" isThereToggle={false} />
         </Link>
-        <Thumbnail img="" title="맛있는 김밥 먹는 모임" isHotTopic={false} isIndexChip={false} />
+        {/* <Thumbnail img="" title="맛있는 김밥 먹는 모임" isHotTopic={false} isIndexChip={false} /> */}
       </div>
       <div className={`${styles.container} ${styles.gap}`}>
         <SectionTitle title="모임 둘러보기" subtitle="산타의 모임을 둘러보세요!" />

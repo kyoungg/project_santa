@@ -30,4 +30,10 @@
     font-weight: 600;
     font-style: italic;
   }
+  .nothingCategoty {
+    @include font-subtitle2;
+    color: $gray2;
+
+    padding-bottom: 2.2rem;
+  }
 }

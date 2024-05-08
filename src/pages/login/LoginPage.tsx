@@ -4,21 +4,22 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import styles from '/src/styles/login/loginPage.module.scss';
-import googleIcon from '/images/google.svg';
-import kakaoIcon from '/images/kakao.png';
+import kakao_login from '/images/kakao_login_large_wide.png';
+import logo from '/images/logo.svg';
 import { IoMailOutline } from 'react-icons/io5';
 import { IoLockOpenOutline } from 'react-icons/io5';
-import { LoginResponse, postUserLogin } from '../../services/userApi';
+import { postUserLogin } from '../../services/userApi';
 import { paths } from '/src/utils/path';
 import { loginSchema } from './loginSchema';
 import { LoginData } from '../../services/userApi';
+import { KAKAO_AUTH_URL } from '/src/utils/oauth';
 
 function LoginPage() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<LoginData>({
     resolver: yupResolver(loginSchema),
   });
 
@@ -29,11 +30,14 @@ function LoginPage() {
     console.log(loginData);
   };
 
-  const { mutate, isError } = useMutation<LoginResponse, Error, LoginData>({
-    mutationFn: (loginData) => postUserLogin(loginData),
+  const { mutate, isError } = useMutation({
+    mutationFn: postUserLogin,
     onSuccess: (data) => {
       localStorage.setItem('access_token', data.accessToken);
       localStorage.setItem('refresh_token', data.refreshToken);
+      if (data.role === 'ADMIN') {
+        localStorage.setItem('role', 'ADMIN');
+      }
       navigate('/');
     },
     onError: (error) => {
@@ -74,14 +78,6 @@ function LoginPage() {
           <div className={styles.loginMenuContainer}>
             <div
               onClick={() => {
-                navigate(paths.FIND_ACCOUNT);
-              }}
-            >
-              아이디 찾기
-            </div>
-            <div className={styles.verticalLine}></div>
-            <div
-              onClick={() => {
                 navigate(paths.FIND_PASSWORD);
               }}
             >
@@ -97,17 +93,22 @@ function LoginPage() {
               회원가입
             </div>
           </div>
-        </div>
-        <div className={styles.socialLoginContainer}>
-          <div>소셜 계정으로 로그인</div>
-          <div className={styles.socialLoginIcon}>
-            <Link to="http://ec2-43-200-136-37.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/kakao">
-              <img src={kakaoIcon} />
-            </Link>
-            <Link to="http://ec2-43-200-136-37.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/google">
-              <img src={googleIcon} />
-            </Link>
+          <div className={styles.socialLoginContainer}>
+            <div className={styles.socialTop}>
+              <div className={styles.line}></div>
+              <div>소셜 로그인</div>
+              <div className={styles.line}></div>
+            </div>
+            <div className={styles.socialLoginIcon}>
+              <Link to={KAKAO_AUTH_URL}>
+                <img src={kakao_login} />
+              </Link>
+            </div>
           </div>
+        </div>
+
+        <div className={styles.bottom}>
+          <img className={styles.logo} src={logo} />
         </div>
       </div>
     </div>

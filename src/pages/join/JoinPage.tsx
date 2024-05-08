@@ -6,9 +6,18 @@ import { useState } from 'react';
 
 import styles from '/src/styles/join/join.module.scss';
 import { paths } from '/src/utils/path';
-import { Nickname, postDuplicateEmail, postDuplicateNickname, postJoin } from '/src/services/userApi';
-import { JoinData, Email } from '/src/services/userApi';
+import { postDuplicateEmail, postDuplicateNickname, postJoin } from '/src/services/userApi';
+import { JoinData } from '/src/services/userApi';
 import { joinSchema } from './joinSchema';
+
+export interface JoinSchema {
+  email: string;
+  checkPassword: string;
+  password: string;
+  name: string;
+  nickname: string;
+  phoneNumber: string;
+}
 
 function JoinPage() {
   const [checkEmail, setCheckEmail] = useState(false);
@@ -23,14 +32,15 @@ function JoinPage() {
     getValues,
     resetField,
     formState: { errors },
-  } = useForm({
+  } = useForm<JoinSchema>({
     resolver: yupResolver(joinSchema),
-    mode: 'onChange',
+    mode: 'onBlur',
   });
 
-  const { mutate } = useMutation<Response, Error, JoinData>({
-    mutationFn: (joinData) => postJoin(joinData),
+  const { mutate } = useMutation({
+    mutationFn: postJoin,
     onSuccess: () => {
+      alert('가입이 완료되었습니다!');
       navigate(paths.LOGIN);
     },
     onError: (error) => {
@@ -38,12 +48,11 @@ function JoinPage() {
     },
   });
 
-  const { mutate: isDuplicateEmail } = useMutation<boolean, Error, Email>({
+  const { mutate: isDuplicateEmail } = useMutation({
     mutationKey: ['duplicateEmail'],
-    mutationFn: (data) => postDuplicateEmail(data),
+    mutationFn: postDuplicateEmail,
     onSuccess: (data) => {
       if (data) {
-        //이메일 중복일 경우
         resetField('email');
         setError('email', {
           message: '이미 등록된 이메일입니다.',
@@ -54,9 +63,9 @@ function JoinPage() {
     },
   });
 
-  const { mutate: isDuplicateNickName } = useMutation<boolean, Error, Nickname>({
+  const { mutate: isDuplicateNickName } = useMutation({
     mutationKey: ['duplicateNickName'],
-    mutationFn: (data) => postDuplicateNickname(data),
+    mutationFn: postDuplicateNickname,
     onSuccess: (data) => {
       if (data) {
         resetField('nickname');
@@ -69,14 +78,12 @@ function JoinPage() {
     },
   });
 
-  //이메일 중복 체크
   const handleDuplicateCheckEmail = async (email: string) => {
-    //이메일 유효성 검사
     const isVaild = await trigger('email');
     if (!isVaild) {
       return;
     }
-    //유효성 통과시 api 호출
+
     isDuplicateEmail({ email: email });
   };
 
@@ -89,7 +96,6 @@ function JoinPage() {
   };
 
   const onSubmit = (joinData: JoinData) => {
-    // const { checkPassword, ...otherJoinData } = joinData;
     if (!checkEmail) {
       return setError('email', {
         message: '이메일 중복 확인을 해 주세요.',
@@ -108,8 +114,9 @@ function JoinPage() {
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <p className={styles.errorMessage}>*는 필수 입력사항입니다.</p>
         <div className={styles.inputContainer}>
-          <div className={styles.label}>이메일</div>
+          <div className={styles.label}>이메일*</div>
           <div className={styles.availabilityContainer}>
             <input type="text" className={styles.availabilityInput} {...register('email')} />
             <div
@@ -122,24 +129,25 @@ function JoinPage() {
             </div>
           </div>
           {errors.email && <p className={styles.errorMessage}>{errors.email?.message}</p>}
+          {checkEmail && <p className={styles.successMessage}>사용 가능한 이메일입니다.</p>}
         </div>
         <div className={styles.inputContainer}>
-          <div className={styles.label}>비밀번호</div>
+          <div className={styles.label}>비밀번호*</div>
           <input type="password" {...register('password')} />
           {errors.password && <p className={styles.errorMessage}>{errors.password?.message}</p>}
         </div>
         <div className={styles.inputContainer}>
-          <div className={styles.label}>비밀번호 확인</div>
+          <div className={styles.label}>비밀번호 확인*</div>
           <input type="password" {...register('checkPassword')} />
           {errors.checkPassword && <p className={styles.errorMessage}>{errors.checkPassword?.message}</p>}
         </div>
         <div className={styles.inputContainer}>
-          <div className={styles.label}>이름</div>
+          <div className={styles.label}>이름*</div>
           <input type="text" {...register('name')} />
           {errors.name && <p className={styles.errorMessage}>{errors.name?.message}</p>}
         </div>
         <div className={styles.inputContainer}>
-          <div className={styles.label}>닉네임</div>
+          <div className={styles.label}>닉네임*</div>
           <div className={styles.availabilityContainer}>
             <input type="text" className={styles.availabilityInput} {...register('nickname')} />
             <div
@@ -152,9 +160,10 @@ function JoinPage() {
             </div>
           </div>
           {errors.nickname && <p className={styles.errorMessage}>{errors.nickname?.message}</p>}
+          {checkNickname && <p className={styles.successMessage}>사용 가능한 닉네임입니다.</p>}
         </div>
         <div className={styles.inputContainer}>
-          <div className={styles.label}>휴대폰</div>
+          <div className={styles.label}>휴대폰*</div>
           <input type="tel" placeholder='"-" 를 제외하고 입력해주세요' {...register('phoneNumber')} />
           {errors.phoneNumber && <p className={styles.errorMessage}>{errors.phoneNumber?.message}</p>}
         </div>

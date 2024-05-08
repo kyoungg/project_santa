@@ -1,5 +1,9 @@
 import { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
+export interface ErrorType extends Error {
+  code?: number;
+}
+
 export const getUserToken = () => {
   const userToken = localStorage.getItem('access_token');
   return userToken;
@@ -19,11 +23,6 @@ export const requestIntercepter = (config: InternalAxiosRequestConfig<unknown>) 
 export const responseIntercepter = (response: AxiosResponse) => {
   return response;
 };
-
-//loader 적용시
-export interface ErrorType extends Error {
-  code?: number;
-}
 
 export const rejectIntercepter = (_error: ErrorType) => {
   return null;

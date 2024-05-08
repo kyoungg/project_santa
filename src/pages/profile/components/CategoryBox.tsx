@@ -20,27 +20,26 @@ export default function CategoryBox() {
     queryFn: getPreferCategory,
     select: (data) => data.data,
     staleTime: Infinity,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
   });
 
-  const Success = isFetched && !isError;
-
+  const isSuccess = isFetched && !isError;
   return (
     <div className={styles.container}>
       <div className={styles.title}>
         <p>선호 카테고리</p>
-        <Link to={paths.CATEGORY}>
-          <FaGear className={styles.icon} />
-        </Link>
+        {isSuccess && preferCategory.length == 0 && (
+          <Link to={paths.CATEGORY}>
+            <FaGear className={styles.icon} />
+          </Link>
+        )}
       </div>
       <div className={styles.categoryList}>
-        {Success ? (
+        {isSuccess && preferCategory.length !== 0 ? (
           preferCategory.map((category: CategoryName) => {
             return <p key={category.category.name}>#{category.category.name}</p>;
           })
         ) : (
-          <p>선호 카테고리를 설정하세요!</p>
+          <p className={styles.nothingCategoty}>선호 카테고리를 설정하세요</p>
         )}
       </div>
     </div>

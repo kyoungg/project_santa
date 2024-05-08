@@ -18,8 +18,6 @@ export default function TrophyPage() {
     select: (data) => data.data.content,
   });
 
-  console.log('sucessChallenge', sucessChallenge);
-
   const SUCCESS = !isError && isFetched;
   return (
     <div className={styles.container}>
@@ -29,7 +27,7 @@ export default function TrophyPage() {
       </div>
       <div className={styles.bottom}>
         <div className={styles.trophyList}>
-          {SUCCESS &&
+          {SUCCESS && sucessChallenge.length !== 0 ? (
             sucessChallenge.map((trophy: ProgressChallengeData) => {
               return (
                 <div className={styles.trophyContainer}>
@@ -37,7 +35,12 @@ export default function TrophyPage() {
                   <p className={styles.trophyName}>{trophy.challenge.name}</p>
                 </div>
               );
-            })}
+            })
+          ) : (
+            <div className={styles.textContainer}>
+              <div className={styles.nothingData}>아직 획득한 트로피가 없네요!</div>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -7,18 +7,24 @@
 }
 
 .loginContainer {
-  @include setting;
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+  box-sizing: border-box;
+  font-family: 'Noto Sans KR', sans-serif;
+
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+
   gap: 2.8rem;
   background-color: #eaef9d;
 }
 
 .textContainer {
   @include flex-center-col;
-  padding-top: 5rem;
+  padding-top: 6rem;
   .text {
     color: $green3;
     @include font-title;
@@ -33,6 +39,7 @@
 
 .middleContainer {
   @include flex-center-col;
+  padding-bottom: 1rem;
 }
 
 .inputContainer {
@@ -68,19 +75,23 @@
 }
 
 .loginMenuContainer {
-  @include flex-center-row;
-  margin: 0.8rem 0;
+  margin: 1.5rem 0 0.8rem;
   width: 100%;
+
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+
   color: $green3;
   cursor: pointer;
-}
-
-.verticalLine {
-  width: 1px;
-  height: 1rem;
-  background: $green3;
+  div {
+    padding: 0 0.7rem;
+  }
+  .verticalLine {
+    padding: 0;
+    width: 1px;
+    height: 1rem;
+    background: $green3;
+  }
 }
 
 .siginText {
@@ -91,6 +102,7 @@
   @include flex-center-col;
   @include font-body2;
   color: $green3;
+  padding: 1.5rem 0;
   div {
     margin: 0.3rem 0;
   }
@@ -98,10 +110,30 @@
 
 .socialLoginIcon {
   @include flex-center-row;
-  img {
-    width: 3.75rem;
-    height: 3.75rem;
-    margin: 0 5px;
+  flex-direction: column;
+  a {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    img {
+      width: 288px;
+      padding-top: 0.5rem;
+    }
+  }
+}
+
+.socialTop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  .line {
+    height: 0.08px;
+    width: 15%;
+    margin: 0 0.5rem;
+
+    background-color: $green2;
   }
 }
 
@@ -116,4 +148,15 @@
   @include font-body2;
   padding: 3px 0 0 30px;
   color: $red1;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo {
+  width: 4rem;
+  padding-top: 5rem;
 }
