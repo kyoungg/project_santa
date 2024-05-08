@@ -28,6 +28,8 @@ import RecordMountainPage from './pages/user/mountain/RecordMountainPage';
 import ProfileEditPage from './pages/profile/edit/ProfileEditPage';
 import { GatheringDetailEditPage } from './pages/gathering/GatheringDetailEditPage';
 import { GatheringSearchResultPage } from './pages/gathering/GatheringSearchResultPage';
+import AdminChallengePage from './pages/adminChallenge/AdminChallengePage';
+import EditChallengePage from './pages/adminChallenge/EditChallengePage';
 
 const router = createBrowserRouter([
   {
@@ -47,6 +49,9 @@ const router = createBrowserRouter([
       { path: paths.GATHERING_POST, element: <PostPage /> },
       { path: paths.PROFILE_EDIT, element: <ProfileEditPage /> },
       { path: paths.TROPHY, element: <TrophyPage /> },
+      { path: paths.ADMIN_CHALLENGE, element: <AdminChallengePage /> },
+      { path: `${paths.ADMIN_CHALLENGE_DETAIL_EDIT}/:id`, element: <EditChallengePage /> },
+
       {
         element: <PrivateRoutes />,
         children: [
