@@ -28,7 +28,6 @@ function LoginPage() {
 
   const onSubmit = (loginData: LoginData) => {
     mutate(loginData);
-    console.log(loginData);
   };
 
   const { mutate, isError } = useMutation({

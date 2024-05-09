@@ -14,7 +14,11 @@ const CATEGORY = [
   { id: 7, name: '출사' },
 ];
 
-function AddChallenge() {
+type Props = {
+  setIsItPosting: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+function AddChallenge({ setIsItPosting }: Props) {
   const queryClient = useQueryClient();
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -37,8 +41,6 @@ function AddChallenge() {
         imageFile,
         image: '',
       });
-
-      console.log('res', res);
       return res;
     } catch (e) {
       console.error(e);
@@ -53,6 +55,7 @@ function AddChallenge() {
       }
       queryClient.invalidateQueries({ queryKey: ['AdminchallengeList'] });
       alert('챌린지 등록되었습니다!');
+      setIsItPosting(false);
     },
     onError: () => {
       alert('다시 시도해주세요');
@@ -120,7 +123,7 @@ function AddChallenge() {
           />
         </div>
         <div className={styles.addInputContainer}>
-          <label className={styles.categoryLabel}>카테고리 ID</label>
+          <label className={styles.categoryLabel}>카테고리 명</label>
           <GatheringCategorySelectBox
             defaultValue="등산"
             onChange={(e) => {

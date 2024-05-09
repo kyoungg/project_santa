@@ -34,7 +34,6 @@ export default function VertifyMountainPage() {
     const date = new Date();
     const climbDate = `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
     const vertifyData = {
-      // climbDate: climbDate,
       climbDate: climbDate,
       latitude: location.coordinates?.lng,
       longitude: location.coordinates?.lat,

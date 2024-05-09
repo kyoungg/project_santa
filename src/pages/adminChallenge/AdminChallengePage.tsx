@@ -52,7 +52,11 @@ export default function AdminChallengePage() {
               챌린지 등록
             </div>
           </div>
-          {isItPosting ? <AddChallenge /> : <ChallengeList onDelete={handleDelete} challengeList={challengeList} />}
+          {isItPosting ? (
+            <AddChallenge setIsItPosting={setIsItPosting} />
+          ) : (
+            <ChallengeList onDelete={handleDelete} challengeList={challengeList} />
+          )}
         </div>
       )}
     </>

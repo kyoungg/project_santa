@@ -85,9 +85,11 @@ export const tokenRefresh = async () => {
         //새 엑세스 토큰 로컬에 넣음
         localStorage.setItem('access_token', newAccessToken);
         getVaildTime();
+        alert('로그인 연장에 성공했습니다!');
         //엑세스 토큰 못받아왔으면
       } else {
         //로그아웃
+        alert('다시 로그인 해주세요');
         return logout();
       }
     }

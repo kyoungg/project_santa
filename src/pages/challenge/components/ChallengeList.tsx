@@ -33,25 +33,22 @@ export default function ChallengeList() {
     const isSuccess = isFetched && !isError;
     if (isSuccess && allChallenge) {
       setChallengeList((prevList) => [...prevList, ...allChallenge.content]);
-      console.log('mountainList', challengeList);
     }
   }, [isFetched, isError, allChallenge]);
 
-  const isSuccess = !isError && isFetched;
   return (
     <>
-      {isSuccess &&
-        challengeList?.map((challengeData: TotalChallenge, index: number) => {
-          return (
-            <div key={`${challengeData.name}-${challengeData.id}`} className={styles.gap}>
-              <ChallengeCard
-                challengeData={challengeData}
-                setPage={setPage}
-                isLast={allChallenge && allChallenge?.totalPage >= page && challengeList.length === index + 1}
-              />
-            </div>
-          );
-        })}
+      {challengeList?.map((challengeData: TotalChallenge, index: number) => {
+        return (
+          <div key={`${challengeData.name}-${challengeData.id}`} className={styles.gap}>
+            <ChallengeCard
+              challengeData={challengeData}
+              setPage={setPage}
+              isLast={allChallenge && allChallenge?.totalPage >= page && challengeList.length === index + 1}
+            />
+          </div>
+        );
+      })}
     </>
   );
 }

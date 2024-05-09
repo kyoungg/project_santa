@@ -28,7 +28,6 @@ export default function MountainList({ mountainData, setPage, isLast }: Props) {
         }}
         ref={(_ref) => {
           if (isLast) {
-            console.log('현재 ref 위치', mountainData.id);
             targetRef.current = _ref;
           } else {
             _ref = null;

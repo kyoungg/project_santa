@@ -12,6 +12,7 @@
 
 .title {
   @include title-default;
+  padding-top: 10px;
 }
 
 .icon {
