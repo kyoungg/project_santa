@@ -11,6 +11,8 @@ import { IoCloseOutline } from 'react-icons/io5';
 import { useMutation } from '@tanstack/react-query';
 import { postGathering } from '/src/services/gatheringApi';
 import { GatheringCategorySelectBox } from './components/GatheringCategorySelectBox';
+import { useNavigate } from 'react-router-dom';
+import { formattingDate } from '/src/utils/formattingDate';
 
 export function PostPage() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -18,14 +20,15 @@ export function PostPage() {
   const [tagValue, setTagValue] = useState<string>();
   const [imgFileUrl, setImgFileUrl] = useState<string>('');
   const [imgFile, setImgFile] = useState<File | null>(null);
+  const navigate = useNavigate();
   let gatheringFormData = new FormData();
   const [postData, setPostData] = useState({
     meetingName: '',
-    categoryName: '',
+    categoryName: '등산',
     mountainName: '',
     description: '',
     headcount: '',
-    date: '',
+    date: formattingDate(new Date()),
     tags: [''],
     image: null,
   });
@@ -40,17 +43,9 @@ export function PostPage() {
   const handleDateChange = (date: Date) => {
     if (date) {
       setSelectedDate(date);
-      // gatheringFormData.append('date', formattingDate(date))
       setPostData(prevData => ({ ...prevData, date: formattingDate(date) }))
     }
   };
-
-  function formattingDate(date: Date): string {
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
 
   function handleInputTag(e: ChangeEvent<HTMLInputElement>) {
     const inputValue = e.target.value;
@@ -65,9 +60,6 @@ export function PostPage() {
     }
   }
 
-  function clickMountainSearch() {
-    //input을 넣고 검색하면 키워드 검색 / 리스트 출력
-  }
 
   function deleteTag(index: number) {
     const newArr = [...tag.slice(0, index), ...tag.slice(index + 1)];
@@ -88,12 +80,27 @@ export function PostPage() {
           setImgFileUrl(reader.result);
         }
       };
-      console.log(file);
     }
   }
 
   const { mutate } = useMutation({
     mutationFn: postGathering,
+    onSuccess: () => {
+      navigate(-1);
+    },
+    onError: (error) => {
+      if (error.message.includes('400')) {
+        alert('내용을 입력해주세요.');
+      }
+      else if (error.message.includes('413')) {
+        alert('이미지 용량이 너무 큽니다');
+      }
+      else if (error.message.includes('409')) {
+        alert('해당 날짜에 이미 참여중인 모임이 있습니다.');
+      }
+      // console.log('error 내용', error.response.status, error)
+
+    }
   });
 
   function handleCreateBtn() {
@@ -124,7 +131,6 @@ export function PostPage() {
             <GatheringCategorySelectBox onChange={(e) => handleInput('categoryName', e)} />
             <input
               placeholder="산"
-              onClick={clickMountainSearch}
               className={styles.inputBox}
 
               onChange={(e) => handleInput('mountainName', e)}

@@ -5,14 +5,22 @@
 
 //  new #ffdc5e; hot #ffb5b5; todo 색상 변수로 넘기기
 .issueChip {
-  width: 32px;
+  width: 31px;
   height: 10px;
   padding: 2px 5px;
+
   border-radius: 6px;
-  font-size: 0.6rem;
+
+  font-size: 0.55rem;
   font-weight: 600;
-  background-color: #ffb5b5;
   color: $white;
+
+  background-color: #ffb5b5;
+
+  //김경혜
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .chipWrapper {

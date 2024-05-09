@@ -20,7 +20,7 @@
 .trophyList {
   flex: 1 1 0;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   padding: 0 0.3rem;
 }
 
@@ -29,4 +29,18 @@
   height: 3.75rem;
   border-radius: 50%;
   padding: 0.5rem 0.6rem;
+}
+
+.nothingData {
+  @include font-subtitle2;
+  color: $gray2;
+
+  padding-bottom: 0.9rem;
+}
+
+.textContainer {
+  @include flex-center-col;
+
+  width: 100%;
+  height: 100%;
 }

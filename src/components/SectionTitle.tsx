@@ -1,5 +1,6 @@
 import styles from '../styles/components/sectionTitle.module.scss';
 import { Link } from 'react-router-dom';
+import { FaChevronRight } from 'react-icons/fa';
 interface SectionTitleProps {
   title: string;
   subtitle: string;
@@ -19,8 +20,9 @@ const SectionTitle = ({
         <p className={styles.subtitle}>{subtitle}</p>
         {targetPageUrl && (
           <Link to={`${targetPageUrl}`} className={styles.goToPageButton}>
-            {' '}
-            더보기 &gt;{' '}
+            {/* {' '}
+            더보기 &gt;{' '} */}
+            <FaChevronRight className={styles.targetPageBtn} />
           </Link>
         )}
       </div>

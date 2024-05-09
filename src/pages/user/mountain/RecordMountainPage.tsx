@@ -26,7 +26,13 @@ export default function RecordMountainPage() {
         <div className={styles.title}>나의 업적</div>
         <PiMedal className={styles.icon} />
       </div>
-      <div className={styles.bottom}>{SUCCESS && <RecordList myMountains={myMountains} />}</div>
+      <div className={styles.bottom}>
+        {SUCCESS && myMountains.length !== 0 ? (
+          <RecordList myMountains={myMountains} />
+        ) : (
+          <div className={styles.noData}>아직 정복한 정상이 없어요!</div>
+        )}
+      </div>
     </div>
   );
 }

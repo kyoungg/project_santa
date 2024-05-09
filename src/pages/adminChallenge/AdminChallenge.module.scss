@@ -1,0 +1,226 @@
+@import '/src/styles/global';
+@import '/src/styles/color';
+
+.container {
+  @include setting;
+  @include flex-center-col;
+}
+
+.selectTabBar {
+  @include flex-center-row;
+  padding-top: 20px;
+  height: 120px;
+  gap: 2rem;
+}
+
+.ClickedtabItem {
+  border-bottom: #709f55 solid 2.4px;
+  width: 7rem;
+  height: 30px;
+  text-align: center;
+  color: $green3;
+}
+
+.tabItem {
+  border-bottom: #ffffff00 solid 2.4px;
+  color: gray;
+  width: 7.3rem;
+  height: 30px;
+  text-align: center;
+  cursor: pointer;
+}
+
+// ChallengeList.tsx
+
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.challengeCard {
+  background-color: $green2;
+  width: 18rem;
+  height: 200px;
+  border-radius: 10px;
+  border: 2px solid #dbdbdb;
+}
+
+.imgWrapper {
+  width: 18rem;
+  height: 100px;
+  background-color: white;
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
+}
+
+.listImg {
+  width: 18rem;
+}
+
+.textContainer {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.titleWrapper {
+  @include font-subtitle1;
+}
+
+.testWrpper {
+  @include font-body2;
+}
+
+.btnWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.listBtn {
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $green1;
+  width: 6rem;
+  height: 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 2px 2px 0.3em #67676728;
+}
+
+.delBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 6rem;
+  height: 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 2px 2px 0.3em #67676728;
+  background-color: rgb(222, 136, 136);
+}
+
+//김경혜 - 챌린지 수정 ui
+.editMiddle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding-top: 40px;
+
+  width: 232px;
+  .inputImg {
+    width: 100%;
+  }
+  .inputName {
+    height: 40px;
+    width: 100%;
+    margin: 10px 0;
+
+    border-style: none;
+    border-radius: 10px;
+
+    background-color: #f9f9f9;
+  }
+  .inputDescription {
+    height: 150px;
+    width: 100%;
+
+    margin: 10px 0;
+
+    border-style: none;
+    border-radius: 10px;
+
+    background-color: #f9f9f9;
+  }
+}
+
+.editSubmitBtn {
+  @include font-subtitle1;
+  color: $white;
+
+  width: 100%;
+  height: 45px;
+
+  border-style: none;
+  border-radius: 10px;
+  background-color: $green3;
+}
+
+//김경혜- 챌린지 등록 ui
+.addMiddle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 232px;
+  .imgContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 120px;
+    height: 120px;
+    padding-bottom: 10px;
+
+    border-radius: 50%;
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+  }
+  .inputImg {
+    width: 90%;
+    height: 90%;
+    margin-bottom: 10px;
+  }
+  .inputName {
+    height: 40px;
+    width: 100%;
+    margin-bottom: 10px;
+
+    border-style: none;
+    border-radius: 10px;
+
+    background-color: #f9f9f9;
+  }
+  .inputDescription {
+    height: 150px;
+    width: 100%;
+
+    margin: 10px 0;
+
+    border-style: none;
+    border-radius: 10px;
+
+    background-color: #f9f9f9;
+  }
+  .textInputCintainer {
+    padding-top: 10px;
+  }
+}
+
+.addInputContainer {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+
+  width: 100%;
+  .label {
+    @include font-body2;
+  }
+}
+
+.categoryLabel {
+  @include font-body2;
+  padding-bottom: 5px;
+}

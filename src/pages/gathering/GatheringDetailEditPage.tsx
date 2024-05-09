@@ -1,21 +1,21 @@
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { TitleContainer } from './components/TitleContainer';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 // import { useMutation, useQuery } from '@tanstack/react-query';
 import styles from '../../styles/gathering/gatheringPostPage.module.scss';
-import { getGatheringDetailById } from '/src/services/gatheringApi';
+import { editGathering, getGatheringDetailById } from '/src/services/gatheringApi';
 // import { editGathering, getGatheringDetailById } from '/src/services/gatheringApi';
 import { GatheringCategorySelectBox } from './components/GatheringCategorySelectBox';
-import { IoCalendarClearOutline, IoCloseOutline, IoImageOutline, IoPersonOutline } from 'react-icons/io5';
+import { IoCalendarClearOutline, IoCloseOutline, IoPersonOutline } from 'react-icons/io5';
 import { DatePickerComponent } from '/src/components/common/DatePickerComponent';
 import { GatheringDetailType } from '/src/services/gatheringApi';
 import { Button } from '/src/components/common/Button';
 
 export function GatheringDetailEditPage() {
     const [searchParams] = useSearchParams();
-    const [meetingId, setMeetingId] = useState('');
-
+    const meetingId = searchParams.get('meetingid');
+    const navigate = useNavigate();
     const [gatheringData, setGatheringData] = useState<GatheringDetailType>({
         meetingId: 0,
         leaderId: 0,
@@ -26,7 +26,7 @@ export function GatheringDetailEditPage() {
         description: '',
         headcount: 0,
         date: '',
-        tags: [''],
+        tags: [],
         image: '',
         imageFile: '',
         participants: [
@@ -39,43 +39,37 @@ export function GatheringDetailEditPage() {
     });
     const [tag, setTag] = useState<string[]>([]);
     const [tagValue, setTagValue] = useState<string>();
-    const [imgFileUrl, setImgFileUrl] = useState<string>('');
+    const [imgFileUrl, setImgFileUrl] = useState<string | null>(null);
     const [imgFile, setImgFile] = useState<File | null>(null);
     const [selectedDate, setSelectedDate] = useState(new Date());
 
-    useEffect(() => {
-        const keyword = searchParams.get('meetingid');
-        if (keyword) {
-            setMeetingId(keyword);
-        } else {
-            setMeetingId('');
-        }
-    }, [searchParams])
-
-    const { data: gatheringDetail } = useQuery({
+    const { data: gatheringDetail, isSuccess, isError } = useQuery({
         queryKey: ['gatheringDetail', meetingId],
         queryFn: () => {
-            return getGatheringDetailById(meetingId);
+            if (meetingId) {
+                return getGatheringDetailById(meetingId);
+            }
         },
         select: (data) => data?.data,
+        enabled: !!meetingId
     })
 
+    if (!meetingId) {
+        navigate(-1);
+    }
+
+
     useEffect(() => {
-        if (gatheringDetail) {
+
+        if (isSuccess && !isError && gatheringDetail) {
             console.log('데이터 가져오기 성공', gatheringDetail)
             setGatheringData(gatheringDetail);
-            setTag([...gatheringData.tags]);
-            setImgFileUrl(gatheringData.image);
-
-            //time value 때문에 오류가 남 
-            // setSelectedDate(new Date(gatheringData.date))
+            setTag([...gatheringDetail.tags]);
+            setImgFileUrl(gatheringDetail.image);
         }
-    }, [gatheringDetail])
 
-    useEffect(() => {
-        console.log('tag', tag)
+    }, [gatheringDetail, meetingId])
 
-    }, [tag])
     function handleDataEdit(key: string, e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
         setGatheringData(prevData => ({ ...prevData, [key]: e.target.value }));
     }
@@ -128,13 +122,14 @@ export function GatheringDetailEditPage() {
         }
     };
 
-    // const { mutate } = useMutation({
-    //     mutationFn: editGathering,
-    // });
-    //타입 오류가 나는데 어떻게 해야할지 모르겠다
+    const { mutate: editMutation } = useMutation({
+        mutationFn: editGathering,
+        onSuccess: () => {
+            navigate(-1);
+        }
+    });
 
     function handleCreateBtn() {
-        //아직 구현중
         const gatheringFormData = new FormData();
         gatheringFormData.append('categoryName', gatheringData.categoryName)
         gatheringFormData.append('mountainName', gatheringData.mountainName)
@@ -151,8 +146,13 @@ export function GatheringDetailEditPage() {
         });
         if (imgFile) {
             gatheringFormData.append('imageFile', imgFile); // 이미지 파일 추가
+            gatheringFormData.append('image', gatheringData.image);
+
         }
-        // mutate(Number(meetingId), gatheringFormData);
+        else if (imgFile == null && imgFileUrl) {
+            gatheringFormData.append('image', imgFileUrl);
+        }
+        editMutation({ meetingId: Number(meetingId), data: gatheringFormData });
     }
 
     return (
@@ -182,10 +182,8 @@ export function GatheringDetailEditPage() {
                             onChange={handleImageUpload}
                         />
                         <label htmlFor="image" className={styles.center}>
-                            {imgFileUrl !== '' ? (
+                            {gatheringDetail && imgFileUrl && (
                                 <img src={imgFileUrl} className={styles.image}></img>
-                            ) : (
-                                <IoImageOutline size="2rem" color="#7f7f7f" />
                             )}
                         </label>
                     </div>
@@ -251,7 +249,7 @@ export function GatheringDetailEditPage() {
                                     placeholder="태그 입력 후 spacebar"
                                 />
                                 <div className={styles.tagContainer}>
-                                    {tag.length !== 0 &&
+                                    {gatheringDetail && tag.length !== 0 &&
                                         tag.map((item, index) => (
                                             <div key={index} className={`${styles.containerRow} ${styles.tagItem}`}>
                                                 <div>{item}</div>
@@ -264,8 +262,8 @@ export function GatheringDetailEditPage() {
                     </div>
                 </div>
             </form>
-            <Button type='submit' variant="green3" onClick={handleCreateBtn}>
-                모임 만들기{' '}
+            <Button type='submit' variant="green1" onClick={handleCreateBtn}>
+                수정 완료
             </Button>
         </div>
     )

@@ -25,3 +25,11 @@
   display: flex;
   flex-direction: column;
 }
+
+.noData {
+  display: flex;
+
+  padding: 3.1rem;
+  @include font-subtitle2;
+  color: $gray2;
+}

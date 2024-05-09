@@ -10,6 +10,7 @@ import { profileEditSchema } from './profileEditSchema';
 import useUserInfo from '/src/hooks/useUserInfo';
 import { paths } from '/src/utils/path';
 import { useNavigate } from 'react-router-dom';
+import { getIsUser } from '/src/services/auth';
 
 export default function ProfileEditPage() {
   const [imgPreview, setImgPreview] = useState('');
@@ -22,14 +23,17 @@ export default function ProfileEditPage() {
     setValue,
     watch,
     formState: { errors },
-  } = useForm({
+  } = useForm<EditData>({
     resolver: yupResolver(profileEditSchema),
     mode: 'onChange',
   });
 
   const userInfo = useUserInfo();
 
+  const isUser = getIsUser();
+
   useEffect(() => {
+    if (userInfo?.name) setValue('name', userInfo.name);
     if (userInfo?.nickname) setValue('nickname', userInfo.nickname);
     if (userInfo?.phoneNumber) setValue('phoneNumber', userInfo.phoneNumber);
     if (userInfo?.image) setValue('image', userInfo.image);
@@ -37,7 +41,7 @@ export default function ProfileEditPage() {
 
   const { mutate } = useMutation<Response, Error, FormData>({
     //@ts-expect-error 김경혜...11
-    mutationFn: (formData) => patchUserInfo(formData),
+    mutationFn: patchUserInfo,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['userInfo'] });
       navigation(paths.PROFILE);
@@ -64,24 +68,26 @@ export default function ProfileEditPage() {
     const form = new FormData();
 
     form.append('image', editData.image);
-    form.append('imageFile', newImg[0]);
     form.append('nickname', editData.nickname);
+    form.append('name', editData.name);
     form.append('phoneNumber', editData.phoneNumber);
+    if (newImg && newImg[0] !== undefined) {
+      form.append('imageFile', newImg[0]);
+    }
 
     return form;
   }
 
   const onSubmit = (editData: EditData) => {
-    console.log('요청보낼 데이터', editData);
+    console.log(editData);
     const formData = createFormData(editData);
-    console.log(formData);
     mutate(formData);
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.top}>
-        <div className={styles.title}>프로필 수정</div>
+        <div className={styles.title}>{isUser ? '프로필 수정' : '프로필 정보 추가'}</div>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.userInfo}>
@@ -100,10 +106,14 @@ export default function ProfileEditPage() {
           </div>
         </div>
         <div className={styles.defaultContainer}>
-          <div className={styles.label}>이름</div>
-          <div className={styles.defaultinput}>{userInfo?.name}</div>
           <div className={styles.label}>이메일</div>
           <div className={styles.defaultinput}>{userInfo?.email}</div>
+        </div>
+
+        <div className={styles.inputContainer}>
+          <div className={styles.label}>이름</div>
+          <input type="text" {...register('name')} />
+          {errors.name && <p className={styles.errorMessage}>{errors.name?.message}</p>}
         </div>
 
         <div className={styles.inputContainer}>

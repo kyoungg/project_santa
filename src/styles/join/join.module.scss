@@ -85,3 +85,10 @@
 
   padding-top: 3px;
 }
+
+.successMessage {
+  color: $green2;
+  @include font-body2;
+
+  padding-top: 3px;
+}

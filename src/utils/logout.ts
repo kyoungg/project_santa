@@ -1,8 +1,9 @@
-const logout = () => {
-  localStorage.removeItem('access_token');
-  localStorage.removeItem('refresh_token');
+import { paths } from './path';
 
-  window.location.href = '/';
+const logout = () => {
+  localStorage.clear();
+
+  window.location.href = paths.LOGIN;
 };
 
 export default logout;

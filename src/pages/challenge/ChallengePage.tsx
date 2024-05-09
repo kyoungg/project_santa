@@ -8,8 +8,6 @@ import ProgressChallengeList from './components/ProgressChallengeList';
 import { paths } from '/src/utils/path';
 import useUserInfo from '/src/hooks/useUserInfo';
 
-//type Tab = 'all' | 'progress';
-
 export default function ChallengePage() {
   const [openTab, setOpenTab] = useState('progress');
   const navigation = useNavigate();
@@ -37,7 +35,7 @@ export default function ChallengePage() {
           진행중인 챌린지
         </button>
         <button className={openTab == 'all' ? styles.clickedBtn : styles.nomalBtn} onClick={onClickTabBtn}>
-          전채 챌린지
+          전체 챌린지
         </button>
       </div>
       <div className={styles.bottom}>

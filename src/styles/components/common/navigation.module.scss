@@ -15,6 +15,39 @@
   z-index: 999;
 }
 
+.btnContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+}
+
+.accessTokenBtn {
+  width: 2rem;
+  height: 2rem;
+
+  color: white;
+  padding: 0 0.6rem;
+}
+
+.top {
+  display: flex;
+  align-items: flex-end;
+  button {
+    margin-left: 0.5rem;
+    width: 5rem;
+    height: 1.8rem;
+
+    border-style: none;
+    border-radius: 10px;
+    background-color: $green3;
+
+    font-size: 0.6rem;
+    font-weight: 500;
+    color: $white;
+  }
+}
+
 .logo {
   height: 1.87rem;
   padding: 0.938rem 0 0 1.56rem;

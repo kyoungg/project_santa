@@ -1,5 +1,5 @@
 import styles from '../../../styles/admin/listComponent.module.scss'
-import { DeleteBtn } from '/src/components/common/Button';
+import { DeleteBtn, EditBtn } from '/src/components/common/Button';
 import { PiSiren } from "react-icons/pi";
 import useIntersectionObserver from '/src/hooks/useIntersectionObserver';
 
@@ -11,9 +11,10 @@ interface ListComponentProps {
     onClickDelete?: () => void,
     isLast?: boolean;
     setPage?: React.Dispatch<React.SetStateAction<number>>;
+    onClickEdit?: () => void,
 }
 export function ListComponent({ title, subtitle, content, report, isLast,
-    setPage, }: ListComponentProps) {
+    setPage, onClickDelete, onClickEdit }: ListComponentProps) {
     const { targetRef } = useIntersectionObserver<HTMLDivElement>(() => {
         if (isLast && setPage) {
             setPage((prev) => prev + 1);
@@ -41,8 +42,9 @@ export function ListComponent({ title, subtitle, content, report, isLast,
                 <div className={styles.subtitle}>{subtitle}</div>
                 <div className={styles.body}>{content}</div>
             </div>
-            <div>
-                <DeleteBtn onClick={() => { }} />
+            <div className={styles.rowContainer}>
+                {onClickEdit && <EditBtn onClick={onClickEdit} />}
+                {onClickDelete && <DeleteBtn onClick={onClickDelete} />}
             </div>
         </div>
     )

@@ -25,9 +25,6 @@ export default function AchievementsBox() {
     queryKey: ['myMountains'],
     queryFn: getMyMountains,
     select: (data) => data.data.content,
-    staleTime: Infinity,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
   });
 
   const SUCCESS = !isError && isFetched;

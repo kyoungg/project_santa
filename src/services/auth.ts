@@ -1,7 +1,4 @@
-// import { redirect } from 'react-router-dom';
-// import { paths } from '../utils/path';
-
-export function getAuthToken() {
+export function getAccessToken() {
   return localStorage.getItem('access_token');
 }
 
@@ -9,17 +6,22 @@ export function getRefreshToken() {
   return localStorage.getItem('refresh_token');
 }
 
-// export function tokenLoader() {
-//   return getAuthToken();
-// }
+export function getIsUser() {
+  const role = localStorage.getItem('role');
+  return role === 'USER' || role === 'ADMIN';
+}
 
-// export function checkAuthLoader() {
-//   const token = getAuthToken();
+export function getUserRole() {
+  return localStorage.getItem('role');
+}
 
-//   if (!token) {
-//     console.log('need to login.');
-//     return redirect(paths.LOGIN);
-//   }
+export function getIsAdmin() {
+  const role = localStorage.getItem('role');
+  return role == 'ADMIN';
+}
 
-//   return null;
-// }
+export const getVaildTime = () => {
+  const currentTime = new Date();
+  const vaildTime = new Date(currentTime.getTime() + 28 * 60000);
+  return localStorage.setItem('vaild_time', `${vaildTime}`);
+};

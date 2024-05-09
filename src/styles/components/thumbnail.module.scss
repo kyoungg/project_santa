@@ -3,29 +3,37 @@
 @import '../color';
 @import '../reset';
 
-.thumnailContainer {
+.thumbnailContainer {
   @include flex-center-row;
   gap: 0.7rem;
   width: 100%;
 }
-.thumnailItemBox {
+
+.thumbnailItemBox {
   position: relative;
   width: 6.5rem;
   height: 6.5rem;
   border-radius: 12px;
   margin: 1em 0;
-  background-color: skyblue;
   cursor: pointer;
 }
+
 .indexBadge {
+  width: 100%;
+}
+
+.indexText {
+  position: absolute;
+  left: 1.2rem;
+  top: 1rem;
+}
+
+.badgeContainer {
   position: absolute;
   width: 3rem;
   height: 3rem;
-  border-radius: 0.8rem;
   left: -1rem;
   top: -1rem;
-  background-color: $green1;
-  clip-path: polygon(50% 0%, 67% 29%, 98% 35%, 77% 59%, 79% 91%, 50% 80%, 21% 91%, 24% 63%, 2% 35%, 32% 29%);
 }
 
 .chipWrapper {
@@ -33,23 +41,44 @@
   right: 0;
   margin: 5px;
 }
-.thumnailTitle {
+
+.thumbnailTitle {
   @include font-subtitle2;
   position: absolute;
   bottom: 0;
-  margin: 12px 8px;
+  padding: 12px 8px;
   white-space: wrap;
   overflow: hidden;
   text-overflow: ellipsis;
   letter-spacing: -1px;
-  color: white;
+  color: $white;
+}
+
+.overlay {
+  background: linear-gradient(
+    359deg,
+    rgba(1, 1, 1, 0.37) 0.55%,
+    rgba(59, 59, 59, 0.32) 37.19%,
+    rgba(255, 255, 255, 0.17) 98.52%
+  );
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .imgWrapper {
   border-radius: 12px;
   overflow: hidden;
+  position: relative;
+  height: 100%;
 }
 
 .img {
   width: 105%;
+
+  //김경혜
+  height: 100%;
+  object-fit: cover;
 }

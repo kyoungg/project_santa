@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import styles from './VertifyMountainPage.module.scss';
 import useGeolocation from '/src/hooks/useGeolocation';
@@ -11,6 +11,7 @@ import { paths } from '/src/utils/path';
 export default function VertifyMountainPage() {
   const navigation = useNavigate();
   const location = useGeolocation();
+  const queryClient = useQueryClient();
 
   const {
     mutate,
@@ -20,6 +21,7 @@ export default function VertifyMountainPage() {
     mutationFn: (vertifyData: VertifyData) => postVertifyMountain(vertifyData),
     onSuccess: (data) => {
       data.data;
+      queryClient.invalidateQueries({ queryKey: ['myMountains'] });
     },
     onError(error) {
       // @ts-ignore
@@ -48,6 +50,7 @@ export default function VertifyMountainPage() {
           <img className={styles.image} src={SuccessImg} />
           <button
             className={styles.vertifyBtn}
+            style={{ backgroundColor: '#C1D95F' }}
             onClick={() => {
               navigation(paths.PROFILE);
             }}
@@ -69,7 +72,7 @@ export default function VertifyMountainPage() {
               navigation(-1);
             }}
           >
-            아니요
+            돌아갈게요
           </button>
         </>
       )}

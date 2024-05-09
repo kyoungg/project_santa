@@ -1,0 +1,13 @@
+@import '/src/styles/global';
+@import '/src/styles/color';
+
+.container {
+  @include setting;
+  @include flex-center-col;
+}
+
+.title {
+  @include font-title;
+  color: $green3;
+  padding-bottom: 1.25rem;
+}

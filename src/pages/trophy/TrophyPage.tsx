@@ -2,25 +2,19 @@ import { useQuery } from '@tanstack/react-query';
 
 import styles from './TrophyPage.module.scss';
 import trophyImg from '/images/trophyImg.png';
-import { ProgressChallengeData, getUserChallenge } from '/src/services/challengeApi';
+import { TrophyType, getUserChallenge } from '/src/services/challengeApi';
 import useUserInfo from '/src/hooks/useUserInfo';
+//_ProgressChallengeData,
 
 export default function TrophyPage() {
   const userInfo = useUserInfo();
 
-  const {
-    data: sucessChallenge,
-    isError,
-    isFetched,
-  } = useQuery({
-    queryKey: ['userChallenge', true],
+  const { data: sucessChallenge } = useQuery({
+    queryKey: ['sucessChallenge', true],
     queryFn: () => getUserChallenge(true),
     select: (data) => data.data.content,
   });
 
-  console.log('sucessChallenge', sucessChallenge);
-
-  const SUCCESS = !isError && isFetched;
   return (
     <div className={styles.container}>
       <div className={styles.top}>
@@ -29,15 +23,20 @@ export default function TrophyPage() {
       </div>
       <div className={styles.bottom}>
         <div className={styles.trophyList}>
-          {SUCCESS &&
-            sucessChallenge.map((trophy: ProgressChallengeData) => {
+          {sucessChallenge && sucessChallenge?.length !== 0 ? (
+            sucessChallenge.map((trophy: TrophyType) => {
               return (
                 <div className={styles.trophyContainer}>
-                  <img className={styles.trophyImg} src={trophy.challenge.image} />
-                  <p className={styles.trophyName}>{trophy.challenge.name}</p>
+                  <img className={styles.trophyImg} src={trophy.challengeImage} />
+                  <p className={styles.trophyName}>{trophy.challengeName}</p>
                 </div>
               );
-            })}
+            })
+          ) : (
+            <div className={styles.textContainer}>
+              <div className={styles.nothingData}>아직 획득한 트로피가 없네요!</div>
+            </div>
+          )}
         </div>
       </div>
     </div>

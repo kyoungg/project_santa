@@ -1,4 +1,3 @@
-// import axios from 'axios';
 import { api } from './api';
 export interface LoginData {
   email: string;
@@ -34,6 +33,7 @@ export interface LoginResponse {
   grantType: string;
   accessToken: string;
   refreshToken: string;
+  role: string;
 }
 
 export interface UserInfo {
@@ -50,13 +50,40 @@ export interface EditData {
   nickname: string;
   phoneNumber: string;
   image: string;
-  imageFile: string;
+  imageFile?: string;
+  name: string;
 }
 
-// 소셜 로그인 api
+export interface UserRank {
+  id: number;
+  rank: number;
+  nickname: string;
+  image: string;
+  score: number;
+}
+
+export interface KakaoCode {
+  authorizationCode: string;
+}
+
+export interface kakaoLoginData {
+  accessToken: string;
+  grantType: string;
+  refreshToken: string;
+}
+
+export const postKakaoCode = async (code: KakaoCode) => {
+  const response = await api.post<kakaoLoginData>('oauth2/kakao', code);
+  return response;
+};
 
 export const postUserLogin = async (loginData: LoginData) => {
   const response = await api.post<LoginResponse>('users/sign-in', loginData);
+  return response.data;
+};
+
+export const postRefreshToken = async (refreshToken: string) => {
+  const response = await api.post('users/new-access-token', refreshToken);
   return response.data;
 };
 
@@ -102,3 +129,14 @@ export const postResetPassword = async (resetPasswordData: ResetPasswordData) =>
   const response = await api.post('users/reset-passwords', resetPasswordData);
   return response.data;
 };
+
+export const getUserRank = async () => {
+  const response = await api.get<UserRank>('users/ranking');
+  return response.data;
+};
+
+export const deleteUser = () => {
+  return api.delete('users');
+};
+
+//소셜 로그인 Api

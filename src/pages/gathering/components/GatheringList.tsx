@@ -45,7 +45,7 @@ export function GatheringList({
       className={styles.gatheringListContainer}
       ref={(_ref) => {
         if (isLast) {
-          console.log('ref 할당');
+          // console.log('ref 할당', gatheringInfo.title);
           targetRef.current = _ref;
         }
       }}

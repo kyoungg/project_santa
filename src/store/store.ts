@@ -7,7 +7,7 @@ interface CategoryState {
 }
 
 export const useCategoryStore = create<CategoryState>((set) => ({
-  category: '맞춤추천',
+  category: '등산',
   setCategory: (category) => set({ category: category }),
 }));
 
