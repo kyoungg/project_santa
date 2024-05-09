@@ -24,11 +24,11 @@ export function PostPage() {
   let gatheringFormData = new FormData();
   const [postData, setPostData] = useState({
     meetingName: '',
-    categoryName: '',
+    categoryName: '등산',
     mountainName: '',
     description: '',
     headcount: '',
-    date: '',
+    date: formattingDate(new Date()),
     tags: [''],
     image: null,
   });
@@ -47,13 +47,6 @@ export function PostPage() {
     }
   };
 
-  // function formattingDate(date: Date): string {
-  //   const year = date.getFullYear();
-  //   const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  //   const day = date.getDate().toString().padStart(2, '0');
-  //   return `${year}-${month}-${day}`;
-  // }
-
   function handleInputTag(e: ChangeEvent<HTMLInputElement>) {
     const inputValue = e.target.value;
     if (inputValue[inputValue.length - 1] === ' ') {
@@ -67,9 +60,6 @@ export function PostPage() {
     }
   }
 
-  function clickMountainSearch() {
-    //input을 넣고 검색하면 키워드 검색 / 리스트 출력
-  }
 
   function deleteTag(index: number) {
     const newArr = [...tag.slice(0, index), ...tag.slice(index + 1)];
@@ -90,7 +80,6 @@ export function PostPage() {
           setImgFileUrl(reader.result);
         }
       };
-      console.log(file);
     }
   }
 
@@ -98,6 +87,19 @@ export function PostPage() {
     mutationFn: postGathering,
     onSuccess: () => {
       navigate(-1);
+    },
+    onError: (error) => {
+      if (error.message.includes('400')) {
+        alert('내용을 입력해주세요.');
+      }
+      else if (error.message.includes('413')) {
+        alert('이미지 용량이 너무 큽니다');
+      }
+      else if (error.message.includes('409')) {
+        alert('해당 날짜에 이미 참여중인 모임이 있습니다.');
+      }
+      // console.log('error 내용', error.response.status, error)
+
     }
   });
 
@@ -129,7 +131,6 @@ export function PostPage() {
             <GatheringCategorySelectBox onChange={(e) => handleInput('categoryName', e)} />
             <input
               placeholder="산"
-              onClick={clickMountainSearch}
               className={styles.inputBox}
 
               onChange={(e) => handleInput('mountainName', e)}

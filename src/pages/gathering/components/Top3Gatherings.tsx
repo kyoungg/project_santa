@@ -15,7 +15,7 @@ export function Top3Gatherings() {
     })
     const [thumbnails, setThumbnails] = useState<ThumbnailChallenge[]>([]);
     useEffect(() => {
-        console.log(top3Gatherings);
+        console.log('top3', top3Gatherings);
         if (top3Gatherings !== undefined) {
 
             const thumbnailsArray = Array.from({ length: 3 }, (_, index) => ({

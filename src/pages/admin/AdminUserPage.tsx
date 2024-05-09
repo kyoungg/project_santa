@@ -3,12 +3,13 @@ import styles from '../../styles/admin/adminMain.module.scss';
 import { TitleContainer } from '../gathering/components/TitleContainer';
 import { SearchInput } from '/src/components/common/Input';
 import SectionTitle from '/src/components/SectionTitle';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { deleteUser, userSearchApi } from '/src/services/adminApi';
 import { ChangeEvent, useEffect, useState } from 'react';
 const PAGE_SIZE = 4;
 
 export function AdminUserPage() {
+    const queryClient = useQueryClient();
     const [page, setPage] = useState(0);
     const [userDataList, setUserDataList] = useState<UserListType[]>([])
     const [searchValue, setSearchValue] = useState<string>('');
@@ -21,7 +22,7 @@ export function AdminUserPage() {
         reportCount: number;
     }
     const { data: userData, isFetched,
-        isError, refetch } = useQuery({
+        isError } = useQuery({
             queryKey: ['userSearch', searchValue, page],
             queryFn: () => userSearchApi(searchValue, page, PAGE_SIZE),
             select: (data) => {
@@ -55,15 +56,10 @@ export function AdminUserPage() {
     const { mutate: deleteMutation } = useMutation({
         mutationFn: deleteUser,
         onSuccess: () => {
-            console.log('refetch 합니다');
+            queryClient.invalidateQueries({ queryKey: ['userSearch', searchValue, page] })
             setPage(0);
-            refetch()
-            //refetch하고, 새로운 데이터를 userDataList에 넣고싶은데 .. 타입이 다르다해서
-            // then((newData: AxiosResponse<UserListType>) => {
-            //     console.log('newData', newData);
-            // }).catch((error) => {
-            //     console.error('refetch 에러:', error);
-            // });
+            setUserDataList([]);
+
         }
     });
     function handleDeleteBtnClick(id: number) {

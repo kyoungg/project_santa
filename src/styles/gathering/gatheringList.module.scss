@@ -2,61 +2,65 @@
 @import '../global';
 
 .gatheringListContainer {
-    width: 100%;
+  width: 100%;
+  // border: 0.1rem solid black;
+  @include flex-center-row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  // padding: 0.5rem;
+  box-sizing: border-box;
+  gap: 0.5rem;
+  height: 4.475rem;
+  margin: 0.5rem 0;
+
+  .image {
     // border: 0.1rem solid black;
-    @include flex-center-row;
-    justify-content: flex-start;
-    align-items: flex-start;
-    // padding: 0.5rem;
-    box-sizing: border-box;
-    gap: 0.5rem;
     height: 4.475rem;
-    margin:0.5rem 0;
-  
-    .image {
-      border: 0.1rem solid black;
-      height: 4.475rem;
-      width: 4.475rem;
-      border-radius: 0.3rem;
-    }
-  
-    .textContainer {
-      @include flex-center-col;
-      align-items: flex-start;
-      justify-content: space-between;
-      height:100%;
-      width: 70%;
-      gap:0.4rem;
-      
-    }
-  
-    .subtitle1{
-      @include font-subtitle1
-    }
-    .body2{
-      @include font-body2
-    }
-    .infoContainer {
-      @include flex-center-row;
-      align-items: space-between;
-      justify-content: flex-start;
-      width: 100%;
-      gap: 0.3rem;
-      color: $gray2;
-      flex-wrap:nowrap;  
-      .tag {
-        // width: 1.7rem;
-        width: auto;
-        overflow: hidden;
-        flex-wrap: nowrap;
-        background-color: $green3;
-        border-radius: 1.5rem;
-        padding: 0.2rem 0.3rem;
-        color: $white;
-        @include font-body2;
-      }
+    width: 4.475rem;
+    border-radius: 0.3rem;
+  }
+
+  .textContainer {
+    @include flex-center-col;
+    align-items: flex-start;
+    justify-content: space-between;
+    height: 100%;
+    width: 70%;
+    gap: 0.4rem;
+
+  }
+
+  .subtitle1 {
+    @include font-subtitle1
+  }
+
+  .body2 {
+    @include font-body2
+  }
+
+  .infoContainer {
+    @include flex-center-row;
+    align-items: space-between;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 0.3rem;
+    color: $gray2;
+    flex-wrap: nowrap;
+
+    .tag {
+      // width: 1.7rem;
+      width: auto;
+      overflow: hidden;
+      flex-wrap: nowrap;
+      background-color: $green3;
+      border-radius: 1.5rem;
+      padding: 0.2rem 0.3rem;
+      color: $white;
+      @include font-body2;
     }
   }
-  .hidden{
-    overflow:hidden;
-  }
+}
+
+.hidden {
+  overflow: hidden;
+}

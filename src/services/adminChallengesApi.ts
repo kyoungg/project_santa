@@ -44,17 +44,24 @@ export const getChallenge = async (id: string): Promise<TotalChallenge> => {
   return res.data;
 };
 
-export const updateChallenge = async (addChallengeForm: AddChallengeForm, id: string) => {
-  const formdata = makeFormData(addChallengeForm);
+// export const updateChallenge = async (addChallengeForm: AddChallengeForm, id: string) => {
+//   const formdata = makeFormData(addChallengeForm);
 
-  const config = {
+//   const config = {
+//     headers: {
+//       'Content-Type': 'multipart/form-data',
+//     },
+//   };
+//   return api.patch(`${url}/${id}`, formdata, config);
+// };
+
+export function updateChallenge({ id, data }: { id: string, data: FormData }) {
+  return api.patch(`${url}/${id}`, data, {
     headers: {
       'Content-Type': 'multipart/form-data',
-    },
-  };
-  return api.patch(`${url}/${id}`, formdata, config);
-};
-
+    }
+  })
+}
 export const deleteChallenge = async (id: number) => {
   return api.delete(`${url}/${id}`);
 };

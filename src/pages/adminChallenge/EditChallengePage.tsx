@@ -44,36 +44,36 @@ function EditChallengePage() {
 
   const queryClient = useQueryClient();
 
-  /** update api 호출 함수 */
-  const fetchUpdateChallenge = async () => {
-    const { name, description, clearStandard, image } = challenge;
+  // /** update api 호출 함수 */
+  // const fetchUpdateChallenge = async () => {
+  //   const { name, description, clearStandard, image } = challenge;
 
-    // 이미지파일과 이름 둘중 하나라도 없으면 return;
-    if (!imageFile || name === '') return;
+  //   // 이미지파일과 이름 둘중 하나라도 없으면 return;
+  //   if (!imageFile || name === '') return;
 
-    try {
-      const res = await updateChallenge(
-        {
-          categoryId: 1,
-          name,
-          description,
-          clearStandard,
-          imageFile,
-          image,
-        },
-        id,
-      );
+  //   try {
+  //     const res = await updateChallenge(
+  //       {
+  //         categoryId: 1,
+  //         name,
+  //         description,
+  //         clearStandard,
+  //         imageFile,
+  //         image,
+  //       },
+  //       id,
+  //     );
 
-      console.log(res);
-      return res;
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  //     console.log(res);
+  //     return res;
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // };
 
   /** update를 위한 useMutaion */
-  const { mutate, data: updateData } = useMutation({
-    mutationFn: fetchUpdateChallenge,
+  const { mutate: editMutation, data: updateData } = useMutation({
+    mutationFn: updateChallenge,
     onSuccess: () => {
       navigate(paths.ADMIN_CHALLENGE);
       return queryClient.invalidateQueries({ queryKey: ['AdminchallengeList'] });
@@ -85,7 +85,21 @@ function EditChallengePage() {
 
   /** mutation 호출 함수 */
   const handleUpdate = () => {
-    mutate();
+    const challengeFormData = new FormData();
+    if (challenge) {
+
+      challengeFormData.append('name', challenge.name);
+      challengeFormData.append('categoryId', challenge.id.toString());
+      challengeFormData.append('description', challenge.description);
+      challengeFormData.append('clearStandard', challenge.clearStandard.toString());
+      challengeFormData.append('image', challenge.image);
+      if (imageFile) {
+        challengeFormData.append('imageFile', imageFile);
+      }
+
+      console.log(challenge, id);
+      editMutation({ id: id, data: challengeFormData });
+    }
   };
 
   /** 챌린지 이름, 설명 변경 함수 */

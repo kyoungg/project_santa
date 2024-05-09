@@ -173,8 +173,8 @@ export function GatheringDetailPage() {
             <div className={styles.subtitle1}>참여인원</div>
             <div className={styles.profileListContainer}>
               {gatheringDetail?.participants.map((participant, index) => (
-                <div className={styles.profileContainer}>
-                  <div key={`${participant.userId} ${participant.userName}`} onClick={() => handleReport(index)}>
+                <div className={styles.profileContainer} key={`${participant.userId} ${participant.userName}`}>
+                  <div onClick={() => handleReport(index)}>
                     {isProfileClicked[index] && (<div className={styles.reportBtn} onClick={() => handleClickReportBtn(participant.userId)}>신고</div>)}
                     <VerticalProfile name={participant.userName} imageUrl="/images/defaultProfile.png" />
                   </div>

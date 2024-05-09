@@ -4,7 +4,7 @@ import { useCategoryStore } from '/src/store/store';
 import type { GatheringCategory } from '/src/services/gatheringApi';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, react-hooks/exhaustive-deps
 const categoryList: GatheringCategory[] = [
-  '맞춤추천',
+  // '맞춤추천',
   '등산',
   '힐링',
   '정상깨기',

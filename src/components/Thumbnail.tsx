@@ -25,6 +25,7 @@ export default function Thumbnail({ data, isHotTopic, isIndexChip }: ThumbnailPr
             </div>
           )}
           <div className={styles.imgWrapper}>
+            <div className={styles.overlay}></div>
             <img className={styles.img} src={item.image} />
           </div>
           <p className={styles.thumbnailTitle}>{item.name}</p>
