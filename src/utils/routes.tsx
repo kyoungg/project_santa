@@ -3,7 +3,7 @@ import { paths } from './path';
 
 import { getAccessToken, getIsAdmin, getIsUser } from '../services/auth';
 
-//누구나 접근 가능
+//로그인 안했을 때만 접근 가능
 const PublicRoutes: React.FC = () => {
   const isLogin = getAccessToken();
 

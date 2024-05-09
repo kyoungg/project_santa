@@ -5,7 +5,7 @@ import './styles/_global.scss';
 import './styles/_reset.scss';
 import { paths } from './utils/path';
 import Layout from './utils/Layout';
-import { PrivateRoutes, PrivateUserRoutes, PublicRoutes } from './utils/routes';
+import { PrivateAdminRoutes, PrivateRoutes, PrivateUserRoutes, PublicRoutes } from './utils/routes';
 import JoinPage from './pages/join/JoinPage';
 import GatheringMainPage from './pages/gathering/GatheringMainPage';
 import MainPage from './pages/main/MainPage';
@@ -54,16 +54,6 @@ const router = createBrowserRouter([
       { path: paths.GATHERING_DETAIL_EDIT, element: <GatheringDetailEditPage /> },
       { path: paths.GATHERING_SEARCHRESULT, element: <GatheringSearchResultPage /> },
       { path: paths.GATHERING_POST, element: <PostPage /> },
-      { path: paths.PROFILE_EDIT, element: <ProfileEditPage /> },
-      { path: paths.TROPHY, element: <TrophyPage /> },
-      { path: paths.ADMIN, element: <AdminMainPage /> },
-      { path: paths.ADMIN_USER, element: <AdminUserPage /> },
-      { path: paths.ADMIN_REPORT, element: <AdminReportPage /> },
-      { path: paths.ADMIN_CATEGORY, element: <AdminCategoryPage /> },
-      { path: paths.ADMIN_CHALLENGE, element: <AdminChallengePage /> },
-      { path: `${paths.ADMIN_CHALLENGE_DETAIL_EDIT}/:id`, element: <EditChallengePage /> },
-      { path: paths.MOUNTAIN, element: <MountainPage /> },
-      { path: paths.MOUNTAIN_DETAIL, element: <MountainDetailPage /> },
       { path: paths.MOUNTAIN, element: <MountainPage /> },
       { path: paths.MOUNTAIN_DETAIL, element: <MountainDetailPage /> },
       {
@@ -87,6 +77,18 @@ const router = createBrowserRouter([
         ],
       },
       {
+        element: <PrivateAdminRoutes />,
+        children: [
+          //role이 user이거나 guest인 경우 접근 가능
+          { path: paths.ADMIN, element: <AdminMainPage /> },
+          { path: paths.ADMIN_USER, element: <AdminUserPage /> },
+          { path: paths.ADMIN_REPORT, element: <AdminReportPage /> },
+          { path: paths.ADMIN_CATEGORY, element: <AdminCategoryPage /> },
+          { path: paths.ADMIN_CHALLENGE, element: <AdminChallengePage /> },
+          { path: `${paths.ADMIN_CHALLENGE_DETAIL_EDIT}/:id`, element: <EditChallengePage /> },
+        ],
+      },
+      {
         element: <PublicRoutes />,
         children: [
           //로그인한경우 접근 안됨
@@ -98,6 +100,7 @@ const router = createBrowserRouter([
       },
     ],
   },
+  //layout 적용 안됨
   {
     path: paths.HOME,
     element: <PublicRoutes />,

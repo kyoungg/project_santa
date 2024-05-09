@@ -28,6 +28,7 @@ export default function TabBar() {
               onClick={() => {
                 navigation(tab.path);
               }}
+              key={tab.path}
             >
               <div className={styles.icon}>{tab.icon}</div>
               <p className={styles.name}>{tab.title}</p>

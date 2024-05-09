@@ -30,15 +30,22 @@ function LoginPage() {
     console.log(loginData);
   };
 
+  const getVaildTime = () => {
+    const currentTime = new Date();
+    const vaildTime = new Date(currentTime.getTime() + 28 * 60000);
+    return localStorage.setItem('vaild_time', `${vaildTime}`);
+  };
+
   const { mutate, isError } = useMutation({
     mutationFn: postUserLogin,
     onSuccess: (data) => {
       localStorage.setItem('access_token', data.accessToken);
       localStorage.setItem('refresh_token', data.refreshToken);
+      getVaildTime();
       if (data.role === 'ADMIN') {
         localStorage.setItem('role', 'ADMIN');
       }
-      navigate('/');
+      navigate(paths.HOME);
     },
     onError: (error) => {
       console.log('login error', error);

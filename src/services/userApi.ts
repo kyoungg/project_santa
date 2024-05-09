@@ -82,6 +82,11 @@ export const postUserLogin = async (loginData: LoginData) => {
   return response.data;
 };
 
+export const postRefreshToken = async (refreshToken: string) => {
+  const response = await api.post('users/new-access-token', refreshToken);
+  return response.data;
+};
+
 export const getUserInfo = async () => {
   const result = await api.get<UserInfo>('users/my-info');
   return result.data;

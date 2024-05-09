@@ -1,4 +1,5 @@
 import axios from 'axios';
+import logout from '../utils/logout';
 // import { AxiosInstance } from 'axios';
 // import logout from '../utils/logout';
 
@@ -64,16 +65,41 @@ api.interceptors.request.use((config) => {
 // );
 
 //토큰 다시 받아오는 함수
+
 export const tokenRefresh = async () => {
   //리프레쉬 토큰 가져옴
-  const refreshToken = localStorage.getItem('refresh_token');
-  const response = await api.post('users/new-access-token', {
-    refreshToken: refreshToken,
-  });
+  const currentTime = new Date();
+  const vaildTime = localStorage.getItem('vaild_time');
 
-  //새로 받아온 토큰 리턴
-  const newAccessToken = response.data;
-  return newAccessToken;
+  if (vaildTime) {
+    const isEnd = `${currentTime}` >= vaildTime;
+    //만료 시간이 끝났으면
+    if (isEnd) return logout();
+
+    //안끝났으면
+    if (!isEnd) {
+      const refreshToken = localStorage.getItem('refresh_token');
+      const response = await api.post('users/new-access-token', {
+        refreshToken: refreshToken,
+      });
+
+      const newAccessToken = response.data;
+
+      //새 엑세스 토큰을 받아왔으면
+      if (newAccessToken) {
+        console.log('기존 엑세스 토큰', localStorage.getItem('access_token'));
+        console.log('새 엑세스 토큰', newAccessToken);
+        //기존에 있던 토큰 삭제
+        localStorage.removeItem('access_token');
+        //새 엑세스 토큰 로컬에 넣음
+        localStorage.setItem('access_token', newAccessToken);
+        //엑세스 토큰 못받아왔으면
+      } else {
+        //로그아웃
+        return logout();
+      }
+    }
+  }
 };
 
 //interceptor 분리시 -> 로그인, 새로고침 해야 헤더에 토큰 적용되는 에러 발생함

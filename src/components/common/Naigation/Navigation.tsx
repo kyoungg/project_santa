@@ -9,6 +9,8 @@ import UserProfile from './UserProfile';
 import { NAVLIST, paths } from '/src/utils/path';
 import logout from '/src/utils/logout';
 import { getIsAdmin, getRefreshToken } from '/src/services/auth';
+import { TbTimeDuration30 } from 'react-icons/tb';
+import { tokenRefresh } from '/src/services/api';
 
 export default function Navigation({ back }: { back: boolean }) {
   const navigation = useNavigate();
@@ -57,6 +59,8 @@ export default function Navigation({ back }: { back: boolean }) {
     );
   };
 
+  const isAdmin = getIsAdmin();
+
   const handleAuth = () => {
     if (isLogin) {
       return logout();
@@ -65,19 +69,25 @@ export default function Navigation({ back }: { back: boolean }) {
     }
   };
 
-  const isAdmin = getIsAdmin();
+  const handleAccessToken = () => {
+    tokenRefresh();
+  };
 
   return (
     <header className={styles.header}>
       <nav className={isOpen ? styles.darkBg : ''}>
-        {back ? <BackBtn /> : <HambergerBtn />}
+        <div className={styles.btnContainer}>
+          {back ? <BackBtn /> : <HambergerBtn />}
+          <TbTimeDuration30 onClick={handleAccessToken} className={styles.accessTokenBtn} />
+        </div>
         <div className={isOpen ? styles.navOpen : styles.navClose} ref={navRef}>
           <div className={styles.top}>
             <img src={logo} className={styles.logo} />
             {isAdmin && (
               <button
                 onClick={() => {
-                  navigation('/관리자 페이지');
+                  setIsOpen(!isOpen);
+                  navigation(paths.ADMIN);
                 }}
               >
                 관리자 페이지
