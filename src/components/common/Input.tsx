@@ -14,7 +14,7 @@ export const Input = ({ variant, onChange, value, placeholder }: Props) => {
       onChange={onChange}
       value={value}
       placeholder={placeholder}
-    ></input>
+    />
   );
 };
 

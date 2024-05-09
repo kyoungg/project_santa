@@ -1,10 +1,10 @@
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { TitleContainer } from './components/TitleContainer';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 // import { useMutation, useQuery } from '@tanstack/react-query';
 import styles from '../../styles/gathering/gatheringPostPage.module.scss';
-import { getGatheringDetailById } from '/src/services/gatheringApi';
+import { editGathering, getGatheringDetailById } from '/src/services/gatheringApi';
 // import { editGathering, getGatheringDetailById } from '/src/services/gatheringApi';
 import { GatheringCategorySelectBox } from './components/GatheringCategorySelectBox';
 import { IoCalendarClearOutline, IoCloseOutline, IoImageOutline, IoPersonOutline } from 'react-icons/io5';
@@ -15,7 +15,7 @@ import { Button } from '/src/components/common/Button';
 export function GatheringDetailEditPage() {
     const [searchParams] = useSearchParams();
     const [meetingId, setMeetingId] = useState('');
-
+    const navigate = useNavigate();
     const [gatheringData, setGatheringData] = useState<GatheringDetailType>({
         meetingId: 0,
         leaderId: 0,
@@ -128,13 +128,14 @@ export function GatheringDetailEditPage() {
         }
     };
 
-    // const { mutate } = useMutation({
-    //     mutationFn: editGathering,
-    // });
-    //타입 오류가 나는데 어떻게 해야할지 모르겠다
+    const { mutate: editMutation } = useMutation({
+        mutationFn: editGathering,
+        onSuccess: () => {
+            navigate(-1);
+        }
+    });
 
     function handleCreateBtn() {
-        //아직 구현중
         const gatheringFormData = new FormData();
         gatheringFormData.append('categoryName', gatheringData.categoryName)
         gatheringFormData.append('mountainName', gatheringData.mountainName)
@@ -152,7 +153,7 @@ export function GatheringDetailEditPage() {
         if (imgFile) {
             gatheringFormData.append('imageFile', imgFile); // 이미지 파일 추가
         }
-        // mutate(Number(meetingId), gatheringFormData);
+        editMutation({ meetingId: Number(meetingId), data: gatheringFormData });
     }
 
     return (
@@ -264,8 +265,8 @@ export function GatheringDetailEditPage() {
                     </div>
                 </div>
             </form>
-            <Button type='submit' variant="green3" onClick={handleCreateBtn}>
-                모임 만들기{' '}
+            <Button type='submit' variant="green1" onClick={handleCreateBtn}>
+                수정 완료
             </Button>
         </div>
     )

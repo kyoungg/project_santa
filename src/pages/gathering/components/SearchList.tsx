@@ -5,6 +5,7 @@ import { IoCheckmarkCircleSharp } from 'react-icons/io5';
 import { GatheringList } from './GatheringList';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { isClosedGathering } from '/src/utils/isClosedGathering';
 
 type Participant = {
   userId: number; // 예시로 숫자 타입을 사용하였습니다. 실제 타입에 맞게 수정해주세요.
@@ -40,6 +41,23 @@ export function SearchList({ gatheringData }: { gatheringData: gatheringDataType
     }
   }
 
+  function returnClassName(date: string) {
+    //작성자의 id와 모임장의 id가 같으면 styles.bgLightYellow
+
+    if (isClosedGathering(date)) {
+      //활동 완료된 모임 숨기기 버튼 클릭시 display:none
+      if (!showInProgress) {
+        return `${styles.width100}`
+      } else {
+        return `${styles.width100} ${styles.displayNone}`
+      }
+    } else {
+      return `${styles.width100}`
+    }
+
+  }
+
+
   return (
     <div className={styles.containerCol}>
       <div className={styles.containerRow}>
@@ -63,16 +81,19 @@ export function SearchList({ gatheringData }: { gatheringData: gatheringDataType
         </div>
       </div>
       {gatheringData.map((item) => (
-        <div key={item.meetingId} className={styles.width100}>
+        <div key={item.meetingId} className={returnClassName(item.date)}>
           <GatheringList
-            title={item.meetingName}
-            content={item.description}
-            tag={item.categoryName}
-            imageUrl={item.image}
-            mountain={item.mountainName}
-            capacity={item.headcount}
-            attendance={item.participants.length}
-            date={item.date}
+            gatheringInfo={{
+
+              title: item.meetingName,
+              content: item.description,
+              tag: item.categoryName,
+              imageUrl: item.image,
+              mountain: item.mountainName,
+              capacity: item.headcount,
+              attendance: item.participants.length,
+              date: item.date,
+            }}
             onClick={() => navigate(`/gathering/detail?meetingid=${item.meetingId}`)}
           />
         </div>

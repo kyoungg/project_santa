@@ -28,6 +28,10 @@ import RecordMountainPage from './pages/user/mountain/RecordMountainPage';
 import ProfileEditPage from './pages/profile/edit/ProfileEditPage';
 import { GatheringDetailEditPage } from './pages/gathering/GatheringDetailEditPage';
 import { GatheringSearchResultPage } from './pages/gathering/GatheringSearchResultPage';
+import { AdminMainPage } from './pages/admin/AdminMainPage';
+import { AdminUserPage } from './pages/admin/AdminUserPage';
+import { AdminReportPage } from './pages/admin/AdminReportPage';
+import { AdminCategoryPage } from './pages/admin/AdminCategoryPage';
 import AdminChallengePage from './pages/adminChallenge/AdminChallengePage';
 import EditChallengePage from './pages/adminChallenge/EditChallengePage';
 import OauthRedirectPage from './pages/login/OauthRedirectPage';
@@ -52,6 +56,10 @@ const router = createBrowserRouter([
       { path: paths.GATHERING_POST, element: <PostPage /> },
       { path: paths.PROFILE_EDIT, element: <ProfileEditPage /> },
       { path: paths.TROPHY, element: <TrophyPage /> },
+      { path: paths.ADMIN, element: <AdminMainPage /> },
+      { path: paths.ADMIN_USER, element: <AdminUserPage /> },
+      { path: paths.ADMIN_REPORT, element: <AdminReportPage /> },
+      { path: paths.ADMIN_CATEGORY, element: <AdminCategoryPage /> },
       { path: paths.ADMIN_CHALLENGE, element: <AdminChallengePage /> },
       { path: `${paths.ADMIN_CHALLENGE_DETAIL_EDIT}/:id`, element: <EditChallengePage /> },
       { path: paths.MOUNTAIN, element: <MountainPage /> },

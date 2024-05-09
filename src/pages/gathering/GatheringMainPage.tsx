@@ -11,6 +11,10 @@ import { useEffect, useState } from 'react';
 import { getGatheringListByCategory, GatheringListByCategory } from '/src/services/gatheringApi';
 import { useQuery } from '@tanstack/react-query';
 import { useCategoryStore } from '/src/store/store';
+// import Thumbnail from '/src/components/Thumbnail';
+import { MyGatherings } from './components/MyGatherings';
+import { Top3Gatherings } from './components/Top3Gatherings';
+import { useUserInfo } from '/src/utils/useUserInfo';
 
 const PAGE_SIZE = 4;
 
@@ -19,6 +23,8 @@ function GatheringMainPage() {
   const navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [gatheringList, setGatheringList] = useState<GatheringListByCategory[]>([]);
+
+  //모임 목록 가져오기 
   const {
     data: GatheringListByCategory,
     isFetched,
@@ -29,10 +35,11 @@ function GatheringMainPage() {
     select: (data) => {
       return {
         content: data.data.content,
-        totalPage: data.data.totalPages,
+        totalPage: data.data.totalPages - 1,
       };
     },
   });
+
 
   useEffect(() => {
     setGatheringList([]);
@@ -46,12 +53,13 @@ function GatheringMainPage() {
       setGatheringList((prevList) => [...prevList, ...GatheringListByCategory.content]);
     }
   }, [isFetched, isError, GatheringListByCategory]);
+  const currentUserInfo = useUserInfo((data) => data);
 
   return (
     <div className={styles.gatheringContainer}>
       <div className={styles.container}>
         <div className={styles.profileContainer}>
-          <UserProfile_small name="윤혜원" imageUrl="/images/profile.png" />
+          <UserProfile_small name={currentUserInfo?.nickname} imageUrl={currentUserInfo?.image} />
           <Link to={'/gathering/search'}>
             <div className={styles.searchBtn}>
               <IoSearch color="#498428" />
@@ -63,16 +71,8 @@ function GatheringMainPage() {
           <Button variant="green3">모임 만들기</Button>
         </Link>
       </div>
-      <div className={styles.container}>
-        <SectionTitle title="인기 모임" subtitle="현재 진행중인 챌린지/모임을 확인해보세요!" isThereToggle={false} />
-        {/* <Thumbnail img="/images/profile.png" title="한라산 등반" isHotTopic={false} isIndexChip={false} /> */}
-      </div>
-      <div className={styles.container}>
-        <Link to={'/gathering/participate'} className={styles.width100}>
-          <SectionTitle title="나의 모임" subtitle="참여중인 모임을 확인해보세요" isThereToggle={false} />
-        </Link>
-        {/* <Thumbnail img="" title="맛있는 김밥 먹는 모임" isHotTopic={false} isIndexChip={false} /> */}
-      </div>
+      <MyGatherings />
+      <Top3Gatherings />
       <div className={`${styles.container} ${styles.gap}`}>
         <SectionTitle title="모임 둘러보기" subtitle="산타의 모임을 둘러보세요!" />
         <GatheringCategory />
@@ -80,14 +80,18 @@ function GatheringMainPage() {
           {gatheringList?.map((item: GatheringListByCategory, index) => (
             <div key={`${item.meetingId}-${item.leaderId}-${index}`}>
               <GatheringList
-                title={item.meetingName}
-                content={item.description}
-                tag={item.categoryName}
-                mountain={item.mountainName}
-                imageUrl={item.image}
-                capacity={item.headcount}
-                attendance={item.participants.length}
-                date={item.date}
+                gatheringInfo={{
+                  title: item.meetingName,
+                  content: item.description,
+                  tag: item.categoryName,
+                  mountain: item.mountainName,
+                  imageUrl: item.image,
+                  capacity: item.headcount,
+                  attendance: item.participants.length,
+                  date: item.date,
+                }}
+
+
                 isLast={
                   GatheringListByCategory &&
                   GatheringListByCategory?.totalPage >= page &&
@@ -101,7 +105,7 @@ function GatheringMainPage() {
           {gatheringList?.length === 0 && <div>데이터가 없습니다.</div>}
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 

@@ -2,102 +2,116 @@
 @import '../color';
 @import '../reset';
 
-.gatheringDetailContainer{
+.gatheringDetailContainer {
     @include flex-center-col;
     @include setting;
 
 }
-.infoContainer{
-    width:100%;
-    margin:1rem 0;
+
+.infoContainer {
+    width: 100%;
+    margin: 1rem 0;
 
 }
-.containerRow{
+
+.containerRow {
     @include flex-between-row;
-    width:100%;
+    width: 100%;
     justify-content: start;
-    gap:2rem;
-    margin-bottom:1rem;
+    gap: 2rem;
+    margin-bottom: 1rem;
 }
-.containerCol{
+
+.containerCol {
     @include flex-between-col;
-    width:100%;
-    gap:1rem;
+    width: 100%;
+    gap: 1rem;
 }
-.imageContainer{
-    width:7.6rem;
-    height:7.6rem;
+
+.imageContainer {
+    width: 7.6rem;
+    height: 7.6rem;
     background-color: $white2;
 }
-.topInfoContainer{
-    display:flex;
+
+.topInfoContainer {
+    display: flex;
     flex-direction: column;
     justify-content: space-around;
-    height:7.6rem;
-    padding:1rem 0;
-    
+    height: 7.6rem;
+    padding: 1rem 0;
+
 }
-.iconTextContainer{
+
+.iconTextContainer {
     display: flex;
     flex-direction: row;
     gap: 1rem;
 
 }
-.textarea{
-    width:100%;
+
+.textarea {
+    width: 100%;
     background-color: $green1;
     border-radius: 2rem;
-    height:13.3rem;
-    padding:1.5rem;
+    height: 13.3rem;
+    padding: 1.5rem;
     box-sizing: border-box;
 }
-.tagContainer{
-    display:flex;
+
+.tagContainer {
+    display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: flex-start;
-    width:100%;
-    gap:0.5rem;
+    width: 100%;
+    gap: 0.5rem;
 }
-.subtitle1{
+
+.subtitle1 {
     @include font-subtitle1;
-    
+
 }
-.memberContainer{
-    display:flex;
-    flex-direction:column;
+
+.memberContainer {
+    display: flex;
+    flex-direction: column;
     justify-content: flex-start;
-    width:100%;
-    margin-top:0.8rem;
+    width: 100%;
+    margin-top: 0.8rem;
 }
 
-.profileListContainer{
-    display:flex;
-    gap:2rem;
+.profileListContainer {
+    display: flex;
+    gap: 2rem;
     flex-wrap: nowrap;
-    width:100%;
-    overflow-x : auto;
-    padding:0.2rem 0;
+    width: 100%;
+    overflow-x: auto;
+    padding: 0.2rem 0;
 
 }
 
-.deleteEditContainer{
+.deleteEditContainer {
     justify-content: flex-end;
-    gap:0.5rem
+    gap: 0.5rem
 }
-.profileContainer{
-    position:relative;
-    padding:1rem 0;
+
+.profileContainer {
+    position: relative;
+    padding: 1rem 0;
     @include flex-center-col
 }
-.reportBtn{
-    position:absolute;
-    top:0;
+
+.reportBtn {
+    position: absolute;
+    top: 0;
     background-color: $green1;
-    width:2rem;;
-    padding:0.5rem;
+    width: 2rem;
+    ;
+    padding: 0.5rem;
     border-radius: 0.4rem;
     text-align: center;
+    cursor: pointer;
 
 
 }

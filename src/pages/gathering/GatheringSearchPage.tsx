@@ -32,8 +32,6 @@ export function GatheringSearchPage() {
         />
       </div>
       <SearchKeyword />
-
-
     </div>
   );
 }

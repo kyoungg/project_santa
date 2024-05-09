@@ -3,12 +3,12 @@
 @import '../color';
 @import '../reset';
 
-.thumnailContainer {
+.thumbnailContainer {
   @include flex-center-row;
   gap: 0.7rem;
   width: 100%;
 }
-.thumnailItemBox {
+.thumbnailItemBox {
   position: relative;
   width: 6.5rem;
   height: 6.5rem;
@@ -36,7 +36,7 @@
   right: 0;
   margin: 5px;
 }
-.thumnailTitle {
+.thumbnailTitle {
   @include font-subtitle2;
   position: absolute;
   bottom: 0;

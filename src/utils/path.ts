@@ -23,9 +23,13 @@ export const paths = {
   MOUNTAIN_DETAIL: '/mountain/detail',
   MOUNTAIN_VERTIFY: '/mountain/vertify',
   MOUNTAIN_RECORD: '/mountain/record',
-  ADMIN_CHALLENGE: '/admin/challenges',
+  ADMIN: '/admin',
+  ADMIN_USER: '/admin/user',
+  ADMIN_CHALLENGE: '/admin/challenge',
+  ADMIN_REPORT: '/admin/report',
+  ADMIN_CATEGORY: '/admin/category',
   ADMIN_CHALLENGE_DETAIL_EDIT: '/admin/challenges/detail/edit',
-};
+}
 
 export const NAVLIST = [
   { title: '메인', path: paths.HOME },

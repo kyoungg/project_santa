@@ -2,7 +2,7 @@ import IssueChip from './IssueChip';
 import styles from '../styles/components/thumbnail.module.scss';
 import { ThumbnailChallenge } from '../services/challengeApi';
 
-interface ThumbnailItems extends ThumbnailChallenge {}
+interface ThumbnailItems extends ThumbnailChallenge { }
 interface ThumbnailProps {
   data: ThumbnailItems[];
   isHotTopic: boolean;
@@ -10,9 +10,9 @@ interface ThumbnailProps {
 }
 export default function Thumbnail({ data, isHotTopic, isIndexChip }: ThumbnailProps) {
   return (
-    <div className={styles.thumnailContainer}>
+    <div className={styles.thumbnailContainer}>
       {data.map((item, index) => (
-        <div className={styles.thumnailItemBox} key={item.id}>
+        <div className={styles.thumbnailItemBox} key={item.id}>
           {isIndexChip && (
             <div className={styles.badgeContainer}>
               <img src="images/thumbnail-label.png" alt={`${index + 1}`} className={styles.indexBadge} />
@@ -27,7 +27,7 @@ export default function Thumbnail({ data, isHotTopic, isIndexChip }: ThumbnailPr
           <div className={styles.imgWrapper}>
             <img className={styles.img} src={item.image} />
           </div>
-          <p className={styles.thumnailTitle}>{item.name}</p>
+          <p className={styles.thumbnailTitle}>{item.name}</p>
         </div>
       ))}
     </div>
