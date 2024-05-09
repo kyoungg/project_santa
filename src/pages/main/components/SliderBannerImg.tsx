@@ -1,5 +1,8 @@
 import styles from '../mainPage.module.scss';
 import { _imageSrcArray, _path } from '/src/utils/ImgPath';
+//김경혜
+import { SlArrowRight } from 'react-icons/sl';
+import { SlArrowLeft } from 'react-icons/sl';
 
 import { useState, useRef } from 'react';
 
@@ -43,15 +46,17 @@ const SliderBannerImg = () => {
       <div className={styles.bannerContainer} ref={slideRef}>
         <div className={styles.sliderBox} ref={boxRef}>
           {_imageSrcArray.map((src, _index) => (
-            <img src={`${_path}/${src}`} className={styles.bannerImage} />
+            <img src={`${_path}/${src}`} className={styles.bannerImage} key={src} />
           ))}
         </div>
       </div>
       <div className={styles.sliderButtonLeft} onClick={() => handleClick(true)}>
-        <img src="/images/btn-left.png" alt="<" className={styles.btnImg} />
+        {/* 김경혜 <img src="/images/btn-left.png" alt="<" className={styles.btnImg} /> */}
+        <SlArrowLeft className={styles.btnImg} />
       </div>
       <div className={styles.sliderButtonRight} onClick={() => handleClick(false)}>
-        <img src="/images/btn-right.png" alt=">" className={styles.btnImg} />
+        {/* 김경혜 <img src="/images/btn-right.png" alt=">" className={styles.btnImg} /> */}
+        <SlArrowRight className={styles.btnImg} />
       </div>
     </div>
   );

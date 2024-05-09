@@ -29,7 +29,7 @@ export const paths = {
   ADMIN_REPORT: '/admin/report',
   ADMIN_CATEGORY: '/admin/category',
   ADMIN_CHALLENGE_DETAIL_EDIT: '/admin/challenges/detail/edit',
-}
+};
 
 export const NAVLIST = [
   { title: '메인', path: paths.HOME },

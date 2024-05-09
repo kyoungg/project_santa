@@ -48,6 +48,9 @@ function AddChallenge() {
   const { mutate, data } = useMutation({
     mutationFn: fetchCreateChallenge,
     onSuccess: () => {
+      if (!imageFile) {
+        return alert('챌린지 사진을 등록 해 주세요');
+      }
       queryClient.invalidateQueries({ queryKey: ['AdminchallengeList'] });
       alert('챌린지 등록되었습니다!');
     },
@@ -98,48 +101,44 @@ function AddChallenge() {
           <img src="/images/input-img.png" alt="사진 올리기" className={styles.inputImg} />
         )}
       </div>
-      <div className={styles.addInputContainer}>
-        <label className={styles.label}>제목</label>
-        <input className={styles.inputName} value={name} onChange={(e) => setName(e.target.value)} />
-      </div>
-      <div className={styles.addInputContainer}>
-        <label className={styles.label}>소개</label>
-        <input className={styles.inputName} value={description} onChange={(e) => setDescription(e.target.value)} />
-      </div>
-      <div className={styles.addInputContainer}>
-        <label className={styles.label}>달성 목표</label>
+      <div className={styles.textInputCintainer}>
+        <div className={styles.addInputContainer}>
+          <label className={styles.label}>제목</label>
+          <input className={styles.inputName} value={name} onChange={(e) => setName(e.target.value)} />
+        </div>
+        <div className={styles.addInputContainer}>
+          <label className={styles.label}>소개</label>
+          <input className={styles.inputName} value={description} onChange={(e) => setDescription(e.target.value)} />
+        </div>
+        <div className={styles.addInputContainer}>
+          <label className={styles.label}>달성 목표</label>
+          <input
+            type="number"
+            className={styles.inputName}
+            value={clearStandard}
+            onChange={(e) => setClearStandard(e.target.valueAsNumber)}
+          />
+        </div>
+        <div className={styles.addInputContainer}>
+          <label className={styles.categoryLabel}>카테고리 ID</label>
+          <GatheringCategorySelectBox
+            defaultValue="등산"
+            onChange={(e) => {
+              const categoryId = getCategoryId(e.target.value);
+              //@ts-ignore 김경혜...33
+              setCategoryId(categoryId);
+            }}
+          />
+        </div>
         <input
-          type="number"
-          className={styles.inputName}
-          value={clearStandard}
-          onChange={(e) => setClearStandard(e.target.valueAsNumber)}
+          className=""
+          type="file"
+          accept="image/jpeg,image/jpg,image/png"
+          ref={fileRef}
+          onChange={handleChangeImageFile}
+          style={{ visibility: 'hidden' }}
         />
       </div>
-      <div className={styles.addInputContainer}>
-        <label className={styles.label}>카테고리 ID</label>
-        {/* <input
-          type="number"
-          className={styles.inputName}
-          value={categoryId}
-          onChange={(e) => setCategoryId(e.target.valueAsNumber)}
-        /> */}
-        <GatheringCategorySelectBox
-          defaultValue="등산"
-          onChange={(e) => {
-            const categoryId = getCategoryId(e.target.value);
-            //@ts-ignore 김경혜...33
-            setCategoryId(categoryId);
-          }}
-        />
-      </div>
-      <input
-        className=""
-        type="file"
-        accept="image/jpeg,image/jpg,image/png"
-        ref={fileRef}
-        onChange={handleChangeImageFile}
-        style={{ visibility: 'hidden' }}
-      />
       <button onClick={handleUpload} className={styles.editSubmitBtn}>
         업로드
       </button>

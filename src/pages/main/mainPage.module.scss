@@ -32,7 +32,8 @@
   left: 92px;
 }
 .bannerWrapper {
-  padding-top: 80px;
+  //padding-top: 80px; 김경혜
+  padding-top: 0;
 }
 
 // SliderBannerImg.tsx
@@ -78,6 +79,9 @@
 .btnImg {
   width: 2rem;
   height: 2rem;
+
+  //김경혜
+  color: $green1;
 }
 .sliderBox {
   white-space: nowrap;

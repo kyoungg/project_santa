@@ -26,7 +26,6 @@
   position: absolute;
   left: 1.2rem;
   top: 1rem;
-
 }
 
 .badgeContainer {
@@ -56,7 +55,12 @@
 }
 
 .overlay {
-  background: linear-gradient(359deg, rgba(1, 1, 1, 0.37) 0.55%, rgba(59, 59, 59, 0.32) 37.19%, rgba(255, 255, 255, 0.17) 98.52%);
+  background: linear-gradient(
+    359deg,
+    rgba(1, 1, 1, 0.37) 0.55%,
+    rgba(59, 59, 59, 0.32) 37.19%,
+    rgba(255, 255, 255, 0.17) 98.52%
+  );
   position: absolute;
   top: 0;
   left: 0;
@@ -73,4 +77,8 @@
 
 .img {
   width: 105%;
+
+  //김경혜
+  height: 100%;
+  object-fit: cover;
 }
