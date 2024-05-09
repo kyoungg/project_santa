@@ -1,20 +1,13 @@
 import axios from 'axios';
 import logout from '../utils/logout';
+import { getVaildTime } from './auth';
 // import { AxiosInstance } from 'axios';
 // import logout from '../utils/logout';
-
-//토큰 만료 시간
-// const JWT_EXPIRY_TIME = 28 * 60000;
 
 const getAccessToken = () => {
   const accessToken = localStorage.getItem('access_token');
   return accessToken;
 };
-
-// const getRefreshToken = () => {
-//   const refreshToken = localStorage.getItem('refresh_token');
-//   return refreshToken;
-// };
 
 export const api = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
@@ -65,7 +58,6 @@ api.interceptors.request.use((config) => {
 // );
 
 //토큰 다시 받아오는 함수
-
 export const tokenRefresh = async () => {
   //리프레쉬 토큰 가져옴
   const currentTime = new Date();
@@ -87,12 +79,12 @@ export const tokenRefresh = async () => {
 
       //새 엑세스 토큰을 받아왔으면
       if (newAccessToken) {
-        console.log('기존 엑세스 토큰', localStorage.getItem('access_token'));
-        console.log('새 엑세스 토큰', newAccessToken);
         //기존에 있던 토큰 삭제
         localStorage.removeItem('access_token');
+        localStorage.removeItem('vaild_time');
         //새 엑세스 토큰 로컬에 넣음
         localStorage.setItem('access_token', newAccessToken);
+        getVaildTime();
         //엑세스 토큰 못받아왔으면
       } else {
         //로그아웃

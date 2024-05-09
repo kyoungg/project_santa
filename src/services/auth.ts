@@ -19,3 +19,9 @@ export function getIsAdmin() {
   const role = localStorage.getItem('role');
   return role == 'ADMIN';
 }
+
+export const getVaildTime = () => {
+  const currentTime = new Date();
+  const vaildTime = new Date(currentTime.getTime() + 28 * 60000);
+  return localStorage.setItem('vaild_time', `${vaildTime}`);
+};

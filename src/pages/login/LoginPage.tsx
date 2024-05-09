@@ -13,6 +13,7 @@ import { paths } from '/src/utils/path';
 import { loginSchema } from './loginSchema';
 import { LoginData } from '../../services/userApi';
 import { KAKAO_AUTH_URL } from '/src/utils/oauth';
+import { getVaildTime } from '/src/services/auth';
 
 function LoginPage() {
   const {
@@ -28,12 +29,6 @@ function LoginPage() {
   const onSubmit = (loginData: LoginData) => {
     mutate(loginData);
     console.log(loginData);
-  };
-
-  const getVaildTime = () => {
-    const currentTime = new Date();
-    const vaildTime = new Date(currentTime.getTime() + 28 * 60000);
-    return localStorage.setItem('vaild_time', `${vaildTime}`);
   };
 
   const { mutate, isError } = useMutation({

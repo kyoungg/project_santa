@@ -1,5 +1,4 @@
 // component
-import { Button } from '../main/components/Button';
 import { TitleContainer } from '../gathering/components/TitleContainer';
 
 // styles
@@ -136,25 +135,35 @@ function EditChallengePage() {
   return (
     <div className={styles.container}>
       <TitleContainer title="챌린지 관리" />
-      <div onClick={handleRefClick}>
-        {previewImage ? (
-          <img src={previewImage} alt="preview" />
-        ) : (
-          <img src={challenge.image} alt="사진 수정하기" className={styles.inputImg} />
-        )}
-      </div>
-      <input type="text" value={challenge.name} name="name" onChange={handleChange} />
-      <input type="text" value={challenge.description} name="description" onChange={handleChange} />
+      <div className={styles.editMiddle}>
+        <div onClick={handleRefClick}>
+          {previewImage ? (
+            <img src={previewImage} alt="preview" />
+          ) : (
+            <img src={challenge.image} alt="사진 수정하기" className={styles.inputImg} />
+          )}
+        </div>
 
-      <input
-        className=""
-        type="file"
-        accept="image/jpeg,image/jpg,image/png"
-        ref={fileRef}
-        onChange={handleChangeImageFile}
-        style={{ visibility: 'hidden' }}
-      />
-      <Button onClick={handleUpdate}>수정하기</Button>
+        <input type="text" value={challenge.name} name="name" onChange={handleChange} className={styles.inputName} />
+        <input
+          type="text"
+          value={challenge.description}
+          name="description"
+          onChange={handleChange}
+          className={styles.inputDescription}
+        />
+        <input
+          className=""
+          type="file"
+          accept="image/jpeg,image/jpg,image/png"
+          ref={fileRef}
+          onChange={handleChangeImageFile}
+          style={{ visibility: 'hidden' }}
+        />
+        <button onClick={handleUpdate} className={styles.editSubmitBtn}>
+          수정하기
+        </button>
+      </div>
     </div>
   );
 }

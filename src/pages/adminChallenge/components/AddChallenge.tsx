@@ -1,18 +1,28 @@
-import { Button } from '../../main/components/Button';
 import styles from '../AdminChallenge.module.scss';
 import { useState, useRef, useEffect } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addChallenge } from '/src/services/adminChallengesApi';
+import { GatheringCategorySelectBox } from '../../gathering/components/GatheringCategorySelectBox';
+
+const CATEGORY = [
+  { id: 1, name: '등산' },
+  { id: 2, name: '기타' },
+  { id: 3, name: '힐링' },
+  { id: 4, name: '식도락' },
+  { id: 5, name: '정상깨기' },
+  { id: 6, name: '백패킹' },
+  { id: 7, name: '출사' },
+];
+
 function AddChallenge() {
+  const queryClient = useQueryClient();
   const fileRef = useRef<HTMLInputElement>(null);
 
   const [name, setName] = useState('');
-  const [categoryId, _setCategoryId] = useState(1);
+  const [categoryId, setCategoryId] = useState<number>(1);
   const [description, setDescription] = useState('');
-  const [clearStandard, _setClearStandard] = useState(1);
-
+  const [clearStandard, setClearStandard] = useState<number>(1);
   const [imageFile, setImageFile] = useState<File | null>(null);
-
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   const fetchCreateChallenge = async () => {
@@ -28,7 +38,7 @@ function AddChallenge() {
         image: '',
       });
 
-      console.log(res);
+      console.log('res', res);
       return res;
     } catch (e) {
       console.error(e);
@@ -37,6 +47,13 @@ function AddChallenge() {
 
   const { mutate, data } = useMutation({
     mutationFn: fetchCreateChallenge,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['AdminchallengeList'] });
+      alert('챌린지 등록되었습니다!');
+    },
+    onError: () => {
+      alert('다시 시도해주세요');
+    },
   });
 
   const handleRefClick = () => {
@@ -58,30 +75,63 @@ function AddChallenge() {
   const handleUpload = () => {
     mutate();
   };
+
   useEffect(() => {
     console.log(data);
   }, [data]);
+
+  const getCategoryId = (name: string) => {
+    for (let i = 0; i < CATEGORY.length; i++) {
+      if (CATEGORY[i].name === name) {
+        return CATEGORY[i].id;
+      }
+    }
+    return undefined;
+  };
+
   return (
-    <div className={styles.container}>
-      <div onClick={handleRefClick}>
+    <div className={styles.addMiddle}>
+      <div onClick={handleRefClick} className={styles.imgContainer}>
         {previewImage ? (
           <img src={previewImage} alt="preview" />
         ) : (
           <img src="/images/input-img.png" alt="사진 올리기" className={styles.inputImg} />
         )}
       </div>
-      <input
-        className={styles.inputTextBox}
-        placeholder="제목을 입력해주세요."
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input
-        className={styles.inputTextBox}
-        placeholder="내용을 입력해주세요."
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
+      <div className={styles.addInputContainer}>
+        <label className={styles.label}>제목</label>
+        <input className={styles.inputName} value={name} onChange={(e) => setName(e.target.value)} />
+      </div>
+      <div className={styles.addInputContainer}>
+        <label className={styles.label}>소개</label>
+        <input className={styles.inputName} value={description} onChange={(e) => setDescription(e.target.value)} />
+      </div>
+      <div className={styles.addInputContainer}>
+        <label className={styles.label}>달성 목표</label>
+        <input
+          type="number"
+          className={styles.inputName}
+          value={clearStandard}
+          onChange={(e) => setClearStandard(e.target.valueAsNumber)}
+        />
+      </div>
+      <div className={styles.addInputContainer}>
+        <label className={styles.label}>카테고리 ID</label>
+        {/* <input
+          type="number"
+          className={styles.inputName}
+          value={categoryId}
+          onChange={(e) => setCategoryId(e.target.valueAsNumber)}
+        /> */}
+        <GatheringCategorySelectBox
+          defaultValue="등산"
+          onChange={(e) => {
+            const categoryId = getCategoryId(e.target.value);
+            //@ts-ignore 김경혜...33
+            setCategoryId(categoryId);
+          }}
+        />
+      </div>
       <input
         className=""
         type="file"
@@ -90,7 +140,9 @@ function AddChallenge() {
         onChange={handleChangeImageFile}
         style={{ visibility: 'hidden' }}
       />
-      <Button onClick={handleUpload}>업로드</Button>
+      <button onClick={handleUpload} className={styles.editSubmitBtn}>
+        업로드
+      </button>
     </div>
   );
 }

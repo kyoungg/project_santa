@@ -78,7 +78,7 @@ export default function Navigation({ back }: { back: boolean }) {
       <nav className={isOpen ? styles.darkBg : ''}>
         <div className={styles.btnContainer}>
           {back ? <BackBtn /> : <HambergerBtn />}
-          <TbTimeDuration30 onClick={handleAccessToken} className={styles.accessTokenBtn} />
+          {isLogin && <TbTimeDuration30 onClick={handleAccessToken} className={styles.accessTokenBtn} />}
         </div>
         <div className={isOpen ? styles.navOpen : styles.navClose} ref={navRef}>
           <div className={styles.top}>
