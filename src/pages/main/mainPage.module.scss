@@ -199,15 +199,3 @@
   padding: 2px 10px;
   border-bottom: solid 1px $gray1;
 }
-
-//김경혜
-.noData {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  @include font-subtitle1;
-  color: $gray2;
-
-  padding: 2rem 0 3rem;
-}
