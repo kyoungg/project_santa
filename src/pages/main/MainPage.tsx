@@ -22,7 +22,7 @@ export default function Main() {
   const { data: challenges } = useQuery({ queryKey: ['challenges'], queryFn: getChallengeList });
   const navigation = useNavigate();
 
-  if (!meetings || !ranks || !challenges) return <>Loading...</>;
+  // if (!meetings && !ranks && !challenges) return <div>Loading...</div>;
   return (
     <>
       <div className={styles.container}>
@@ -46,7 +46,11 @@ export default function Main() {
               subtitle="업적을 달설할 수 있는 챌린지를 확인해보세요!"
               targetPageUrl={paths.CHALLENGE}
             />
-            <Thumbnail data={challenges} isHotTopic={true} isIndexChip={true} />
+            {challenges ? (
+              <Thumbnail data={challenges} isHotTopic={true} isIndexChip={true} />
+            ) : (
+              <div className={styles.noData}>로그인하고 챌린지를 확인하세요!</div>
+            )}
           </div>
           <div>
             <div className={styles.sectionWrapper}>
@@ -59,12 +63,12 @@ export default function Main() {
                 subtitle="현재 진행중인 모임을 확인해보세요."
                 targetPageUrl={paths.GATHERING}
               />
-              <MeetingList meetings={meetings} />
+              {meetings && <MeetingList meetings={meetings} />}
             </div>
           </div>
           <div>
             <SectionTitle title="랭킹🏅" subtitle="이달의 랭킹을 확인해보세요!" targetPageUrl={paths.RANK} />
-            <UserRankList ranks={ranks} />
+            {ranks && <UserRankList ranks={ranks} />}
           </div>
         </div>
       </div>
