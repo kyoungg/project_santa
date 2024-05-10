@@ -11,16 +11,18 @@ export function GatheringCategory() {
   const categoryList = useCategoryList<GatheringCategoryType[]>((data) => data.data);
 
   const [categories, setCategories] = useState<GatheringCategoryType[]>([]);
+
+
   useEffect(() => {
     if (categoryList) {
       setCategories([{ id: 0, name: '맞춤추천' }, ...categoryList])
     }
-  }, [category])
+  }, [categoryList])
 
   return (
     <div className={styles.scrollContainer}>
       <div className={styles.categoryContainer}>
-        {categoryList && categories.map((_category: GatheringCategoryType) => (
+        {categories.map((_category: GatheringCategoryType) => (
           <Chips
             key={_category.id}
             variant={`${_category.name == category.name ? 'square-green3' : 'square-green2'}`}

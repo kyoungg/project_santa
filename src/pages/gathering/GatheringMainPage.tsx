@@ -9,7 +9,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { GatheringCategory } from './components/GatheringCategory';
 import { useEffect, useState } from 'react';
 import { getGatheringListByCategory, GatheringListByCategory } from '/src/services/gatheringApi';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useCategoryStore } from '/src/store/store';
 // import Thumbnail from '/src/components/Thumbnail';
 import { MyGatherings } from './components/MyGatherings';
@@ -24,6 +24,7 @@ function GatheringMainPage() {
   const navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [gatheringList, setGatheringList] = useState<GatheringListByCategory[]>([]);
+  const queryClient = useQueryClient();
 
   //모임 목록 가져오기 
   const {
@@ -45,21 +46,21 @@ function GatheringMainPage() {
   useEffect(() => {
     setGatheringList([]);
     setPage(0);
-  }, [category]);
+    // queryClient.invalidateQueries({ queryKey: ['gatheringListByCategory', page, category], });
 
+  }, [category]);
 
   useEffect(() => {
     const isSuccess = isFetched && !isError;
 
     if (isSuccess && GatheringListByCategory) {
       if (page === 0) {
-        setGatheringList([...GatheringListByCategory.content]);
-
+        setGatheringList([...GatheringListByCategory?.content]);
       } else {
-        setGatheringList((prevList) => [...prevList, ...GatheringListByCategory.content]);
+        setGatheringList((prevList) => [...prevList, ...GatheringListByCategory?.content]);
       }
     }
-  }, [isFetched, isError, GatheringListByCategory]);
+  }, [isFetched, isError, GatheringListByCategory, category]);
   const currentUserInfo = useUserInfo((data) => data);
 
   return (
@@ -97,11 +98,9 @@ function GatheringMainPage() {
                   attendance: item.participants.length,
                   date: item.date,
                 }}
-
-
                 isLast={
                   GatheringListByCategory &&
-                  GatheringListByCategory?.totalPage >= page &&
+                  GatheringListByCategory?.totalPage > page &&
                   gatheringList.length === index + 1
                 }
                 setPage={setPage}
