@@ -56,8 +56,6 @@ export default function RankPage() {
     }
   }, [fetchData]);
 
-  console.log('ranks', ranks);
-
   if (!top3Rank) return <>Loading...</>;
 
   return (

@@ -58,7 +58,7 @@
 
 .progress {
   width: 90%;
-  height: 0.6rem;
+  height: 0.95rem;
 
   background-color: $white;
 
@@ -79,4 +79,12 @@
 
   @include font-subtitle2;
   color: $gray2;
+}
+
+.progressNumber {
+  @include font-body1;
+  color: $green3;
+
+  position: absolute;
+  left: 47%;
 }
