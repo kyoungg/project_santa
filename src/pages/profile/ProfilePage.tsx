@@ -41,7 +41,6 @@ export default function ProfilePage() {
 
   return (
     <>
-      (
       <div className={styles.container}>
         <div className={styles.userInfo}>
           {userInfo && <img className={styles.userImg} src={userInfo?.image} />}

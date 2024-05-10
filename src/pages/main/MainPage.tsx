@@ -15,12 +15,27 @@ import { getChallengeList } from '/src/services/challengeApi';
 import { useQuery } from '@tanstack/react-query';
 import { paths } from '/src/utils/path';
 import { useNavigate } from 'react-router-dom';
+import { getPreferCategory } from '/src/services/categoryApi';
+import { getAccessToken, getIsUser } from '/src/services/auth';
 
 export default function Main() {
   const { data: meetings } = useQuery({ queryKey: ['meetings'], queryFn: getMeetings });
   const { data: ranks } = useQuery({ queryKey: ['ranks'], queryFn: getMainPagesRanks });
   const { data: challenges } = useQuery({ queryKey: ['challenges'], queryFn: getChallengeList });
   const navigation = useNavigate();
+  const isLogin = getAccessToken();
+  const isUser = getIsUser();
+
+  const { data: preferCategory } = useQuery({
+    queryKey: ['preferCategory'],
+    queryFn: getPreferCategory,
+    select: (data) => data.data,
+    staleTime: Infinity,
+  });
+
+  if (isLogin && isUser && preferCategory) {
+    preferCategory.length == 0 && navigation(paths.CATEGORY);
+  }
 
   // if (!meetings && !ranks && !challenges) return <div>Loading...</div>;
   return (
