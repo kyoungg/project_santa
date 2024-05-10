@@ -18,8 +18,6 @@ export function GatheringSearchPage() {
     console.log('검색어', searchValue);
   }
 
-
-
   return (
     <div className={styles.mainContainer}>
       <div className={styles.containerRow}>

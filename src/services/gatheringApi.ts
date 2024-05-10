@@ -124,7 +124,7 @@ export function getMyGatherings(page: number, size: number) {
 }
 //인기모임 조회 
 export function getPopularGatherings(page: number, size: number) {
-  return api.get(`meetings/participants?page=${page}&size=${size}`)
+  return api.get<GatheringListResponse>(`meetings/participants?page=${page}&size=${size}`)
 }
 
 //모임 종료하기 

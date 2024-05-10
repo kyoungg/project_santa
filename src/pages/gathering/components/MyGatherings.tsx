@@ -17,17 +17,19 @@ export function MyGatherings() {
     useEffect(() => {
         console.log(myGatherings);
     }, [myGatherings])
-    const thumbnails = myGatherings ? Array.from({ length: 3 }, (_, index) => ({
-        id: myGatherings[index]?.meetingId,
-        name: myGatherings[index]?.meetingName,
-        image: myGatherings[index]?.image
-    })) : [];
+    const thumbnails = myGatherings && myGatherings.length > 0 ?
+        Array.from({ length: 3 }, (_, index) => ({
+            id: myGatherings[index]?.meetingId,
+            name: myGatherings[index]?.meetingName,
+            image: myGatherings[index]?.image
+        })) : [];
     return (
         <div className={styles.container}>
             <div onClick={() => navigate('/gathering/participate')} className={styles.width100}>
                 <SectionTitle title="나의 모임" subtitle="참여중인 모임을 확인해보세요" isThereToggle={false} />
             </div>
-            {thumbnails && <Thumbnail data={thumbnails} isHotTopic={false} isIndexChip={false} />}
+            {thumbnails.length !== 0 && <Thumbnail data={thumbnails} isHotTopic={false} isIndexChip={false} gatheringLink='/gathering/detail?meetingId' />}
+            {thumbnails.length === 0 && <div className={styles.noGatheringText}>참여중인 모임이 없습니다.<br />새로운 모임에 참여해보세요!</div>}
         </div>
     )
 }

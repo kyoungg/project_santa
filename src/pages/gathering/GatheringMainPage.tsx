@@ -30,7 +30,7 @@ function GatheringMainPage() {
     isFetched,
     isError,
   } = useQuery({
-    queryKey: ['gatheringListByCategory', page, category],
+    queryKey: ['gatheringListByCategory', page],
     queryFn: () => getGatheringListByCategory(category, page, PAGE_SIZE),
     select: (data) => {
       return {

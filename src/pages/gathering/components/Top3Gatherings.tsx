@@ -31,7 +31,7 @@ export function Top3Gatherings() {
             <div onClick={() => navigate('/gathering/participate')} className={styles.width100}>
                 <SectionTitle title="인기 모임" subtitle="참여중인 모임을 확인해보세요" isThereToggle={false} />
             </div>
-            <Thumbnail data={thumbnails} isHotTopic={false} isIndexChip={false} />
+            <Thumbnail data={thumbnails} isHotTopic={false} isIndexChip={false} gatheringLink='/gathering/detail?meetingId' />
         </div>
     )
 }

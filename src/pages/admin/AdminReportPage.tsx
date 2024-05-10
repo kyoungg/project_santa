@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import styles from '../../styles/admin/adminMain.module.scss';
 import { TitleContainer } from '../gathering/components/TitleContainer';
 import { ListComponent } from './components/ListComponent';
@@ -10,15 +10,15 @@ const PAGE_SIZE = 4;
 export function AdminReportPage() {
     const [page, setPage] = useState(0);
     const [reportDataList, setReportDataList] = useState<reportsType[]>([])
-
+    const queryClient = useQueryClient();
     const { data: reportData, isFetched,
-        isError, refetch } = useQuery({
+        isError } = useQuery({
             queryKey: ['userSearch', page],
             queryFn: () => getReportData(page, PAGE_SIZE),
             select: (data) => {
                 return {
                     content: data.data.content,
-                    totalPage: data.data.totalPages,
+                    totalPage: data.data.totalPages - 1,
                 }
             }
 
@@ -30,7 +30,9 @@ export function AdminReportPage() {
     const { mutate: deleteMutation } = useMutation({
         mutationFn: deleteReport,
         onSuccess: () => {
-            refetch();
+            setReportDataList([]);
+            setPage(0);
+            queryClient.invalidateQueries({ queryKey: ['userSearch', page] });
         }
     });
     function handleDeleteBtn(reportId: number) {
@@ -42,7 +44,6 @@ export function AdminReportPage() {
         const isSuccess = isFetched && !isError;
 
         if (isSuccess && reportData !== undefined) {
-
             setReportDataList(prevList => [...prevList, ...reportData.content]);
 
         }
