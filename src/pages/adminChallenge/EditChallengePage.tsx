@@ -13,10 +13,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getChallenge, updateChallenge } from '/src/services/adminChallengesApi';
 import { TotalChallenge } from '/src/services/challengeApi';
 import { paths } from '/src/utils/path';
+import { GatheringCategorySelectBox } from '../gathering/components/GatheringCategorySelectBox';
 
 function EditChallengePage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [clearStandard, setClearStandard] = useState<string | null>();
+  const [categoryId, setCategoryId] = useState<number>(1);
 
   if (!id) return <>error</>;
 
@@ -28,9 +31,7 @@ function EditChallengePage() {
     description: '',
     image: '',
     clearStandard: 0,
-    category: {
-      name: '',
-    },
+    categoryName: ''
   });
 
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -89,9 +90,9 @@ function EditChallengePage() {
     if (challenge) {
 
       challengeFormData.append('name', challenge.name);
-      challengeFormData.append('categoryId', challenge.id.toString());
+      challengeFormData.append('categoryId', categoryId.toString());
       challengeFormData.append('description', challenge.description);
-      challengeFormData.append('clearStandard', challenge.clearStandard.toString());
+      clearStandard && challengeFormData.append('clearStandard', clearStandard);
       challengeFormData.append('image', challenge.image);
       if (imageFile) {
         challengeFormData.append('imageFile', imageFile);
@@ -135,8 +136,15 @@ function EditChallengePage() {
     console.log(fetchData);
     if (fetchData) {
       setChallenge(fetchData);
+      setClearStandard(fetchData.clearStandard.toString());
+
     }
   }, [fetchData]);
+
+  useEffect(() => {
+    console.log('챌린지출력', challenge);
+    console.log(challenge.categoryName);
+  }, [challenge])
 
   useEffect(() => {
     console.log('-----update data---');
@@ -146,6 +154,24 @@ function EditChallengePage() {
   if (!fetchData) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
 
+  const CATEGORY = [
+    { id: 1, name: '등산' },
+    { id: 2, name: '기타' },
+    { id: 3, name: '힐링' },
+    { id: 4, name: '식도락' },
+    { id: 5, name: '정상깨기' },
+    { id: 6, name: '백패킹' },
+    { id: 7, name: '출사' },
+  ];
+
+  const getCategoryId = (name: string) => {
+    for (let i = 0; i < CATEGORY.length; i++) {
+      if (CATEGORY[i].name === name) {
+        return CATEGORY[i].id;
+      }
+    }
+    return undefined;
+  };
   return (
     <div className={styles.container}>
       <TitleContainer title="챌린지 관리" />
@@ -157,15 +183,6 @@ function EditChallengePage() {
             <img src={challenge.image} alt="사진 수정하기" className={styles.inputImg} />
           )}
         </div>
-
-        <input type="text" value={challenge.name} name="name" onChange={handleChange} className={styles.inputName} />
-        <input
-          type="text"
-          value={challenge.description}
-          name="description"
-          onChange={handleChange}
-          className={styles.inputDescription}
-        />
         <input
           className=""
           type="file"
@@ -174,6 +191,34 @@ function EditChallengePage() {
           onChange={handleChangeImageFile}
           style={{ visibility: 'hidden' }}
         />
+        <div>
+
+          <div>제목</div>
+          <input type="text" value={challenge.name} name="name" onChange={handleChange} className={styles.inputName} />
+          <div>소개</div>
+          <input
+            type="text"
+            value={challenge.description}
+            name="description"
+            onChange={handleChange}
+            className={styles.inputDescription}
+          />
+          <div>달성목표</div>
+          {clearStandard !== null && <input
+            type="number"
+            className={styles.inputName}
+            value={clearStandard}
+            onChange={(e) => setClearStandard(e.target.value)}
+          />}
+          <div>카테고리 명</div>
+          {challenge.categoryName !== '' && (<GatheringCategorySelectBox
+            defaultValue={challenge?.categoryName}
+            onChange={(e) => {
+              const categoryId = getCategoryId(e.target.value);
+              categoryId && setCategoryId(categoryId);
+            }}
+          />)}
+        </div>
         <button onClick={handleUpdate} className={styles.editSubmitBtn}>
           수정하기
         </button>

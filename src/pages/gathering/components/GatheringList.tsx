@@ -57,7 +57,8 @@ export function GatheringList({
         <div className={`${styles.body2} ${styles.hidden}`}>{gatheringInfo.content}</div>
         <div className={`${styles.infoContainer} ${styles.body2}`}>
           <div className={styles.tag}>{gatheringInfo.tag}</div>
-          <div>{gatheringInfo.mountain}</div>
+          {/* 5글자 까지만 들어가도록 */}
+          <div>{gatheringInfo.mountain.substring(0, 5)}</div>
           <div>
             {gatheringInfo.attendance}/{gatheringInfo.capacity}(명)
           </div>

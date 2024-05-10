@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import styles from '../../../styles/gathering/gatheringMain.module.scss';
 import SectionTitle from '/src/components/SectionTitle';
 import { useQuery } from '@tanstack/react-query';
@@ -7,7 +7,7 @@ import Thumbnail from '/src/components/Thumbnail';
 import { useEffect, useState } from 'react';
 import { ThumbnailChallenge } from '/src/services/challengeApi';
 export function Top3Gatherings() {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const { data: top3Gatherings } = useQuery({
         queryKey: ['top3Gatherings'],
         queryFn: () => getPopularGatherings(0, 3),
@@ -28,8 +28,8 @@ export function Top3Gatherings() {
     }, [top3Gatherings])
     return (
         <div className={styles.container}>
-            <div onClick={() => navigate('/gathering/participate')} className={styles.width100}>
-                <SectionTitle title="인기 모임" subtitle="참여중인 모임을 확인해보세요" isThereToggle={false} />
+            <div className={styles.width100}>
+                <SectionTitle title="인기 모임" subtitle="산타의 인기 모임을 확인해보세요" />
             </div>
             <Thumbnail data={thumbnails} isHotTopic={false} isIndexChip={false} gatheringLink='/gathering/detail?meetingId' />
         </div>

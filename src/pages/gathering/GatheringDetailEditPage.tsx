@@ -66,8 +66,14 @@ export function GatheringDetailEditPage() {
             setGatheringData(gatheringDetail);
             setTag([...gatheringDetail.tags]);
             setImgFileUrl(gatheringDetail.image);
-            const prevDate = Date.parse(gatheringData.date)
-            setSelectedDate(new Date(prevDate));
+
+            if (gatheringDetail.date) {
+                console.log(gatheringDetail.date, '출력');
+                const newDate = new Date(gatheringDetail.date)
+                console.log(new Date(), newDate);
+                setSelectedDate(newDate);
+            }
+
         }
 
     }, [gatheringDetail, meetingId])

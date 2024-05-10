@@ -48,9 +48,7 @@ export interface TotalChallenge {
   description: string;
   image: string;
   clearStandard: 0;
-  category: {
-    name: string;
-  };
+  categoryName: string;
 }
 
 export interface ProgressChallengeData {

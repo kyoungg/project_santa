@@ -26,7 +26,7 @@ export function MyGatherings() {
     return (
         <div className={styles.container}>
             <div onClick={() => navigate('/gathering/participate')} className={styles.width100}>
-                <SectionTitle title="나의 모임" subtitle="참여중인 모임을 확인해보세요" isThereToggle={false} />
+                <SectionTitle title="나의 모임" subtitle="참여중인 모임을 확인해보세요" targetPageUrl='/gathering/participate' />
             </div>
             {thumbnails.length !== 0 && <Thumbnail data={thumbnails} isHotTopic={false} isIndexChip={false} gatheringLink='/gathering/detail?meetingId' />}
             {thumbnails.length === 0 && <div className={styles.noGatheringText}>참여중인 모임이 없습니다.<br />새로운 모임에 참여해보세요!</div>}
