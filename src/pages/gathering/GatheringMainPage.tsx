@@ -45,21 +45,21 @@ function GatheringMainPage() {
   useEffect(() => {
     setGatheringList([]);
     setPage(0);
-  }, [category]);
+    // queryClient.invalidateQueries({ queryKey: ['gatheringListByCategory', page, category], });
 
+  }, [category]);
 
   useEffect(() => {
     const isSuccess = isFetched && !isError;
 
     if (isSuccess && GatheringListByCategory) {
       if (page === 0) {
-        setGatheringList([...GatheringListByCategory.content]);
-
+        setGatheringList([...GatheringListByCategory?.content]);
       } else {
-        setGatheringList((prevList) => [...prevList, ...GatheringListByCategory.content]);
+        setGatheringList((prevList) => [...prevList, ...GatheringListByCategory?.content]);
       }
     }
-  }, [isFetched, isError, GatheringListByCategory]);
+  }, [isFetched, isError, GatheringListByCategory, category]);
   const currentUserInfo = useUserInfo((data) => data);
 
   return (
@@ -97,11 +97,9 @@ function GatheringMainPage() {
                   attendance: item.participants.length,
                   date: item.date,
                 }}
-
-
                 isLast={
                   GatheringListByCategory &&
-                  GatheringListByCategory?.totalPage >= page &&
+                  GatheringListByCategory?.totalPage > page &&
                   gatheringList.length === index + 1
                 }
                 setPage={setPage}
