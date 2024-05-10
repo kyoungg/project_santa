@@ -15,6 +15,7 @@ import { useCategoryStore } from '/src/store/store';
 import { MyGatherings } from './components/MyGatherings';
 import { Top3Gatherings } from './components/Top3Gatherings';
 import { useUserInfo } from '/src/utils/useUserInfo';
+// import { useCategoryList } from '/src/utils/useCategoryList';
 
 const PAGE_SIZE = 4;
 
@@ -30,8 +31,8 @@ function GatheringMainPage() {
     isFetched,
     isError,
   } = useQuery({
-    queryKey: ['gatheringListByCategory', page],
-    queryFn: () => getGatheringListByCategory(category, page, PAGE_SIZE),
+    queryKey: ['gatheringListByCategory', page, category],
+    queryFn: () => getGatheringListByCategory(category.name, page, PAGE_SIZE),
     select: (data) => {
       return {
         content: data.data.content,
@@ -42,15 +43,22 @@ function GatheringMainPage() {
 
 
   useEffect(() => {
+    console.log('카테고리 변경', category.name)
     setGatheringList([]);
     setPage(0);
   }, [category]);
 
+
   useEffect(() => {
     const isSuccess = isFetched && !isError;
+
     if (isSuccess && GatheringListByCategory) {
-      console.log('total page', GatheringListByCategory.totalPage);
-      setGatheringList((prevList) => [...prevList, ...GatheringListByCategory.content]);
+      if (page === 0) {
+        setGatheringList([...GatheringListByCategory.content]);
+
+      } else {
+        setGatheringList((prevList) => [...prevList, ...GatheringListByCategory.content]);
+      }
     }
   }, [isFetched, isError, GatheringListByCategory]);
   const currentUserInfo = useUserInfo((data) => data);

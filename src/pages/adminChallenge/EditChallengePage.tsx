@@ -14,6 +14,7 @@ import { getChallenge, updateChallenge } from '/src/services/adminChallengesApi'
 import { TotalChallenge } from '/src/services/challengeApi';
 import { paths } from '/src/utils/path';
 import { GatheringCategorySelectBox } from '../gathering/components/GatheringCategorySelectBox';
+import { useCategoryList } from '/src/utils/useCategoryList';
 
 function EditChallengePage() {
   const { id } = useParams();
@@ -21,6 +22,7 @@ function EditChallengePage() {
   const [clearStandard, setClearStandard] = useState<string | null>();
   const [categoryId, setCategoryId] = useState<number>(1);
 
+  const categoryList = useCategoryList((data) => data.data)
   if (!id) return <>error</>;
 
   const fileRef = useRef<HTMLInputElement>(null);
@@ -45,37 +47,11 @@ function EditChallengePage() {
 
   const queryClient = useQueryClient();
 
-  // /** update api 호출 함수 */
-  // const fetchUpdateChallenge = async () => {
-  //   const { name, description, clearStandard, image } = challenge;
-
-  //   // 이미지파일과 이름 둘중 하나라도 없으면 return;
-  //   if (!imageFile || name === '') return;
-
-  //   try {
-  //     const res = await updateChallenge(
-  //       {
-  //         categoryId: 1,
-  //         name,
-  //         description,
-  //         clearStandard,
-  //         imageFile,
-  //         image,
-  //       },
-  //       id,
-  //     );
-
-  //     console.log(res);
-  //     return res;
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // };
-
   /** update를 위한 useMutaion */
   const { mutate: editMutation, data: updateData } = useMutation({
     mutationFn: updateChallenge,
     onSuccess: () => {
+      alert('수정이 완료되었습니다.')
       navigate(paths.ADMIN_CHALLENGE);
       return queryClient.invalidateQueries({ queryKey: ['AdminchallengeList'] });
     },
@@ -90,7 +66,8 @@ function EditChallengePage() {
     if (challenge) {
 
       challengeFormData.append('name', challenge.name);
-      challengeFormData.append('categoryId', categoryId.toString());
+      console.log(categoryId)
+      categoryId && challengeFormData.append('categoryId', categoryId.toString());
       challengeFormData.append('description', challenge.description);
       clearStandard && challengeFormData.append('clearStandard', clearStandard);
       challengeFormData.append('image', challenge.image);
@@ -137,7 +114,8 @@ function EditChallengePage() {
     if (fetchData) {
       setChallenge(fetchData);
       setClearStandard(fetchData.clearStandard.toString());
-
+      setCategoryId(getCategoryId(fetchData.categoryName))
+      console.log(categoryList);
     }
   }, [fetchData]);
 
@@ -154,23 +132,13 @@ function EditChallengePage() {
   if (!fetchData) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
 
-  const CATEGORY = [
-    { id: 1, name: '등산' },
-    { id: 2, name: '기타' },
-    { id: 3, name: '힐링' },
-    { id: 4, name: '식도락' },
-    { id: 5, name: '정상깨기' },
-    { id: 6, name: '백패킹' },
-    { id: 7, name: '출사' },
-  ];
-
   const getCategoryId = (name: string) => {
-    for (let i = 0; i < CATEGORY.length; i++) {
-      if (CATEGORY[i].name === name) {
-        return CATEGORY[i].id;
-      }
+    console.log(name);
+    if (categoryList) {
+      console.log(categoryList)
+      const selectedCategory = categoryList.find((category: { name: string; }) => category.name === name);
+      return selectedCategory.id
     }
-    return undefined;
   };
   return (
     <div className={styles.container}>
@@ -178,7 +146,7 @@ function EditChallengePage() {
       <div className={styles.editMiddle}>
         <div onClick={handleRefClick}>
           {previewImage ? (
-            <img src={previewImage} alt="preview" />
+            <img src={previewImage} alt="preview" className={styles.inputImg} />
           ) : (
             <img src={challenge.image} alt="사진 수정하기" className={styles.inputImg} />
           )}
@@ -191,8 +159,7 @@ function EditChallengePage() {
           onChange={handleChangeImageFile}
           style={{ visibility: 'hidden' }}
         />
-        <div>
-
+        <div className={styles.contentContainer}>
           <div>제목</div>
           <input type="text" value={challenge.name} name="name" onChange={handleChange} className={styles.inputName} />
           <div>소개</div>

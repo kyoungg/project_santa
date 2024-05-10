@@ -207,20 +207,20 @@ export function GatheringDetailPage() {
             <div className={styles.subtitle1}>참여인원</div>
             <div className={styles.profileListContainer}>
               {gatheringDetail?.participants.map((participant, index) => (
-                <div className={styles.profileContainer} key={`${participant.userId} ${participant.userName}`}>
+                <div className={styles.profileContainer} key={`${participant.userId} ${participant.userNickname}`}>
                   <div onClick={() => handleReport(index)}>
                     {isProfileClicked[index] && (<div className={styles.reportBtn} onClick={() => handleClickReportBtn(participant.userId)}>신고</div>)}
-                    <VerticalProfile name={participant.userName} imageUrl="/images/defaultProfile.png" />
+                    <VerticalProfile name={participant.userNickname} imageUrl={participant.userImage} />
                   </div>
                 </div>
               ))}
             </div>
           </div>
-          {isClosed ? (
-            <Button variant="gray">이미 종료된 모임입니다</Button>
+          {isSameUser ? (
+            <Button variant="green3" onClick={handleCloseGathering}>모임 종료하기</Button>
           ) : (
-            isSameUser ? (
-              <Button variant="green3" onClick={handleCloseGathering}>모임 종료하기</Button>
+            isClosed ? (
+              <Button variant="gray">이미 종료된 모임입니다</Button>
             ) : (
               <Button variant="green3" onClick={handleJoinGathering}>참가신청하기</Button>
             )

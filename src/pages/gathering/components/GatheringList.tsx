@@ -45,7 +45,7 @@ export function GatheringList({
       className={styles.gatheringListContainer}
       ref={(_ref) => {
         if (isLast) {
-          // console.log('ref 할당', gatheringInfo.title);
+          console.log('ref 할당', gatheringInfo.title);
           targetRef.current = _ref;
         }
       }}
@@ -58,7 +58,7 @@ export function GatheringList({
         <div className={`${styles.infoContainer} ${styles.body2}`}>
           <div className={styles.tag}>{gatheringInfo.tag}</div>
           {/* 5글자 까지만 들어가도록 */}
-          <div>{gatheringInfo.mountain.substring(0, 5)}</div>
+          <div>{gatheringInfo.mountain}</div>
           <div>
             {gatheringInfo.attendance}/{gatheringInfo.capacity}(명)
           </div>

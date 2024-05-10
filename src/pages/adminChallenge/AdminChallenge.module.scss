@@ -4,6 +4,7 @@
 .container {
   @include setting;
   @include flex-center-col;
+  height: 100%;
 }
 
 .selectTabBar {
@@ -115,10 +116,15 @@
 
   padding-top: 40px;
 
-  width: 232px;
+  // width: 232px;
+  width: 100%;
+
   .inputImg {
     width: 100%;
+    object-fit: cover;
+    height: 100%;
   }
+
   .inputName {
     height: 40px;
     width: 100%;
@@ -129,6 +135,7 @@
 
     background-color: #f9f9f9;
   }
+
   .inputDescription {
     height: 150px;
     width: 100%;
@@ -161,6 +168,7 @@
   align-items: center;
 
   width: 232px;
+
   .imgContainer {
     display: flex;
     align-items: center;
@@ -171,17 +179,20 @@
     padding-bottom: 10px;
 
     border-radius: 50%;
+
     img {
       width: 100%;
       height: 100%;
       border-radius: 50%;
     }
   }
+
   .inputImg {
     width: 90%;
     height: 90%;
     margin-bottom: 10px;
   }
+
   .inputName {
     height: 40px;
     width: 100%;
@@ -192,10 +203,11 @@
 
     background-color: #f9f9f9;
   }
-  .inputDescription {
-    height: 150px;
-    width: 100%;
 
+  .inputDescription {
+    height: 5rem;
+    width: 100%;
+    outline: none;
     margin: 10px 0;
 
     border-style: none;
@@ -203,6 +215,7 @@
 
     background-color: #f9f9f9;
   }
+
   .textInputCintainer {
     padding-top: 10px;
   }
@@ -215,6 +228,7 @@
   align-items: flex-start;
 
   width: 100%;
+
   .label {
     @include font-body2;
   }
@@ -223,4 +237,10 @@
 .categoryLabel {
   @include font-body2;
   padding-bottom: 5px;
+}
+
+.contentContainer {
+  width: 100%;
+  margin-bottom: 2rem;
+  gap: 0.2rem;
 }

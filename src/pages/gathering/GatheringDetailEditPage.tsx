@@ -34,6 +34,7 @@ export function GatheringDetailEditPage() {
                 userId: 0,
                 userName: '',
                 userImage: '',
+                userNickname: '',
             }
         ]
     });
