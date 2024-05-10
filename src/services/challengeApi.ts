@@ -116,6 +116,15 @@ export interface TrophyType {
   progress: 1;
 }
 
+export interface ChallengeDetail {
+  categoryName: string;
+  clearStandard: 12;
+  description: string;
+  id: number;
+  image: string;
+  name: string;
+}
+
 //챌린지 페이지 무한스크롤 적용 후 삭제해야함
 export const getAllChallenge = async (page?: number, size?: number) => {
   return await api.get<AllChallengeResponse>(`challenges?page=${page}&size=${size}`);
@@ -135,4 +144,9 @@ export const getChallengeList = async (): Promise<ThumbnailChallenge[]> => {
   const url = `challenges?page=${0}&size=${3}`;
   const res = await api.get(url);
   return res.data.content;
+};
+
+export const getChallengeDetail = async (id: number) => {
+  const response = await api.get<ChallengeDetail>(`challenges/${id}`);
+  return response.data;
 };

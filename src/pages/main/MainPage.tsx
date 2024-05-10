@@ -47,7 +47,7 @@ export default function Main() {
               targetPageUrl={paths.CHALLENGE}
             />
             {challenges ? (
-              <Thumbnail data={challenges} isHotTopic={true} isIndexChip={true} />
+              <Thumbnail data={challenges} isHotTopic={true} isIndexChip={true} challengeLink="/gathering/detail?id" />
             ) : (
               <div className={styles.noData}>로그인하고 챌린지를 확인하세요!</div>
             )}

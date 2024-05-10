@@ -2,6 +2,7 @@ export const paths = {
   HOME: '/',
   RANK: '/rank',
   CHALLENGE: '/challenge',
+  CHALLENGE_DETAIL: '/challenge/detail',
   GATHERING: '/gathering',
   GATHERING_SEARCH: '/gathering/search',
   GATHERING_SEARCHRESULT: '/gathering/search/result',
