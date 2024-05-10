@@ -3,7 +3,7 @@ import { TotalChallenge } from './challengeApi';
 
 export interface AddChallengeForm {
   name: string;
-  categoryId: number;
+  categoryName: string;
   description: string;
   clearStandard: number;
   imageFile: File;
@@ -53,12 +53,12 @@ export const getChallenge = async (id: string): Promise<TotalChallenge> => {
 //   return api.patch(`${url}/${id}`, formdata, config);
 // };
 
-export function updateChallenge({ id, data }: { id: string, data: FormData }) {
+export function updateChallenge({ id, data }: { id: string; data: FormData }) {
   return api.patch(`${url}/${id}`, data, {
     headers: {
       'Content-Type': 'multipart/form-data',
-    }
-  })
+    },
+  });
 }
 export const deleteChallenge = async (id: number) => {
   return api.delete(`${url}/${id}`);
