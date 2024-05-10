@@ -8,16 +8,14 @@ import { useEffect, useState } from 'react';
 import { ThumbnailChallenge } from '/src/services/challengeApi';
 export function Top3Gatherings() {
     // const navigate = useNavigate();
-    const { data: top3Gatherings } = useQuery({
+    const { data: top3Gatherings, isFetched, isError } = useQuery({
         queryKey: ['top3Gatherings'],
         queryFn: () => getPopularGatherings(0, 3),
         select: (data) => data.data.content,
     })
     const [thumbnails, setThumbnails] = useState<ThumbnailChallenge[]>([]);
     useEffect(() => {
-        console.log('top3', top3Gatherings);
-        if (top3Gatherings !== undefined) {
-
+        if (isFetched && !isError && top3Gatherings) {
             const thumbnailsArray = Array.from({ length: 3 }, (_, index) => ({
                 id: top3Gatherings[index]?.meetingId,
                 name: top3Gatherings[index]?.meetingName,

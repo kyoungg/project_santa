@@ -11,7 +11,6 @@ export function SearchKeyword() {
   // const [recommendedKeywords, setRecommendedKeywords] = useState<string[]>([]);
   function deleteSearchKeyword(index: number) {
     const newArr = [...searchKeywords.slice(0, index), ...searchKeywords.slice(index + 1)];
-    console.log(index, newArr, searchKeywords[index]);
     setSearchKeywords(newArr);
   }
 

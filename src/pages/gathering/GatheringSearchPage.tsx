@@ -15,7 +15,6 @@ export function GatheringSearchPage() {
 
   function handleClickSearchBtn() {
     navigate(`/gathering/search/result?keyword=${searchValue}`)
-    console.log('검색어', searchValue);
   }
 
   return (

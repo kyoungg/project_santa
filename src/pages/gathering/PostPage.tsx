@@ -63,7 +63,6 @@ export function PostPage() {
 
   function deleteTag(index: number) {
     const newArr = [...tag.slice(0, index), ...tag.slice(index + 1)];
-    console.log(index, newArr, tag[index]);
     setTag(newArr);
   }
 
@@ -75,7 +74,6 @@ export function PostPage() {
       reader.readAsDataURL(file);
 
       reader.onload = () => {
-        console.log(typeof reader.result);
         if (reader.result !== null && typeof reader.result === 'string') {
           setImgFileUrl(reader.result);
         }
@@ -98,8 +96,6 @@ export function PostPage() {
       else if (error.message.includes('409')) {
         alert('해당 날짜에 이미 참여중인 모임이 있습니다.');
       }
-      // console.log('error 내용', error.response.status, error)
-
     }
   });
 
@@ -114,9 +110,6 @@ export function PostPage() {
     })
     gatheringFormData.append('date', postData.date)
 
-    gatheringFormData.forEach((value, key) => {
-      console.log(`${key}: ${value}`);
-    });
     if (imgFile) {
       gatheringFormData.append('imageFile', imgFile); // 이미지 파일 추가
     }

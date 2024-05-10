@@ -7,8 +7,6 @@ export default function ChallengeDetailPage() {
   const id = new URL(window.location.href).searchParams.get('id');
   const challengeId = Number(id);
 
-  console.log(challengeId);
-
   const {
     data: challenge,
     isError,
@@ -19,8 +17,6 @@ export default function ChallengeDetailPage() {
     select: (data) => data,
     staleTime: Infinity,
   });
-
-  console.log('challengeData', challenge);
 
   return (
     <>

@@ -63,15 +63,12 @@ export function GatheringDetailEditPage() {
     useEffect(() => {
 
         if (isSuccess && !isError && gatheringDetail) {
-            console.log('데이터 가져오기 성공', gatheringDetail)
             setGatheringData(gatheringDetail);
             setTag([...gatheringDetail.tags]);
             setImgFileUrl(gatheringDetail.image);
 
             if (gatheringDetail.date) {
-                console.log(gatheringDetail.date, '출력');
                 const newDate = new Date(gatheringDetail.date)
-                console.log(new Date(), newDate);
                 setSelectedDate(newDate);
             }
 
@@ -98,7 +95,6 @@ export function GatheringDetailEditPage() {
 
     function deleteTag(index: number) {
         const newArr = [...gatheringData.tags.slice(0, index), ...gatheringData.tags.slice(index + 1)];
-        console.log(index, newArr, gatheringData.tags[index]);
         setTag(newArr);
     }
 
@@ -110,12 +106,10 @@ export function GatheringDetailEditPage() {
             reader.readAsDataURL(file);
 
             reader.onload = () => {
-                console.log(typeof reader.result);
                 if (reader.result !== null && typeof reader.result === 'string') {
                     setImgFileUrl(reader.result);
                 }
             };
-            console.log(file);
         }
     }
     function formattingDate(date: Date): string {
@@ -149,10 +143,6 @@ export function GatheringDetailEditPage() {
             gatheringFormData.append(`tags[${index}]`, tagItem)
         })
         gatheringFormData.append('date', gatheringData.date)
-
-        gatheringFormData.forEach((value, key) => {
-            console.log(`${key}: ${value}`);
-        });
         if (imgFile) {
             gatheringFormData.append('imageFile', imgFile); // 이미지 파일 추가
             gatheringFormData.append('image', gatheringData.image);

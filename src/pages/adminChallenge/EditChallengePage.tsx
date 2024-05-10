@@ -14,15 +14,13 @@ import { getChallenge, updateChallenge } from '/src/services/adminChallengesApi'
 import { TotalChallenge } from '/src/services/challengeApi';
 import { paths } from '/src/utils/path';
 import { GatheringCategorySelectBox } from '../gathering/components/GatheringCategorySelectBox';
-import { useCategoryList } from '/src/utils/useCategoryList';
 
 function EditChallengePage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [clearStandard, setClearStandard] = useState<string | null>();
-  const [categoryId, setCategoryId] = useState<number>(1);
+  const [categoryName, setCategoryName] = useState<string>('');
 
-  const categoryList = useCategoryList((data) => data.data)
   if (!id) return <>error</>;
 
   const fileRef = useRef<HTMLInputElement>(null);
@@ -48,7 +46,7 @@ function EditChallengePage() {
   const queryClient = useQueryClient();
 
   /** update를 위한 useMutaion */
-  const { mutate: editMutation, data: updateData } = useMutation({
+  const { mutate: editMutation } = useMutation({
     mutationFn: updateChallenge,
     onSuccess: () => {
       alert('수정이 완료되었습니다.')
@@ -66,8 +64,7 @@ function EditChallengePage() {
     if (challenge) {
 
       challengeFormData.append('name', challenge.name);
-      console.log(categoryId)
-      categoryId && challengeFormData.append('categoryId', categoryId.toString());
+      challengeFormData.append('categoryName', categoryName);
       challengeFormData.append('description', challenge.description);
       clearStandard && challengeFormData.append('clearStandard', clearStandard);
       challengeFormData.append('image', challenge.image);
@@ -75,7 +72,6 @@ function EditChallengePage() {
         challengeFormData.append('imageFile', imageFile);
       }
 
-      console.log(challenge, id);
       editMutation({ id: id, data: challengeFormData });
     }
   };
@@ -109,37 +105,17 @@ function EditChallengePage() {
   };
 
   useEffect(() => {
-    console.log('----edit challenge---');
-    console.log(fetchData);
     if (fetchData) {
       setChallenge(fetchData);
       setClearStandard(fetchData.clearStandard.toString());
-      setCategoryId(getCategoryId(fetchData.categoryName))
-      console.log(categoryList);
+      setCategoryName(fetchData.categoryName)
     }
   }, [fetchData]);
 
-  useEffect(() => {
-    console.log('챌린지출력', challenge);
-    console.log(challenge.categoryName);
-  }, [challenge])
-
-  useEffect(() => {
-    console.log('-----update data---');
-    console.log(updateData);
-  }, [updateData]);
 
   if (!fetchData) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
 
-  const getCategoryId = (name: string) => {
-    console.log(name);
-    if (categoryList) {
-      console.log(categoryList)
-      const selectedCategory = categoryList.find((category: { name: string; }) => category.name === name);
-      return selectedCategory.id
-    }
-  };
   return (
     <div className={styles.container}>
       <TitleContainer title="챌린지 관리" />
@@ -181,8 +157,9 @@ function EditChallengePage() {
           {challenge.categoryName !== '' && (<GatheringCategorySelectBox
             defaultValue={challenge?.categoryName}
             onChange={(e) => {
-              const categoryId = getCategoryId(e.target.value);
-              categoryId && setCategoryId(categoryId);
+              // const categoryId = getCategoryId(e.target.value);
+
+              categoryName && setCategoryName(e.target.value);
             }}
           />)}
         </div>

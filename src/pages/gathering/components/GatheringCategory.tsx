@@ -12,7 +12,6 @@ export function GatheringCategory() {
 
   const [categories, setCategories] = useState<GatheringCategoryType[]>([]);
   useEffect(() => {
-    console.log('선택된 카테고리 : ', category,)
     if (categoryList) {
       setCategories([{ id: 0, name: '맞춤추천' }, ...categoryList])
     }

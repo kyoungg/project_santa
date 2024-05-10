@@ -1,5 +1,5 @@
 import styles from '../AdminChallenge.module.scss';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addChallenge } from '/src/services/adminChallengesApi';
 import { GatheringCategorySelectBox } from '../../gathering/components/GatheringCategorySelectBox';
@@ -47,7 +47,7 @@ function AddChallenge({ setIsItPosting }: Props) {
     }
   };
 
-  const { mutate, data } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: fetchCreateChallenge,
     onSuccess: () => {
       if (!imageFile) {
@@ -81,10 +81,6 @@ function AddChallenge({ setIsItPosting }: Props) {
   const handleUpload = () => {
     mutate();
   };
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   const getCategoryId = (name: string) => {
     for (let i = 0; i < CATEGORY.length; i++) {

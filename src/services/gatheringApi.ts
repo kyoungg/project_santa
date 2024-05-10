@@ -99,8 +99,8 @@ export async function postGathering(data: FormData) {
 }
 
 //검색 결과 조회 api
-export async function getGatheringSearchResult(tag: string) {
-  return await api.get(`meetings/tag-search?tag=${tag}`);
+export async function getGatheringSearchResult(tag: string, page: number, size: number) {
+  return await api.get<GatheringListResponse>(`meetings/tag-search?tag=${tag}&page=${page}&size=${size}`);
 }
 
 //모임 상세보기 api

@@ -43,7 +43,6 @@ function GatheringMainPage() {
 
 
   useEffect(() => {
-    console.log('카테고리 변경', category.name)
     setGatheringList([]);
     setPage(0);
   }, [category]);

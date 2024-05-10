@@ -9,11 +9,11 @@ const PAGE_SIZE = 4;
 
 export function AdminReportPage() {
     const [page, setPage] = useState(0);
-    const [reportDataList, setReportDataList] = useState<reportsType[]>([])
+    const [reportDataList, setReportDataList] = useState<reportsType[]>([]);
     const queryClient = useQueryClient();
     const { data: reportData, isFetched,
         isError } = useQuery({
-            queryKey: ['userSearch', page],
+            queryKey: ['userSearch', page, reportDataList],
             queryFn: () => getReportData(page, PAGE_SIZE),
             select: (data) => {
                 return {
@@ -23,28 +23,31 @@ export function AdminReportPage() {
             }
 
         })
-    useEffect(() => {
-        console.log(reportData);
-    }, [reportData])
 
     const { mutate: deleteMutation } = useMutation({
         mutationFn: deleteReport,
         onSuccess: () => {
-            setReportDataList([]);
-            setPage(0);
             queryClient.invalidateQueries({ queryKey: ['userSearch', page] });
+            setPage(0);
+            setReportDataList([]);
+            alert('삭제되었습니다');
+            window.location.reload();
+
         }
     });
+
     function handleDeleteBtn(reportId: number) {
-        console.log('삭제!!!!!!!!!!');
         deleteMutation(reportId);
     }
 
     useEffect(() => {
         const isSuccess = isFetched && !isError;
-
-        if (isSuccess && reportData !== undefined) {
-            setReportDataList(prevList => [...prevList, ...reportData.content]);
+        if (isSuccess && reportData) {
+            if (page === 0) {
+                setReportDataList([...reportData.content]);
+            } else {
+                setReportDataList(prevList => [...prevList, ...reportData.content]);
+            }
 
         }
 

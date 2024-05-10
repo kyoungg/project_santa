@@ -38,60 +38,34 @@ export function AdminUserPage() {
     useEffect(() => {
         const isSuccess = isFetched && !isError;
 
-        if (isSuccess && userData !== undefined) {
+        if (isSuccess && userData) {
+
             if (page === 0) {
                 setUserDataList([...userData?.content])
             } else {
                 setUserDataList(prevList => [...prevList, ...userData?.content]);
-
             }
 
         }
 
     }, [isFetched, isError, userData, searchValue]);
 
-    // useEffect(() => {
-    //     if (
-    //         isSuccess &&
-    //         userData !== undefined &&
-    //         userDataList.length < PAGE_SIZE * (page + 1) &&
-    //         userDataList.length < userData.totalElements
-    //     ) {
-    //         setUserDataList((prevList) => {
-    //             if (prevList === undefined) {
-    //                 return userData.content;
-    //             }
-    //             return [...prevList, ...userData.content];
-    //         });
-    //     }
-    // }, [isSuccess, userData, searchValue]);
-    // useEffect(() => {
-    //     if (isSuccess && userData !== undefined) {
-    //         setUserDataList(prevList => [...prevList, ...userData.content]);
-    //     }
-    // }, [isSuccess, userData]);
-
-    const initUserList = () => {
-        // console.log('초기화');
-        // setUserDataList([]);
-        // setPage(0);
-        queryClient.invalidateQueries({ queryKey: ['userSearch', searchValue] });
-    };
-
     const { mutate: deleteMutation } = useMutation({
         mutationFn: deleteUser,
         onSuccess: () => {
-            console.log('삭제완')
-            initUserList()
+            queryClient.invalidateQueries({ queryKey: ['userSearch', searchValue, page] });
+            setUserDataList([]);
+            setPage(0);
+            alert('삭제되었습니다');
+            window.location.reload();
+
+
+
         }
     });
     function handleDeleteBtnClick(id: number) {
         //id를 받아서 삭제
-        console.log('삭제');
-        setPage(0);
         deleteMutation(id);
-
-
     }
 
     function handleInputChange(e: ChangeEvent<HTMLInputElement>) {

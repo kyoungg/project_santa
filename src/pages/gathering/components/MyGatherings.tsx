@@ -10,7 +10,6 @@ export function MyGatherings() {
     useEffect(() => {
         async function fetchData() {
             const res = await getMyGatherings(0, 3);
-            console.log(res.data.content);
             setThumbnails(res.data.content);
 
         }
