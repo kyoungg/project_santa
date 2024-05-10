@@ -1,13 +1,13 @@
 import { create } from 'zustand';
-import { GatheringCategory } from '../services/gatheringApi';
+import { GatheringCategoryType } from '../services/gatheringApi';
 //카테고리 상태 관리
 interface CategoryState {
-  category: GatheringCategory;
-  setCategory: (category: GatheringCategory) => void;
+  category: GatheringCategoryType;
+  setCategory: (category: GatheringCategoryType) => void;
 }
 
 export const useCategoryStore = create<CategoryState>((set) => ({
-  category: '등산',
+  category: { id: 1, name: '등산' },
   setCategory: (category) => set({ category: category }),
 }));
 

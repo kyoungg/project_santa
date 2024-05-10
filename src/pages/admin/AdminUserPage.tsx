@@ -21,7 +21,7 @@ export function AdminUserPage() {
         nickname: string;
         reportCount: number;
     }
-    const { data: userData, isSuccess } = useQuery({
+    const { data: userData, isFetched, isError } = useQuery({
         queryKey: ['userSearch', searchValue, page],
         queryFn: () => userSearchApi(searchValue, page, PAGE_SIZE),
         select: (data) => {
@@ -35,43 +35,46 @@ export function AdminUserPage() {
     })
 
 
-    // useEffect(() => {
-    //     const isSuccess = isFetched && !isError;
-
-    //     if (isSuccess && userData !== undefined) {
-    //         console.log(userData)
-    //         console.log(userData?.content);
-    //         console.log(userData?.totalPage);
-    //         setUserDataList(prevList => [...prevList, ...userData?.content]);
-    //     }
-
-    // }, [isFetched, isError, userData, searchValue]);
-
     useEffect(() => {
-        if (
-            isSuccess &&
-            userData !== undefined &&
-            userDataList.length < PAGE_SIZE * (page + 1) &&
-            userDataList.length < userData.totalElements
-        ) {
-            setUserDataList((prevList) => {
-                if (prevList === undefined) {
-                    return userData.content;
-                }
-                return [...prevList, ...userData.content];
-            });
-        }
-    }, [isSuccess, userData, searchValue]);
-    useEffect(() => {
+        const isSuccess = isFetched && !isError;
+
         if (isSuccess && userData !== undefined) {
-            setUserDataList(prevList => [...prevList, ...userData.content]);
+            if (page === 0) {
+                setUserDataList([...userData?.content])
+            } else {
+                setUserDataList(prevList => [...prevList, ...userData?.content]);
+
+            }
+
         }
-    }, [isSuccess, userData]);
+
+    }, [isFetched, isError, userData, searchValue]);
+
+    // useEffect(() => {
+    //     if (
+    //         isSuccess &&
+    //         userData !== undefined &&
+    //         userDataList.length < PAGE_SIZE * (page + 1) &&
+    //         userDataList.length < userData.totalElements
+    //     ) {
+    //         setUserDataList((prevList) => {
+    //             if (prevList === undefined) {
+    //                 return userData.content;
+    //             }
+    //             return [...prevList, ...userData.content];
+    //         });
+    //     }
+    // }, [isSuccess, userData, searchValue]);
+    // useEffect(() => {
+    //     if (isSuccess && userData !== undefined) {
+    //         setUserDataList(prevList => [...prevList, ...userData.content]);
+    //     }
+    // }, [isSuccess, userData]);
 
     const initUserList = () => {
-        console.log('초기화');
-        setUserDataList([]);
-        setPage(0);
+        // console.log('초기화');
+        // setUserDataList([]);
+        // setPage(0);
         queryClient.invalidateQueries({ queryKey: ['userSearch', searchValue] });
     };
 
@@ -85,6 +88,7 @@ export function AdminUserPage() {
     function handleDeleteBtnClick(id: number) {
         //id를 받아서 삭제
         console.log('삭제');
+        setPage(0);
         deleteMutation(id);
 
 

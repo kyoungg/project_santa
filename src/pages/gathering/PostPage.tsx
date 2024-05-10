@@ -110,7 +110,7 @@ export function PostPage() {
     gatheringFormData.append('headcount', postData.headcount);
     gatheringFormData.append('description', postData.description);
     postData.tags.forEach((tagItem, index) => {
-      gatheringFormData.append(`tags[${index}]`, tagItem)
+      gatheringFormData.append(`tags[${index}]`, tagItem.trim())
     })
     gatheringFormData.append('date', postData.date)
 

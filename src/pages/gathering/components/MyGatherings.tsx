@@ -1,31 +1,32 @@
-import { useNavigate } from 'react-router-dom'
 import styles from '../../../styles/gathering/gatheringMain.module.scss';
 import SectionTitle from '/src/components/SectionTitle';
-import { useQuery } from '@tanstack/react-query';
-import { getMyGatherings } from '/src/services/gatheringApi';
+import { GatheringListByCategory, getMyGatherings } from '/src/services/gatheringApi';
 import Thumbnail from '/src/components/Thumbnail';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export function MyGatherings() {
-    const navigate = useNavigate();
-    const { data: myGatherings } = useQuery({
-        queryKey: ['myGatherings'],
-        queryFn: () => getMyGatherings(0, 3),
-        select: (data) => data.data.content,
-    })
 
+    const [_thumbnails, setThumbnails] = useState<GatheringListByCategory[]>([]);
     useEffect(() => {
-        console.log(myGatherings);
-    }, [myGatherings])
-    const thumbnails = myGatherings && myGatherings.length > 0 ?
+        async function fetchData() {
+            const res = await getMyGatherings(0, 3);
+            console.log(res.data.content);
+            setThumbnails(res.data.content);
+
+        }
+
+        fetchData();
+    }, [])
+
+    const thumbnails = _thumbnails && _thumbnails.length > 0 ?
         Array.from({ length: 3 }, (_, index) => ({
-            id: myGatherings[index]?.meetingId,
-            name: myGatherings[index]?.meetingName,
-            image: myGatherings[index]?.image
+            id: _thumbnails[index]?.meetingId,
+            name: _thumbnails[index]?.meetingName,
+            image: _thumbnails[index]?.image
         })) : [];
     return (
         <div className={styles.container}>
-            <div onClick={() => navigate('/gathering/participate')} className={styles.width100}>
+            <div className={styles.width100}>
                 <SectionTitle title="나의 모임" subtitle="참여중인 모임을 확인해보세요" targetPageUrl='/gathering/participate' />
             </div>
             {thumbnails.length !== 0 && <Thumbnail data={thumbnails} isHotTopic={false} isIndexChip={false} gatheringLink='/gathering/detail?meetingId' />}
