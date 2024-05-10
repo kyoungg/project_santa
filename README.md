@@ -156,9 +156,30 @@ npm run dev
 
 ## 기술 스택
 
-- 프론트엔드 : 리액트, Zustand, TanStack Query, SCSS, Husky, Gitlab CI/CD, React-hook-form
-- 백엔드: SpringBoot, SpringSecurity, JPA ,MySQL, Postman, JAVA 17, open jdk, jwt
-- 서버 : 도커, Nginx, Jenkins , AWS EC2 ,RDS, S3, ElastiCache
+> 프론트엔드
+
+<img alt="typescript" src ="https://img.shields.io/badge/typescript-3178C6.svg?&style=for-the-badge&logo=typescript&logoColor=white"/> <img alt="react" src ="https://img.shields.io/badge/react-61DAFB.svg?&style=for-the-badge&logo=react&logoColor=white"/> <img alt="TanStack Query" src ="https://img.shields.io/badge/TanStack Query-FF4154.svg?&style=for-the-badge&logo=reactquery&logoColor=white"/>, 
+<img alt="gitlab" src ="https://img.shields.io/badge/gitlab-FC6D26.svg?&style=for-the-badge&logo=gitlab&logoColor=white"/>
+<img alt="sass" src ="https://img.shields.io/badge/saaa-CC6699.svg?&style=for-the-badge&logo=sass&logoColor=white"/>
+<img alt="reacthookform" src ="https://img.shields.io/badge/reacthookform-EC5990.svg?&style=for-the-badge&logo=reacthookform&logoColor=white"/>
+
+> 백엔드
+
+<img alt="springboot" src ="https://img.shields.io/badge/springboot-6DB33F.svg?&style=for-the-badge&logo=springboot&logoColor=white"/>
+
+<img alt="springsecurity" src ="https://img.shields.io/badge/springsecurity-6DB33F.svg?&style=for-the-badge&logo=springsecurity&logoColor=white"/>
+<img alt="mysql" src ="https://img.shields.io/badge/mysql-4479A1.svg?&style=for-the-badge&logo=mysql&logoColor=white"/>
+<img alt="postman" src ="https://img.shields.io/badge/postman-FF6C37.svg?&style=for-the-badge&logo=postman&logoColor=white"/> 
+
+
+> 서버
+
+<img alt="docker" src ="https://img.shields.io/badge/docker-2496ED.svg?&style=for-the-badge&logo=docker&logoColor=white"/>
+<img alt="nginx" src ="https://img.shields.io/badge/nginx-009639.svg?&style=for-the-badge&logo=nginx&logoColor=white"/>
+<img alt="jenkins" src ="https://img.shields.io/badge/jenkins-D24939.svg?&style=for-the-badge&logo=jenkins&logoColor=white"/>
+<img alt="amazon aws" src ="https://img.shields.io/badge/amazon aws-232F3E.svg?&style=for-the-badge&logo=amazonaws&logoColor=white"/>
+<img alt="amazon ec2" src ="https://img.shields.io/badge/amazon ec2-FF9900.svg?&style=for-the-badge&logo=amazonec2&logoColor=white"/>
+<img alt="amazonelasticache" src ="https://img.shields.io/badge/amazon elasticache-C925D1.svg?&style=for-the-badge&logo=amazonelasticache&logoColor=white"/>
 
 ## 역할담당
 | 훈련생 | 역할 | 담당업무 |
@@ -166,8 +187,8 @@ npm run dev
 | 옥찬혁 | 팀장 <br> 백엔드 |- 챌린지 <br> - 정상 인증 <br> - 랭킹 <br>- AOP 로깅 <br>- Jenkins |
 | 나정균 | 팀원<br> 백엔드 | - 유저<br>- 시큐리티<br>- Jenkins |
 | 민지원 | 팀원<br> 백엔드 | - 모임<br>- 카테고리<br>- 신고<br>- 이미지 업로드(S3)<br>- Docker<br>- Jenkins |
-| 김경혜 | 팀원<br> 프론트 |  |
-| 윤혜원 | 팀원<br> 프론트 |  |
+| 김경혜 | 팀원<br> 프론트 | - route layout<br>- nav,footer<br>- 로그인, 회원가입<br>- 소셜로그인<br>- 카테고리<br>- 유저 프로필 페이지 <br>- geolocation api 인증<br>- 산 목록<br>- 트로피, 챌린지 페이지 |
+| 윤혜원 | 팀원<br> 프론트 | - 모임 조회 및 관리<br>- 게시글 업로드 및 수정<br>- 모임 검색 <br>- 관리자 유저,신고,카테고리<br>- 무한스크롤 |
 | 진채영 | 팀원<br> 프론트 |- husky를 통한 타입체커, lint체크 <br>- gitlab CI/CD 자동 배포<br>- Rank 페이지 api/UI<br>- Main 페이지 api/UI<br>- 관리자 챌린지 api crud |
 | 김정현 | 코치 | 주제 선정 피드백, 프로젝트 질의응답 |
 | 송재천 | 코치 | 주제 선정 피드백, 프로젝트 질의응답 |
