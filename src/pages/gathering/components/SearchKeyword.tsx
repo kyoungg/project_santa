@@ -15,7 +15,7 @@ export function SearchKeyword() {
     setSearchKeywords(newArr);
   }
 
-  //인기 모임의 태그를 기반으로 검색어 추천 
+  //인기 모임의 태그를 기반으로 검색어 추천
   // const { data: popularKeywords, isSuccess } = useQuery({
   //   queryKey: ['popularKeywords'],
   //   queryFn: () => getPopularGatherings(0, 10),
@@ -50,18 +50,19 @@ export function SearchKeyword() {
           </div>
         </div>
         <div className={`${styles.containerRow} ${styles.wrap}`}>
-          {searchKeywords.length !== 0 && searchKeywords.map((item, index) => (
-            <div className={styles.chipContainer}>
-              <Chips variant="green1">
-                <div className={styles.chipContainer}>
-                  {item}
-                  {isDeleted && (
-                    <IoCloseOutline className={styles.closeBtn} onClick={() => deleteSearchKeyword(index)} />
-                  )}
-                </div>
-              </Chips>
-            </div>
-          ))}
+          {searchKeywords.length !== 0 &&
+            searchKeywords.map((item, index) => (
+              <div className={styles.chipContainer}>
+                <Chips variant="green1">
+                  <div className={styles.chipContainer}>
+                    {item}
+                    {isDeleted && (
+                      <IoCloseOutline className={styles.closeBtn} onClick={() => deleteSearchKeyword(index)} />
+                    )}
+                  </div>
+                </Chips>
+              </div>
+            ))}
         </div>
       </div>
       <div className={styles.containerCol}>
@@ -69,18 +70,18 @@ export function SearchKeyword() {
           <div className={styles.subtitle1}>추천검색어</div>
         </div>
         <div className={`${styles.containerRow} ${styles.wrap}`}>
-          <Chips variant="green2">dkdk</Chips>
-          <Chips variant="green2">dkdk</Chips>
-          <Chips variant="green2">dkdk</Chips>
-          <Chips variant="green2">dkdk</Chips>
-          <Chips variant="green2">dkdk</Chips>
-          <Chips variant="green2">dkdk</Chips>
-          <Chips variant="green2">dkdk</Chips>
-          <Chips variant="green2">dkdk</Chips>
-          <Chips variant="green2">dkdk</Chips>
-          <Chips variant="green2">dkdk</Chips>
-          <Chips variant="green2">dkdk</Chips>
-          <Chips variant="green2">dkdk</Chips>
+          <Chips variant="green2">인왕산</Chips>
+          <Chips variant="green2">지리산</Chips>
+          <Chips variant="green2">관악산</Chips>
+          <Chips variant="green2">두무산</Chips>
+          <Chips variant="green2">하설산</Chips>
+          <Chips variant="green2">적상산</Chips>
+          <Chips variant="green2">곤천산</Chips>
+          <Chips variant="green2">한라산</Chips>
+          <Chips variant="green2">태백산</Chips>
+          <Chips variant="green2">백두산</Chips>
+          <Chips variant="green2">소백산</Chips>
+          <Chips variant="green2">북한산</Chips>
         </div>
       </div>
     </div>
