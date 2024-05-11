@@ -17,7 +17,7 @@ import { Top3Gatherings } from './components/Top3Gatherings';
 import { useUserInfo } from '/src/utils/useUserInfo';
 // import { useCategoryList } from '/src/utils/useCategoryList';
 
-const PAGE_SIZE = 4;
+const PAGE_SIZE = 10;
 
 function GatheringMainPage() {
   const { category } = useCategoryStore();

@@ -6,7 +6,7 @@ import SectionTitle from '/src/components/SectionTitle';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { deleteUser, userSearchApi } from '/src/services/adminApi';
 import { ChangeEvent, useEffect, useState } from 'react';
-const PAGE_SIZE = 4;
+const PAGE_SIZE = 10;
 
 export function AdminUserPage() {
     const queryClient = useQueryClient();

@@ -10,7 +10,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useUserInfo } from '/src/utils/useUserInfo';
 import { compareUserAndLeader } from '/src/utils/compareUserAndLeader';
 import { isClosedGathering } from '/src/utils/isClosedGathering';
-const PAGE_SIZE = 2;
+const PAGE_SIZE = 10;
 
 export function ParticipatingGroupPage() {
   const [showInProgress, setShowInProgress] = useState(false);

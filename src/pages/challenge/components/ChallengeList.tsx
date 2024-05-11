@@ -7,7 +7,7 @@ import ChallengeCard from './ChallengeCard';
 import { useNavigate } from 'react-router-dom';
 import { paths } from '/src/utils/path';
 
-const PAGE_SIZE = 4;
+const PAGE_SIZE = 10;
 export default function ChallengeList() {
   const navigation = useNavigate();
   const [page, setPage] = useState(0);

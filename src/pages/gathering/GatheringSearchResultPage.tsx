@@ -8,7 +8,7 @@ import { TitleContainer } from './components/TitleContainer';
 import { IoCheckmarkCircleOutline, IoCheckmarkCircleSharp } from 'react-icons/io5';
 import { GatheringList } from './components/GatheringList';
 import { isClosedGathering } from '/src/utils/isClosedGathering';
-const PAGE_SIZE = 4;
+const PAGE_SIZE = 10;
 export function GatheringSearchResultPage() {
     const [searchParams] = useSearchParams();
     const [searchKeyword, setSearchKeyword] = useState<string>('');

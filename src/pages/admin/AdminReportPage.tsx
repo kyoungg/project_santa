@@ -5,7 +5,7 @@ import { ListComponent } from './components/ListComponent';
 import SectionTitle from '/src/components/SectionTitle';
 import { deleteReport, getReportData, reportsType } from '/src/services/adminApi';
 import { useEffect, useState } from 'react';
-const PAGE_SIZE = 4;
+const PAGE_SIZE = 10;
 
 export function AdminReportPage() {
     const [page, setPage] = useState(0);
