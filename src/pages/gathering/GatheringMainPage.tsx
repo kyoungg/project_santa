@@ -4,18 +4,15 @@ import { UserProfile_small } from '../../components/common/UserProfile_small';
 import { IoSearch } from 'react-icons/io5';
 import { Button } from '../../components/common/Button';
 import styles from '../../styles/gathering/gatheringMain.module.scss';
-// import Thumbnail from '../../components/Thumbnail';
 import { Link, useNavigate } from 'react-router-dom';
 import { GatheringCategory } from './components/GatheringCategory';
 import { useEffect, useState } from 'react';
 import { getGatheringListByCategory, GatheringListByCategory } from '/src/services/gatheringApi';
 import { useQuery } from '@tanstack/react-query';
 import { useCategoryStore } from '/src/store/store';
-// import Thumbnail from '/src/components/Thumbnail';
 import { MyGatherings } from './components/MyGatherings';
 import { Top3Gatherings } from './components/Top3Gatherings';
 import { useUserInfo } from '/src/utils/useUserInfo';
-// import { useCategoryList } from '/src/utils/useCategoryList';
 
 const PAGE_SIZE = 10;
 
@@ -25,7 +22,7 @@ function GatheringMainPage() {
   const [page, setPage] = useState(0);
   const [gatheringList, setGatheringList] = useState<GatheringListByCategory[]>([]);
 
-  //모임 목록 가져오기 
+  //모임 목록 가져오기
   const {
     data: GatheringListByCategory,
     isFetched,
@@ -41,12 +38,10 @@ function GatheringMainPage() {
     },
   });
 
-
   useEffect(() => {
     setGatheringList([]);
     setPage(0);
     // queryClient.invalidateQueries({ queryKey: ['gatheringListByCategory', page, category], });
-
   }, [category]);
 
   useEffect(() => {
@@ -110,7 +105,7 @@ function GatheringMainPage() {
           {gatheringList?.length === 0 && <div>데이터가 없습니다.</div>}
         </div>
       </div>
-    </div >
+    </div>
   );
 }
 

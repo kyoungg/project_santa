@@ -2,25 +2,18 @@ import IssueChip from './IssueChip';
 import styles from '../styles/components/thumbnail.module.scss';
 import { ThumbnailChallenge } from '../services/challengeApi';
 import { useNavigate } from 'react-router-dom';
-import { paths } from '../utils/path';
 
 interface ThumbnailItems extends ThumbnailChallenge {}
 interface ThumbnailProps {
   data: ThumbnailItems[];
   isHotTopic: boolean;
   isIndexChip: boolean;
-  gatheringLink?: string;
-  challengeLink?: string;
 }
-export default function Thumbnail({ data, isHotTopic, isIndexChip, gatheringLink, challengeLink }: ThumbnailProps) {
+export default function Thumbnail({ data, isHotTopic, isIndexChip }: ThumbnailProps) {
   const navigate = useNavigate();
   function handleThumbnailClick(id: number) {
-    if (gatheringLink) {
-      navigate(`/gathering/detail?meetingid=${id}`);
-    }
-    if (challengeLink) {
-      navigate(`${paths.CHALLENGE_DETAIL}?id=${id}`);
-    }
+    console.log(`${URL}?id=${id}`);
+    navigate(`${URL}?id=${id}`);
   }
   return (
     <div className={styles.thumbnailContainer}>

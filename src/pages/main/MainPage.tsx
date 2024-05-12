@@ -2,7 +2,7 @@ import SliderBannerImg from './components/SliderBannerImg';
 import { Button } from '../../components/common/Button';
 import SectionTitle from '../../components/SectionTitle';
 import Thumbnail from '../../components/Thumbnail';
-// import Toggle from './components/Toggle'; 김경혜
+// import Toggle from './components/Toggle';
 import MeetingList from './components/MainMeetingList';
 import UserRankList from './components/MainRankList';
 
@@ -62,7 +62,7 @@ export default function Main() {
               targetPageUrl={paths.CHALLENGE}
             />
             {challenges ? (
-              <Thumbnail data={challenges} isHotTopic={true} isIndexChip={true} challengeLink="/gathering/detail?id" />
+              <Thumbnail data={challenges} isHotTopic={true} isIndexChip={true} />
             ) : (
               <div className={styles.noData}>로그인하고 챌린지를 확인하세요!</div>
             )}
