@@ -31,7 +31,7 @@ function EditChallengePage() {
     description: '',
     image: '',
     clearStandard: 0,
-    categoryName: ''
+    categoryName: '',
   });
 
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -48,8 +48,9 @@ function EditChallengePage() {
   /** update를 위한 useMutaion */
   const { mutate: editMutation } = useMutation({
     mutationFn: updateChallenge,
+    // todo modal이나 toast로 변경해보깅
     onSuccess: () => {
-      alert('수정이 완료되었습니다.')
+      alert('수정이 완료되었습니다.');
       navigate(paths.ADMIN_CHALLENGE);
       return queryClient.invalidateQueries({ queryKey: ['AdminchallengeList'] });
     },
@@ -62,7 +63,6 @@ function EditChallengePage() {
   const handleUpdate = () => {
     const challengeFormData = new FormData();
     if (challenge) {
-
       challengeFormData.append('name', challenge.name);
       challengeFormData.append('categoryName', categoryName);
       challengeFormData.append('description', challenge.description);
@@ -108,10 +108,9 @@ function EditChallengePage() {
     if (fetchData) {
       setChallenge(fetchData);
       setClearStandard(fetchData.clearStandard.toString());
-      setCategoryName(fetchData.categoryName)
+      setCategoryName(fetchData.categoryName);
     }
   }, [fetchData]);
-
 
   if (!fetchData) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
@@ -147,21 +146,26 @@ function EditChallengePage() {
             className={styles.inputDescription}
           />
           <div>달성목표</div>
-          {clearStandard !== null && <input
-            type="number"
-            className={styles.inputName}
-            value={clearStandard}
-            onChange={(e) => setClearStandard(e.target.value)}
-          />}
-          <div>카테고리 명</div>
-          {challenge.categoryName !== '' && (<GatheringCategorySelectBox
-            defaultValue={challenge?.categoryName}
-            onChange={(e) => {
-              // const categoryId = getCategoryId(e.target.value);
+          {clearStandard !== null && (
+            <input
+              type="number"
+              className={styles.inputName}
+              value={clearStandard}
+              onChange={(e) => setClearStandard(e.target.value)}
+            />
+          )}
 
-              categoryName && setCategoryName(e.target.value);
-            }}
-          />)}
+          <div>카테고리 명</div>
+          {challenge.categoryName !== '' && (
+            <GatheringCategorySelectBox
+              defaultValue={challenge?.categoryName}
+              onChange={(e) => {
+                // const categoryId = getCategoryId(e.target.value);
+                // react-hook-form
+                categoryName && setCategoryName(e.target.value);
+              }}
+            />
+          )}
         </div>
         <button onClick={handleUpdate} className={styles.editSubmitBtn}>
           수정하기
