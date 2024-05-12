@@ -116,3 +116,11 @@ a {
 .displayNone {
     display: none;
 }
+
+.noGatheringText {
+    text-align: center;
+    @include font-body1;
+    padding: 1rem;
+    line-height: 1rem;
+    color: $gray2;
+}

@@ -1,20 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { VertifyMountain, getMyMountains } from '/src/services/mountainAPi';
+import { getMyMountains } from '/src/services/mountainAPi';
 
 import { PiMedal } from 'react-icons/pi';
 import styles from './Achievements.module.scss';
 import mountain from '/images/mountain.png';
 import { paths } from '/src/utils/path';
-
-const getTotalHeight = (data: VertifyMountain[]) => {
-  const totalHeight = data.reduce((prev, current) => {
-    return prev + current.mountain.height;
-  }, 0);
-  return totalHeight.toFixed(1);
-};
+import useUserInfo from '/src/hooks/useUserInfo';
 
 export default function AchievementsBox() {
+  const userInfo = useUserInfo();
   const navigation = useNavigate();
 
   const {
@@ -27,8 +22,9 @@ export default function AchievementsBox() {
     select: (data) => data.data.content,
   });
 
-  const SUCCESS = !isError && isFetched;
+  const userMountain = userInfo?.accumulatedHeight;
 
+  const SUCCESS = !isError && isFetched;
   return (
     <div className={styles.container}>
       <div className={styles.title}>
@@ -42,7 +38,7 @@ export default function AchievementsBox() {
       </div>
       <div className={styles.records}>
         <div className={styles.achievName}>총 높이</div>
-        <p>{SUCCESS ? getTotalHeight(myMountains) : 0} M</p>
+        <p>{SUCCESS && userMountain ? Math.floor(userMountain).toLocaleString() : 0} M</p>
         <div className={styles.achievName}>정복한 정상</div>
         <p>{SUCCESS ? myMountains.length : 0} 개</p>
       </div>

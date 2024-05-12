@@ -1,8 +1,8 @@
 import styles from '../mainPage.module.scss';
 import { _imageSrcArray, _path } from '/src/utils/ImgPath';
 //김경혜
-import { SlArrowRight } from 'react-icons/sl';
-import { SlArrowLeft } from 'react-icons/sl';
+import { FaAngleLeft } from 'react-icons/fa';
+import { FaAngleRight } from 'react-icons/fa';
 
 import { useState, useRef } from 'react';
 
@@ -52,11 +52,11 @@ const SliderBannerImg = () => {
       </div>
       <div className={styles.sliderButtonLeft} onClick={() => handleClick(true)}>
         {/* 김경혜 <img src="/images/btn-left.png" alt="<" className={styles.btnImg} /> */}
-        <SlArrowLeft className={styles.btnImg} />
+        <FaAngleLeft className={styles.btnImg} />
       </div>
       <div className={styles.sliderButtonRight} onClick={() => handleClick(false)}>
         {/* 김경혜 <img src="/images/btn-right.png" alt=">" className={styles.btnImg} /> */}
-        <SlArrowRight className={styles.btnImg} />
+        <FaAngleRight className={styles.btnImg} />
       </div>
     </div>
   );

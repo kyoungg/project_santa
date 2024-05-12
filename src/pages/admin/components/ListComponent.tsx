@@ -24,7 +24,6 @@ export function ListComponent({ title, subtitle, content, report, isLast,
         <div className={styles.listContainer}
             ref={(_ref) => {
                 if (isLast) {
-                    console.log('ref 할당');
                     targetRef.current = _ref;
                 } else {
                     _ref = null;

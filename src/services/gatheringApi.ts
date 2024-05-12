@@ -63,7 +63,8 @@ export type GatheringDetailType = {
     {
       userId: number,
       userName: string,
-      userImage: string
+      userImage: string,
+      userNickname: string,
     }
   ]
 }
@@ -73,7 +74,10 @@ type userReport = {
   reportedParticipantId: number;
 
 }
-export type GatheringCategory = '맞춤추천' | '등산' | '힐링' | '식도락' | '정상깨기' | '백패킹' | '출사' | '기타';
+export type GatheringCategoryType = {
+  id: number,
+  name: string,
+}
 
 //모임 조회 api
 export async function getGatheringList() {
@@ -81,7 +85,7 @@ export async function getGatheringList() {
 }
 
 //카테고리별 모임 조회 api
-export function getGatheringListByCategory(category: GatheringCategory, page?: number, size?: number) {
+export function getGatheringListByCategory(category: string, page?: number, size?: number) {
   return api.get<GatheringListResponse>(`meetings/category-search?category=${category}&page=${page}&size=${size}`);
 }
 
@@ -95,8 +99,8 @@ export async function postGathering(data: FormData) {
 }
 
 //검색 결과 조회 api
-export async function getGatheringSearchResult(tag: string) {
-  return await api.get(`meetings/tag-search?tag=${tag}`);
+export async function getGatheringSearchResult(tag: string, page: number, size: number) {
+  return await api.get<GatheringListResponse>(`meetings/tag-search?tag=${tag}&page=${page}&size=${size}`);
 }
 
 //모임 상세보기 api
@@ -122,9 +126,12 @@ export function editGathering({ meetingId, data }: { meetingId: number, data: Fo
 export function getMyGatherings(page: number, size: number) {
   return api.get<GatheringListResponse>(`meetings/my-meetings?page=${page}&size=${size}`)
 }
+// export function getMyThreeGatherings() {
+//   return api.get<GatheringListResponse>(`meetings/my-meetings?page=0&size=3`)
+// }
 //인기모임 조회 
 export function getPopularGatherings(page: number, size: number) {
-  return api.get(`meetings/participants?page=${page}&size=${size}`)
+  return api.get<GatheringListResponse>(`meetings/participants?page=${page}&size=${size}`)
 }
 
 //모임 종료하기 

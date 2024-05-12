@@ -21,7 +21,7 @@ const PrivateRoutes: React.FC = () => {
 const PrivateUserRoutes: React.FC = () => {
   const isUser = getIsUser();
 
-  return isUser ? <Outlet /> : <Navigate to={paths.LOGIN} />;
+  return isUser ? <Outlet /> : <Navigate to={paths.PROFILE_EDIT} />;
 };
 
 //관리자만 접근 가능

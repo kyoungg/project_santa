@@ -76,6 +76,13 @@ export function GatheringDetailPage() {
     onSuccess: () => {
       alert('모임 종료가 완료되었습니다.');
       navigate(-1);
+    },
+    onError: (error) => {
+      if (error.message.includes('409')) {
+        alert('이미 종료된 모임입니다.')
+        navigate(-1);
+      }
+
     }
   })
 
@@ -85,6 +92,13 @@ export function GatheringDetailPage() {
     onSuccess: () => {
       alert('모임 참여가 완료되었습니다.')
       navigate(-1);
+    },
+    onError: (error) => {
+      if (error.message.includes('409')) {
+        alert('참여중인 날짜입니다.')
+        navigate(-1);
+      }
+
     }
   })
   //신고 api
@@ -92,6 +106,11 @@ export function GatheringDetailPage() {
     mutationFn: userReport,
     onSuccess: () => {
       alert('신고가 완료 되었습니다.');
+    },
+    onError: (error) => {
+      if (error.message.includes('409')) {
+        alert('이미 신고한 사람입니다.');
+      }
     }
   })
 
@@ -101,6 +120,7 @@ export function GatheringDetailPage() {
   }
   //삭제 
   function handleDeleteGatheringDetail(meetingId: number) {
+
     deleteMutation(meetingId);
   }
   //프로필 누르면 신고 버튼 생성 
@@ -120,8 +140,12 @@ export function GatheringDetailPage() {
   }
   //모임 종료하기 버튼을 클릭
   function handleCloseGathering() {
-    if (meetingId) {
-      closeGatheringMutation(meetingId);
+    if (gatheringDetail && meetingId) {
+      if (!isClosedGathering(gatheringDetail?.date)) {
+        alert('아직 종료할 수 없는 모임입니다.');
+      } else {
+        closeGatheringMutation(meetingId);
+      }
     }
   }
 
@@ -129,15 +153,25 @@ export function GatheringDetailPage() {
   function handleJoinGathering() {
     if (meetingId) {
       joinGatheringMutation(meetingId);
+
     }
   }
 
+  //정원보다 더 많은 인원이 참여하면 안됨
+  useEffect(() => {
+    if (gatheringDetail) {
+      if (gatheringDetail.participants.length >= gatheringDetail.headcount) {
+        setIsClosed(true);
+      }
+    }
+
+  }, [gatheringDetail?.participants])
   return (
     <div className={styles.gatheringDetailContainer}>
       <TitleContainer title={gatheringDetail?.meetingName} />
       <div className={styles.infoContainer}>
         <div className={`${styles.containerRow}  ${styles.deleteEditContainer}`}>
-          {isSameUser && (
+          {isSameUser && !isClosed && (
             <><EditBtn onClick={() => { if (gatheringDetail) handleEditGatheringDetail(gatheringDetail?.meetingId); }} /><DeleteBtn onClick={() => { if (gatheringDetail) handleDeleteGatheringDetail(gatheringDetail?.meetingId); }} /></>
           )}
         </div>
@@ -173,20 +207,20 @@ export function GatheringDetailPage() {
             <div className={styles.subtitle1}>참여인원</div>
             <div className={styles.profileListContainer}>
               {gatheringDetail?.participants.map((participant, index) => (
-                <div className={styles.profileContainer} key={`${participant.userId} ${participant.userName}`}>
+                <div className={styles.profileContainer} key={`${participant.userId} ${participant.userNickname}`}>
                   <div onClick={() => handleReport(index)}>
                     {isProfileClicked[index] && (<div className={styles.reportBtn} onClick={() => handleClickReportBtn(participant.userId)}>신고</div>)}
-                    <VerticalProfile name={participant.userName} imageUrl="/images/defaultProfile.png" />
+                    <VerticalProfile name={participant.userNickname} imageUrl={participant.userImage} />
                   </div>
                 </div>
               ))}
             </div>
           </div>
-          {isClosed ? (
-            <Button variant="gray">이미 종료된 모임입니다</Button>
+          {isSameUser ? (
+            <Button variant="green3" onClick={handleCloseGathering}>모임 종료하기</Button>
           ) : (
-            isSameUser ? (
-              <Button variant="green3" onClick={handleCloseGathering}>모임 종료하기</Button>
+            isClosed ? (
+              <Button variant="gray">이미 종료된 모임입니다</Button>
             ) : (
               <Button variant="green3" onClick={handleJoinGathering}>참가신청하기</Button>
             )

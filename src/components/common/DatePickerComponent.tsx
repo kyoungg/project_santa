@@ -7,6 +7,7 @@ type DatePickerProps = {
   setSelectedDate: (date: Date) => void;
 };
 export function DatePickerComponent(props: DatePickerProps) {
+  const today = new Date();
   return (
     <DatePicker
       className="input-custom"
@@ -18,6 +19,7 @@ export function DatePickerComponent(props: DatePickerProps) {
         }
       }}
       dateFormat="yyyy년 MM월 dd일"
+      minDate={today}
     />
   );
 }

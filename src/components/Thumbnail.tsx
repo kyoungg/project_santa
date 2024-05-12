@@ -1,6 +1,7 @@
 import IssueChip from './IssueChip';
 import styles from '../styles/components/thumbnail.module.scss';
 import { ThumbnailChallenge } from '../services/challengeApi';
+import { useNavigate } from 'react-router-dom';
 
 interface ThumbnailItems extends ThumbnailChallenge {}
 interface ThumbnailProps {
@@ -9,6 +10,11 @@ interface ThumbnailProps {
   isIndexChip: boolean;
 }
 export default function Thumbnail({ data, isHotTopic, isIndexChip }: ThumbnailProps) {
+  const navigate = useNavigate();
+  function handleThumbnailClick(id: number) {
+    console.log(`${URL}?id=${id}`);
+    navigate(`${URL}?id=${id}`);
+  }
   return (
     <div className={styles.thumbnailContainer}>
       {data.map((item, index) => (
@@ -24,7 +30,7 @@ export default function Thumbnail({ data, isHotTopic, isIndexChip }: ThumbnailPr
               <IssueChip />
             </div>
           )}
-          <div className={styles.imgWrapper}>
+          <div className={styles.imgWrapper} onClick={() => handleThumbnailClick(item.id)}>
             <div className={styles.overlay}></div>
             <img className={styles.img} src={item.image} />
           </div>

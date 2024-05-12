@@ -32,6 +32,9 @@ export default function ProgressChallengeList() {
                   </div>
                   <div className={styles.bottom}>
                     <div className={styles.progress} ref={progressRef}>
+                      <div className={styles.progressNumber}>
+                        {challenge.progress} / {challenge.challengeClearStandard}
+                      </div>
                       <div
                         className={styles.percentBar}
                         style={{ width: `${(challenge.progress / challenge.challengeClearStandard) * 100}%` }}

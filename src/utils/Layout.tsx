@@ -28,6 +28,7 @@ const INCLUDE_BACK_BTN_PATH = [
   paths.CHALLENGE,
   paths.PROFILE_EDIT,
   paths.MOUNTAIN_DETAIL,
+  paths.CHALLENGE_DETAIL,
 ];
 
 export default function Layout() {

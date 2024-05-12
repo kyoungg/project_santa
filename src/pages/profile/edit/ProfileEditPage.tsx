@@ -79,7 +79,6 @@ export default function ProfileEditPage() {
   }
 
   const onSubmit = (editData: EditData) => {
-    console.log(editData);
     const formData = createFormData(editData);
     mutate(formData);
   };

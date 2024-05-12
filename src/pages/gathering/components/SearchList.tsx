@@ -7,24 +7,24 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { isClosedGathering } from '/src/utils/isClosedGathering';
 
-type Participant = {
-  userId: number; // 예시로 숫자 타입을 사용하였습니다. 실제 타입에 맞게 수정해주세요.
+type participants = {
+  userId: number;
   userImage: string;
   userName: string;
 };
 
 type gatheringDataType = {
-  categoryName: string;
-  date: string;
-  description: string;
-  headcount: number;
-  image: string;
   leaderId: number;
   meetingId: number;
   meetingName: string;
+  categoryName: string;
   mountainName: string;
-  participants: Participant[];
-  tags: string[];
+  description: string;
+  headcount: number;
+  date: string;
+  tags: string;
+  image: string;
+  participants: participants[];
 };
 export function SearchList({ gatheringData }: { gatheringData: gatheringDataType[] }) {
   const [showInProgress, setShowInProgress] = useState(false);
@@ -84,7 +84,6 @@ export function SearchList({ gatheringData }: { gatheringData: gatheringDataType
         <div key={item.meetingId} className={returnClassName(item.date)}>
           <GatheringList
             gatheringInfo={{
-
               title: item.meetingName,
               content: item.description,
               tag: item.categoryName,

@@ -19,14 +19,12 @@ export default function CategoryBox() {
     <div className={styles.container}>
       <div className={styles.title}>
         <p>선호 카테고리</p>
-        {preferCategory && preferCategory?.length == 0 && (
-          <FaGear
-            className={styles.icon}
-            onClick={() => {
-              navigation(paths.CATEGORY);
-            }}
-          />
-        )}
+        <FaGear
+          className={styles.icon}
+          onClick={() => {
+            navigation(paths.CATEGORY);
+          }}
+        />
       </div>
       <div className={styles.categoryList}>
         {preferCategory && preferCategory.length !== 0 ? (

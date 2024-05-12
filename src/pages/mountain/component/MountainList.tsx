@@ -4,6 +4,7 @@ import { Card } from '/src/components/common/Card';
 import logo from '/images/logo.svg';
 import { useNavigate } from 'react-router-dom';
 import useIntersectionObserver from '/src/hooks/useIntersectionObserver';
+import { paths } from '/src/utils/path';
 
 interface Props {
   mountainData: TotalMountain;
@@ -24,7 +25,7 @@ export default function MountainList({ mountainData, setPage, isLast }: Props) {
       <div
         className={styles.container}
         onClick={() => {
-          navigation(`/mountain/detail?id=${mountainData.id}`);
+          navigation(`${paths.MOUNTAIN_DETAIL}?id=${mountainData.id}`);
         }}
         ref={(_ref) => {
           if (isLast) {

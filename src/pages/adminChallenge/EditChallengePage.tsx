@@ -13,10 +13,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getChallenge, updateChallenge } from '/src/services/adminChallengesApi';
 import { TotalChallenge } from '/src/services/challengeApi';
 import { paths } from '/src/utils/path';
+import { GatheringCategorySelectBox } from '../gathering/components/GatheringCategorySelectBox';
 
 function EditChallengePage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [clearStandard, setClearStandard] = useState<string | null>();
+  const [categoryName, setCategoryName] = useState<string>('');
 
   if (!id) return <>error</>;
 
@@ -28,9 +31,7 @@ function EditChallengePage() {
     description: '',
     image: '',
     clearStandard: 0,
-    category: {
-      name: '',
-    },
+    categoryName: '',
   });
 
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -44,37 +45,12 @@ function EditChallengePage() {
 
   const queryClient = useQueryClient();
 
-  // /** update api 호출 함수 */
-  // const fetchUpdateChallenge = async () => {
-  //   const { name, description, clearStandard, image } = challenge;
-
-  //   // 이미지파일과 이름 둘중 하나라도 없으면 return;
-  //   if (!imageFile || name === '') return;
-
-  //   try {
-  //     const res = await updateChallenge(
-  //       {
-  //         categoryId: 1,
-  //         name,
-  //         description,
-  //         clearStandard,
-  //         imageFile,
-  //         image,
-  //       },
-  //       id,
-  //     );
-
-  //     console.log(res);
-  //     return res;
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // };
-
   /** update를 위한 useMutaion */
-  const { mutate: editMutation, data: updateData } = useMutation({
+  const { mutate: editMutation } = useMutation({
     mutationFn: updateChallenge,
+    // todo modal이나 toast로 변경해보깅
     onSuccess: () => {
+      alert('수정이 완료되었습니다.');
       navigate(paths.ADMIN_CHALLENGE);
       return queryClient.invalidateQueries({ queryKey: ['AdminchallengeList'] });
     },
@@ -87,17 +63,15 @@ function EditChallengePage() {
   const handleUpdate = () => {
     const challengeFormData = new FormData();
     if (challenge) {
-
       challengeFormData.append('name', challenge.name);
-      challengeFormData.append('categoryId', challenge.id.toString());
+      challengeFormData.append('categoryName', categoryName);
       challengeFormData.append('description', challenge.description);
-      challengeFormData.append('clearStandard', challenge.clearStandard.toString());
+      clearStandard && challengeFormData.append('clearStandard', clearStandard);
       challengeFormData.append('image', challenge.image);
       if (imageFile) {
         challengeFormData.append('imageFile', imageFile);
       }
 
-      console.log(challenge, id);
       editMutation({ id: id, data: challengeFormData });
     }
   };
@@ -131,17 +105,12 @@ function EditChallengePage() {
   };
 
   useEffect(() => {
-    console.log('----edit challenge---');
-    console.log(fetchData);
     if (fetchData) {
       setChallenge(fetchData);
+      setClearStandard(fetchData.clearStandard.toString());
+      setCategoryName(fetchData.categoryName);
     }
   }, [fetchData]);
-
-  useEffect(() => {
-    console.log('-----update data---');
-    console.log(updateData);
-  }, [updateData]);
 
   if (!fetchData) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
@@ -152,20 +121,11 @@ function EditChallengePage() {
       <div className={styles.editMiddle}>
         <div onClick={handleRefClick}>
           {previewImage ? (
-            <img src={previewImage} alt="preview" />
+            <img src={previewImage} alt="preview" className={styles.inputImg} />
           ) : (
             <img src={challenge.image} alt="사진 수정하기" className={styles.inputImg} />
           )}
         </div>
-
-        <input type="text" value={challenge.name} name="name" onChange={handleChange} className={styles.inputName} />
-        <input
-          type="text"
-          value={challenge.description}
-          name="description"
-          onChange={handleChange}
-          className={styles.inputDescription}
-        />
         <input
           className=""
           type="file"
@@ -174,6 +134,39 @@ function EditChallengePage() {
           onChange={handleChangeImageFile}
           style={{ visibility: 'hidden' }}
         />
+        <div className={styles.contentContainer}>
+          <div>제목</div>
+          <input type="text" value={challenge.name} name="name" onChange={handleChange} className={styles.inputName} />
+          <div>소개</div>
+          <input
+            type="text"
+            value={challenge.description}
+            name="description"
+            onChange={handleChange}
+            className={styles.inputDescription}
+          />
+          <div>달성목표</div>
+          {clearStandard !== null && (
+            <input
+              type="number"
+              className={styles.inputName}
+              value={clearStandard}
+              onChange={(e) => setClearStandard(e.target.value)}
+            />
+          )}
+
+          <div>카테고리 명</div>
+          {challenge.categoryName !== '' && (
+            <GatheringCategorySelectBox
+              defaultValue={challenge?.categoryName}
+              onChange={(e) => {
+                // const categoryId = getCategoryId(e.target.value);
+                // react-hook-form
+                categoryName && setCategoryName(e.target.value);
+              }}
+            />
+          )}
+        </div>
         <button onClick={handleUpdate} className={styles.editSubmitBtn}>
           수정하기
         </button>

@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getAllCategory, postPreferCategory } from '/src/services/categoryApi';
+import { getAllCategory, getPreferCategory, postPreferCategory } from '/src/services/categoryApi';
 import { useState } from 'react';
 
 import styles from './CategoryPage.module.scss';
@@ -16,6 +16,15 @@ export default function CategoryPage() {
   const userInfo = useUserInfo();
   const navigation = useNavigate();
 
+  const { data: preferCategory } = useQuery({
+    queryKey: ['preferCategory'],
+    queryFn: getPreferCategory,
+    select: (data) => data.data,
+    staleTime: Infinity,
+  });
+
+  const isEdit = preferCategory?.length !== 0;
+
   const { data: allCategoryData } = useQuery({
     queryKey: ['allCategoryData'],
     queryFn: getAllCategory,
@@ -28,6 +37,9 @@ export default function CategoryPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['preferCategory'] });
       alert('선호 카테고리 등록이 완료되었습니다!');
+      if (!isEdit) {
+        return navigation(paths.HOME);
+      }
       navigation(paths.PROFILE);
     },
     onError: () => {
@@ -65,8 +77,10 @@ export default function CategoryPage() {
   return (
     <div className={styles.container}>
       <div className={styles.top}>
-        <h2>{userInfo?.nickname}님, 환영해요!</h2>
-        <p>선호하시는 카테고리를 선택해주세요.</p>
+        <h2>
+          {userInfo?.nickname}님, {isEdit ? '안녕하세요🙌' : '환영해요🎉'}
+        </h2>
+        <p>{isEdit ? '선호하시는 카테고리를 선택해주세요.' : '시작하기 전 선호하시는 카테고리를 선택해주세요.'}</p>
       </div>
       <div className={styles.middle}>
         <div className={styles.categoryContainer}>
@@ -90,7 +104,7 @@ export default function CategoryPage() {
       </div>
       <div className={styles.bottom}>
         <Button variant="green1" onClick={handleSubmit}>
-          이제 시작 해 볼까요?
+          {isEdit ? '수정 완료' : '이제 시작 해 볼까요?'}
         </Button>
       </div>
     </div>

@@ -21,7 +21,7 @@ export default function GatheringBox() {
         <FaUsers
           className={styles.icon}
           onClick={() => {
-            navigation(paths.GATHERING);
+            navigation(paths.GATHERING_PARTICIPATE);
           }}
         />
       </div>

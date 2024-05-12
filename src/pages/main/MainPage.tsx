@@ -2,7 +2,7 @@ import SliderBannerImg from './components/SliderBannerImg';
 import { Button } from '../../components/common/Button';
 import SectionTitle from '../../components/SectionTitle';
 import Thumbnail from '../../components/Thumbnail';
-// import Toggle from './components/Toggle'; 김경혜
+// import Toggle from './components/Toggle';
 import MeetingList from './components/MainMeetingList';
 import UserRankList from './components/MainRankList';
 
@@ -15,12 +15,27 @@ import { getChallengeList } from '/src/services/challengeApi';
 import { useQuery } from '@tanstack/react-query';
 import { paths } from '/src/utils/path';
 import { useNavigate } from 'react-router-dom';
+import { getPreferCategory } from '/src/services/categoryApi';
+import { getAccessToken, getIsUser } from '/src/services/auth';
 
 export default function Main() {
   const { data: meetings } = useQuery({ queryKey: ['meetings'], queryFn: getMeetings });
   const { data: ranks } = useQuery({ queryKey: ['ranks'], queryFn: getMainPagesRanks });
   const { data: challenges } = useQuery({ queryKey: ['challenges'], queryFn: getChallengeList });
   const navigation = useNavigate();
+  const isLogin = getAccessToken();
+  const isUser = getIsUser();
+
+  const { data: preferCategory } = useQuery({
+    queryKey: ['preferCategory'],
+    queryFn: getPreferCategory,
+    select: (data) => data.data,
+    staleTime: Infinity,
+  });
+
+  if (isLogin && isUser && preferCategory) {
+    preferCategory.length == 0 && navigation(paths.CATEGORY);
+  }
 
   if (!meetings || !ranks || !challenges) return <>Loading...</>;
   return (
@@ -43,10 +58,14 @@ export default function Main() {
           <div className={styles.sectionWrapper}>
             <SectionTitle
               title="챌린지 둘러보기🌟"
-              subtitle="업적을 달설할 수 있는 챌린지를 확인해보세요!"
+              subtitle="업적을 달성할 수 있는 챌린지를 확인해보세요!"
               targetPageUrl={paths.CHALLENGE}
             />
-            <Thumbnail data={challenges} isHotTopic={true} isIndexChip={true} />
+            {challenges ? (
+              <Thumbnail data={challenges} isHotTopic={true} isIndexChip={true} />
+            ) : (
+              <div className={styles.noData}>로그인하고 챌린지를 확인하세요!</div>
+            )}
           </div>
           <div>
             <div className={styles.sectionWrapper}>

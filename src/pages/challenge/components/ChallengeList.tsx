@@ -4,9 +4,12 @@ import styles from './ChallengeList.module.scss';
 import { TotalChallenge, getAllChallenge } from '/src/services/challengeApi';
 import { useEffect, useState } from 'react';
 import ChallengeCard from './ChallengeCard';
+import { useNavigate } from 'react-router-dom';
+import { paths } from '/src/utils/path';
 
-const PAGE_SIZE = 4;
+const PAGE_SIZE = 10;
 export default function ChallengeList() {
+  const navigation = useNavigate();
   const [page, setPage] = useState(0);
   const [challengeList, setChallengeList] = useState<TotalChallenge[]>([]);
   const {
@@ -40,7 +43,13 @@ export default function ChallengeList() {
     <>
       {challengeList?.map((challengeData: TotalChallenge, index: number) => {
         return (
-          <div key={`${challengeData.name}-${challengeData.id}`} className={styles.gap}>
+          <div
+            key={`${challengeData.name}-${challengeData.id}`}
+            className={styles.gap}
+            onClick={() => {
+              navigation(`${paths.CHALLENGE_DETAIL}?id=${challengeData.id}`);
+            }}
+          >
             <ChallengeCard
               challengeData={challengeData}
               setPage={setPage}

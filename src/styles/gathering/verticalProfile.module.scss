@@ -1,15 +1,22 @@
-.profileContainer{
-    display:flex;
-    flex-direction:column;
-    gap:0.5rem;
-    margin-top:1rem;
+.profileContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    justify-content: center;
+    align-items: center;
 }
 
-.imgContainer{
-    width:2.8rem;
-    height:2.8rem;
+.imgContainer {
+    width: 2.8rem;
+    height: 2.8rem;
+
     // border-radius: 50%;
-    img{
+    img {
         border-radius: 50%;
+        width: 100%;
+        height: 100%;
     }
+
+    object-fit:cover;
 }

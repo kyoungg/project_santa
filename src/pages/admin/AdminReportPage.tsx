@@ -1,49 +1,53 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import styles from '../../styles/admin/adminMain.module.scss';
 import { TitleContainer } from '../gathering/components/TitleContainer';
 import { ListComponent } from './components/ListComponent';
 import SectionTitle from '/src/components/SectionTitle';
 import { deleteReport, getReportData, reportsType } from '/src/services/adminApi';
 import { useEffect, useState } from 'react';
-const PAGE_SIZE = 4;
+const PAGE_SIZE = 10;
 
 export function AdminReportPage() {
     const [page, setPage] = useState(0);
-    const [reportDataList, setReportDataList] = useState<reportsType[]>([])
-
+    const [reportDataList, setReportDataList] = useState<reportsType[]>([]);
+    const queryClient = useQueryClient();
     const { data: reportData, isFetched,
-        isError, refetch } = useQuery({
-            queryKey: ['userSearch', page],
+        isError } = useQuery({
+            queryKey: ['userSearch', page, reportDataList],
             queryFn: () => getReportData(page, PAGE_SIZE),
             select: (data) => {
                 return {
                     content: data.data.content,
-                    totalPage: data.data.totalPages,
+                    totalPage: data.data.totalPages - 1,
                 }
             }
 
         })
-    useEffect(() => {
-        console.log(reportData);
-    }, [reportData])
 
     const { mutate: deleteMutation } = useMutation({
         mutationFn: deleteReport,
         onSuccess: () => {
-            refetch();
+            queryClient.invalidateQueries({ queryKey: ['userSearch', page] });
+            setPage(0);
+            setReportDataList([]);
+            alert('삭제되었습니다');
+            window.location.reload();
+
         }
     });
+
     function handleDeleteBtn(reportId: number) {
-        console.log('삭제!!!!!!!!!!');
         deleteMutation(reportId);
     }
 
     useEffect(() => {
         const isSuccess = isFetched && !isError;
-
-        if (isSuccess && reportData !== undefined) {
-
-            setReportDataList(prevList => [...prevList, ...reportData.content]);
+        if (isSuccess && reportData) {
+            if (page === 0) {
+                setReportDataList([...reportData.content]);
+            } else {
+                setReportDataList(prevList => [...prevList, ...reportData.content]);
+            }
 
         }
 

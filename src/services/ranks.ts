@@ -48,6 +48,5 @@ export const getRankUsers = async (page: number = 0, size: number = 10): Promise
 export const getMyRank = async (): Promise<Rank> => {
   const url = `/ranks`;
   const res = await api.get(url);
-  console.log(res.data.userRanking);
   return res.data.userRanking;
 };

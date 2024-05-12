@@ -6,7 +6,7 @@ import SectionTitle from '/src/components/SectionTitle';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { deleteUser, userSearchApi } from '/src/services/adminApi';
 import { ChangeEvent, useEffect, useState } from 'react';
-const PAGE_SIZE = 4;
+const PAGE_SIZE = 10;
 
 export function AdminUserPage() {
     const queryClient = useQueryClient();
@@ -21,54 +21,53 @@ export function AdminUserPage() {
         nickname: string;
         reportCount: number;
     }
-    const { data: userData, isFetched,
-        isError } = useQuery({
-            queryKey: ['userSearch', searchValue, page],
-            queryFn: () => userSearchApi(searchValue, page, PAGE_SIZE),
-            select: (data) => {
-                return {
-                    content: data.data.content,
-                    totalPage: data.data.totalPages,
-                }
+    const { data: userData, isFetched, isError } = useQuery({
+        queryKey: ['userSearch', searchValue, page],
+        queryFn: () => userSearchApi(searchValue, page, PAGE_SIZE),
+        select: (data) => {
+            return {
+                content: data.data.content,
+                totalPage: data.data.totalPages - 1,
+                totalElements: data.data.totalElements
             }
+        }
 
-        })
+    })
 
-    useEffect(() => {
-        console.log(userData)
-        console.log(userData?.content);
-        console.log(userData?.totalPage);
-    }, [userDataList])
 
     useEffect(() => {
         const isSuccess = isFetched && !isError;
 
-        if (isSuccess && userData !== undefined) {
-            console.log(userData)
-            console.log(userData?.content);
-            console.log(userData?.totalPage);
-            setUserDataList(prevList => [...prevList, ...userData?.content]);
+        if (isSuccess && userData) {
+
+            if (page === 0) {
+                setUserDataList([...userData?.content])
+            } else {
+                setUserDataList(prevList => [...prevList, ...userData?.content]);
+            }
+
         }
 
     }, [isFetched, isError, userData, searchValue]);
 
-
     const { mutate: deleteMutation } = useMutation({
         mutationFn: deleteUser,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['userSearch', searchValue, page] })
-            setPage(0);
+            queryClient.invalidateQueries({ queryKey: ['userSearch', searchValue, page] });
             setUserDataList([]);
+            setPage(0);
+            alert('삭제되었습니다');
+            window.location.reload();
+
+
 
         }
     });
     function handleDeleteBtnClick(id: number) {
         //id를 받아서 삭제
-        console.log('삭제');
-        deleteMutation(id)
-
-
+        deleteMutation(id);
     }
+
     function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
         setInputValue(e.target.value);
     }
@@ -86,7 +85,7 @@ export function AdminUserPage() {
                 <SearchInput onClick={handleSearchBtnClick} placeholder='회원 이름 또는 닉네임을 검색하세요' onChange={handleInputChange} value={inputValue} />
             </div>
             {userDataList && userDataList.map((userList: UserListType, index: number) => (
-                <ListComponent key={index} title={userList.name} subtitle={userList.email} report={userList.reportCount} isLast={
+                <ListComponent key={index} title={`${userList.name}(${userList.nickname})`} subtitle={userList.email} report={userList.reportCount} isLast={
                     userData &&
                     userData?.totalPage >= page &&
                     userDataList.length === index + 1

@@ -14,8 +14,6 @@ export default function MountainDetailPage() {
     select: (data) => data.data,
   });
 
-  console.log(mountain);
-
   return (
     <>
       {isSuccess && (

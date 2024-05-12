@@ -5,7 +5,7 @@ import { ListComponent } from './components/ListComponent';
 import SectionTitle from '/src/components/SectionTitle';
 // import { SearchInput } from '/src/components/common/Input';
 import { addCategory, deleteCategoryList, editCategoryList, getCategoryList } from '/src/services/adminApi';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { Input } from '/src/components/common/Input';
 import { FaPlus } from "react-icons/fa";
 import { EditBtn } from '/src/components/common/Button';
@@ -27,7 +27,6 @@ export function AdminCategoryPage() {
         },
     });
     function handleDeleteBtnClick(id: number) {
-        console.log('삭제');
         deleteMutation(id)
     }
 
@@ -80,9 +79,7 @@ export function AdminCategoryPage() {
     function handleEditInput(e: ChangeEvent<HTMLInputElement>) {
         setEditInput(e.target.value)
     }
-    useEffect(() => {
-        console.log('카테고리', categories);
-    }, [categories])
+
 
     return (
         <div className={styles.adminPageContainer}>
