@@ -13,6 +13,7 @@ import { useCategoryStore } from '/src/store/store';
 import { MyGatherings } from './components/MyGatherings';
 import { Top3Gatherings } from './components/Top3Gatherings';
 import { useUserInfo } from '/src/utils/useUserInfo';
+import { Alert } from '/src/components/common/Alert';
 
 const PAGE_SIZE = 10;
 
@@ -21,7 +22,10 @@ function GatheringMainPage() {
   const navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [gatheringList, setGatheringList] = useState<GatheringListByCategory[]>([]);
-
+  const [isOpen, setIsOpen] = useState(false);
+  // const showAlert = () => {
+  //   setIsOpen(true);
+  // };
   //모임 목록 가져오기
   const {
     data: GatheringListByCategory,
@@ -59,6 +63,10 @@ function GatheringMainPage() {
 
   return (
     <div className={styles.gatheringContainer}>
+      {/* <button onClick={showAlert}>클릭</button> */}
+      <Alert variant="error" setIsOpen={setIsOpen} isOpen={isOpen}>
+        오류메세지
+      </Alert>
       <div className={styles.container}>
         <div className={styles.profileContainer}>
           <UserProfile_small name={currentUserInfo?.nickname} imageUrl={currentUserInfo?.image} />

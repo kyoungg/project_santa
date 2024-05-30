@@ -12,8 +12,7 @@ interface ThumbnailProps {
 export default function Thumbnail({ data, isHotTopic, isIndexChip }: ThumbnailProps) {
   const navigate = useNavigate();
   function handleThumbnailClick(id: number) {
-    console.log(`${URL}?id=${id}`);
-    navigate(`${URL}?id=${id}`);
+    navigate(`/challenge/detail?id=${id}`);
   }
   return (
     <div className={styles.thumbnailContainer}>

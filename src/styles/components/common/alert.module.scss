@@ -1,0 +1,35 @@
+.container {
+  width: 334px;
+  display: flex;
+  padding: 0.5rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 2rem;
+  color: white;
+  font-weight: 500;
+  position: sticky;
+  top: 4rem;
+  z-index: 1000;
+  filter: drop-shadow(0 0.1rem 0.3rem #c4c4c4);
+}
+.icon,
+.close {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.text {
+  text-align: center;
+}
+.close {
+  cursor: pointer;
+}
+
+.error {
+  background-color: #ff7438;
+}
+.info {
+  background-color: #ffb800;
+}
+.success {
+  background-color: #64cb2b;
+}
