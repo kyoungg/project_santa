@@ -109,7 +109,13 @@ function LoginPage() {
         </div>
 
         <div className={styles.bottom}>
-          <img className={styles.logo} src={logo} />
+          <img
+            className={styles.logo}
+            src={logo}
+            onClick={() => {
+              navigate(paths.HOME);
+            }}
+          />
         </div>
       </div>
     </div>
