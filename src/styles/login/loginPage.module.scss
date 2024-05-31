@@ -103,6 +103,7 @@
   @include font-body2;
   color: $green3;
   padding: 1.5rem 0;
+  width: 100%;
   div {
     margin: 0.3rem 0;
   }
@@ -110,14 +111,14 @@
 
 .socialLoginIcon {
   @include flex-center-row;
-  flex-direction: column;
+  flex-direction: row;
   a {
     display: flex;
     text-align: center;
     justify-content: center;
     img {
-      width: 288px;
-      padding-top: 0.5rem;
+      width: 60px;
+      padding: 0.5rem 0.3rem 0;
     }
   }
 }

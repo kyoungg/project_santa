@@ -4,7 +4,9 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import styles from '/src/styles/login/loginPage.module.scss';
-import kakao_login from '/images/kakao_login_large_wide.png';
+import kakaoLogo from '/images/kakao.png';
+import googleLogo from '/images/google.svg';
+import naverLogo from '/images/naver.png';
 import logo from '/images/logo.svg';
 import { IoMailOutline } from 'react-icons/io5';
 import { IoLockOpenOutline } from 'react-icons/io5';
@@ -101,8 +103,14 @@ function LoginPage() {
               <div className={styles.line}></div>
             </div>
             <div className={styles.socialLoginIcon}>
+              <Link to={'/'}>
+                <img src={googleLogo} />
+              </Link>
               <Link to={KAKAO_AUTH_URL}>
-                <img src={kakao_login} />
+                <img src={kakaoLogo} />
+              </Link>
+              <Link to={'/'}>
+                <img src={naverLogo} />
               </Link>
             </div>
           </div>
