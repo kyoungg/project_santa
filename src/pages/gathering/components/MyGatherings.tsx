@@ -1,8 +1,9 @@
 import styles from '../../../styles/gathering/gatheringMain.module.scss';
 import SectionTitle from '/src/components/SectionTitle';
-import { GatheringListByCategory, getMyGatherings } from '/src/services/gatheringApi';
+import { getMyGatherings } from '/src/services/gatheringApi';
 import Thumbnail from '/src/components/Thumbnail';
 import { useEffect, useState } from 'react';
+import { GatheringListByCategory } from '/src/types/gatheringTypes';
 
 export function MyGatherings() {
   const [_thumbnails, setThumbnails] = useState<GatheringListByCategory[]>([]);
