@@ -24,7 +24,7 @@ export default function AchievementsBox() {
 
   const userMountain = userInfo?.accumulatedHeight;
 
-  const SUCCESS = !isError && isFetched;
+  const isSuccess = !isError && isFetched;
   return (
     <div className={styles.container}>
       <div className={styles.title}>
@@ -38,9 +38,9 @@ export default function AchievementsBox() {
       </div>
       <div className={styles.records}>
         <div className={styles.achievName}>총 높이</div>
-        <p>{SUCCESS && userMountain ? Math.floor(userMountain).toLocaleString() : 0} M</p>
+        <p>{isSuccess && userMountain ? Math.floor(userMountain).toLocaleString() : 0} M</p>
         <div className={styles.achievName}>정복한 정상</div>
-        <p>{SUCCESS ? myMountains.length : 0} 개</p>
+        <p>{isSuccess ? myMountains.length : 0} 개</p>
       </div>
       <div className={styles.btnContainer}>
         <button

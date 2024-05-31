@@ -106,7 +106,6 @@ function AddChallenge({ setIsItPosting }: Props) {
         <div className={styles.addInputContainer}>
           <label className={styles.categoryLabel}>카테고리 명</label>
           <GatheringCategorySelectBox
-            defaultValue="등산"
             onChange={(e) => {
               setCategoryName(e.target.value);
             }}

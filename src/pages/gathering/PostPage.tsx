@@ -13,6 +13,8 @@ import { postGathering } from '/src/services/gatheringApi';
 import { GatheringCategorySelectBox } from './components/GatheringCategorySelectBox';
 import { useNavigate } from 'react-router-dom';
 import { formattingDate } from '/src/utils/formattingDate';
+import { Alert } from '/src/components/common/Alert';
+import { PostType } from '/src/types/gatheringTypes';
 
 export function PostPage() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -22,7 +24,18 @@ export function PostPage() {
   const [imgFile, setImgFile] = useState<File | null>(null);
   const navigate = useNavigate();
   let gatheringFormData = new FormData();
-  const [postData, setPostData] = useState({
+  type AlertVariant = 'error' | 'info' | 'success';
+
+  interface AlertStatus {
+    variant: AlertVariant;
+    text: string;
+  }
+  const [alertStatus, setAlertStatus] = useState<AlertStatus>({
+    variant: 'error',
+    text: '다시 시도해주세요',
+  });
+  const [isOpen, setIsOpen] = useState(false);
+  const [postData, setPostData] = useState<PostType>({
     meetingName: '',
     categoryName: '등산',
     mountainName: '',
@@ -32,18 +45,22 @@ export function PostPage() {
     tags: [''],
     image: null,
   });
+
+  const showAlert = () => {
+    setIsOpen(true);
+  };
   function handleInput(key: string, e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
-    setPostData(prevData => ({ ...prevData, [key]: e.target.value }));
+    setPostData((prevData) => ({ ...prevData, [key]: e.target.value }));
   }
 
   useEffect(() => {
-    setPostData(prevData => ({ ...prevData, tags: tag }))
+    setPostData((prevData) => ({ ...prevData, tags: tag }));
   }, [tag]);
 
   const handleDateChange = (date: Date) => {
     if (date) {
       setSelectedDate(date);
-      setPostData(prevData => ({ ...prevData, date: formattingDate(date) }))
+      setPostData((prevData) => ({ ...prevData, date: formattingDate(date) }));
     }
   };
 
@@ -59,7 +76,6 @@ export function PostPage() {
       setTagValue(inputValue);
     }
   }
-
 
   function deleteTag(index: number) {
     const newArr = [...tag.slice(0, index), ...tag.slice(index + 1)];
@@ -87,28 +103,71 @@ export function PostPage() {
       navigate(-1);
     },
     onError: (error) => {
+      console.log(error);
       if (error.message.includes('400')) {
-        alert('내용을 입력해주세요.');
+        setAlertStatus({ variant: 'error', text: '내용을 입력해주세요' });
+        showAlert();
+      } else if (error.message.includes('413')) {
+        setAlertStatus({ variant: 'error', text: '이미지 용량이 너무 큽니다' });
+        showAlert();
+      } else if (error.message.includes('409')) {
+        setAlertStatus({ variant: 'error', text: '해당 날짜에 이미 참여중인 모임이 있습니다.' });
+        showAlert();
       }
-      else if (error.message.includes('413')) {
-        alert('이미지 용량이 너무 큽니다');
-      }
-      else if (error.message.includes('409')) {
-        alert('해당 날짜에 이미 참여중인 모임이 있습니다.');
-      }
-    }
+    },
   });
 
+  function validatePostData(postData: PostType) {
+    if (!postData.categoryName.trim()) {
+      setAlertStatus({ variant: 'error', text: '카테고리를 입력해주세요' });
+      showAlert();
+      return false;
+    }
+    if (!postData.mountainName.trim()) {
+      setAlertStatus({ variant: 'error', text: '산 이름을 입력해주세요' });
+      showAlert();
+      return false;
+    }
+    if (!postData.meetingName.trim()) {
+      setAlertStatus({ variant: 'error', text: '모임 이름을 입력해주세요' });
+      showAlert();
+      return false;
+    }
+    if (!postData.headcount.trim()) {
+      setAlertStatus({ variant: 'error', text: '인원수를 입력해주세요' });
+      showAlert();
+      return false;
+    }
+    if (!postData.description.trim()) {
+      setAlertStatus({ variant: 'error', text: '설명을 입력해주세요' });
+      showAlert();
+      return false;
+    }
+    if (!postData.date.trim()) {
+      setAlertStatus({ variant: 'error', text: '날짜를 선택해주세요' });
+      showAlert();
+      return false;
+    }
+    if (!postData.tags.length) {
+      setAlertStatus({ variant: 'error', text: '태그를 하나 이상 입력해주세요' });
+      showAlert();
+      return false;
+    }
+    return true;
+  }
+
   function handleCreateBtn() {
-    gatheringFormData.append('categoryName', postData.categoryName)
-    gatheringFormData.append('mountainName', postData.mountainName)
+    if (!validatePostData(postData)) return;
+
+    gatheringFormData.append('categoryName', postData.categoryName);
+    gatheringFormData.append('mountainName', postData.mountainName);
     gatheringFormData.append('meetingName', postData.meetingName);
     gatheringFormData.append('headcount', postData.headcount);
     gatheringFormData.append('description', postData.description);
     postData.tags.forEach((tagItem, index) => {
-      gatheringFormData.append(`tags[${index}]`, tagItem.trim())
-    })
-    gatheringFormData.append('date', postData.date)
+      gatheringFormData.append(`tags[${index}]`, tagItem.trim());
+    });
+    gatheringFormData.append('date', postData.date);
 
     if (imgFile) {
       gatheringFormData.append('imageFile', imgFile); // 이미지 파일 추가
@@ -117,17 +176,15 @@ export function PostPage() {
   }
   return (
     <div className={styles.mainContainer}>
+      <Alert variant={alertStatus.variant} isOpen={isOpen} setIsOpen={setIsOpen}>
+        {alertStatus.text}
+      </Alert>
       <TitleContainer title="모임 만들기" />
       <form className={styles.inputContainer}>
         <div className={styles.containerRow}>
           <div className={`${styles.containerCol} ${styles.width60}`}>
             <GatheringCategorySelectBox onChange={(e) => handleInput('categoryName', e)} />
-            <input
-              placeholder="산"
-              className={styles.inputBox}
-
-              onChange={(e) => handleInput('mountainName', e)}
-            />
+            <input placeholder="산" className={styles.inputBox} onChange={(e) => handleInput('mountainName', e)} />
           </div>
           <div className={styles.imageContainer}>
             <input
@@ -147,14 +204,14 @@ export function PostPage() {
           </div>
         </div>
         <input
-          name='meetingName'
+          name="meetingName"
           type="text"
           placeholder="모임이름"
           className={styles.inputBox}
           onChange={(e) => handleInput('meetingName', e)}
         />
         <textarea
-          name='description'
+          name="description"
           rows={10}
           cols={33}
           className={styles.textarea}
@@ -170,7 +227,7 @@ export function PostPage() {
               </div>
               <div className={`${styles.inputSettingWidth} ${styles.containerRow} ${styles.grayBack}`}>
                 <input
-                  name='headcount'
+                  name="headcount"
                   type="text"
                   className={styles.inputBox}
                   onChange={(e) => handleInput('headcount', e)}
@@ -217,7 +274,7 @@ export function PostPage() {
           </div>
         </div>
       </form>
-      <Button type='submit' variant="green3" onClick={handleCreateBtn}>
+      <Button type="submit" variant="green3" onClick={handleCreateBtn}>
         모임 만들기{' '}
       </Button>
     </div>

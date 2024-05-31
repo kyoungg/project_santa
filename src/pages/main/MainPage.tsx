@@ -37,7 +37,8 @@ export default function Main() {
     preferCategory.length == 0 && navigation(paths.CATEGORY);
   }
 
-  if (!meetings || !ranks || !challenges) return <>Loading...</>;
+  //김경혜 - 메인페이지 안보이는 오류 수정
+  // if (!meetings && !ranks && !challenges) return <div>Loading...</div>;
   return (
     <>
       <div className={styles.container}>
@@ -62,7 +63,7 @@ export default function Main() {
               targetPageUrl={paths.CHALLENGE}
             />
             {challenges ? (
-              <Thumbnail data={challenges} isHotTopic={true} isIndexChip={true} />
+              <Thumbnail data={challenges} isHotTopic={true} isIndexChip={true} isChallenge={true} />
             ) : (
               <div className={styles.noData}>로그인하고 챌린지를 확인하세요!</div>
             )}
@@ -78,12 +79,12 @@ export default function Main() {
                 subtitle="현재 진행중인 모임을 확인해보세요."
                 targetPageUrl={paths.GATHERING}
               />
-              <MeetingList meetings={meetings} />
+              {meetings && <MeetingList meetings={meetings} />}
             </div>
           </div>
           <div>
             <SectionTitle title="랭킹🏅" subtitle="이달의 랭킹을 확인해보세요!" targetPageUrl={paths.RANK} />
-            <UserRankList ranks={ranks} />
+            {ranks && <UserRankList ranks={ranks} />}
           </div>
         </div>
       </div>
