@@ -2,17 +2,20 @@ import IssueChip from './IssueChip';
 import styles from '../styles/components/thumbnail.module.scss';
 import { ThumbnailChallenge } from '../services/challengeApi';
 import { useNavigate } from 'react-router-dom';
+import { paths } from '../utils/path';
 
 interface ThumbnailItems extends ThumbnailChallenge {}
 interface ThumbnailProps {
   data: ThumbnailItems[];
   isHotTopic: boolean;
   isIndexChip: boolean;
+  isChallenge?: true;
 }
-export default function Thumbnail({ data, isHotTopic, isIndexChip }: ThumbnailProps) {
+export default function Thumbnail({ data, isHotTopic, isIndexChip, isChallenge }: ThumbnailProps) {
   const navigate = useNavigate();
-  function handleThumbnailClick(id: number) {
-    navigate(`/challenge/detail?id=${id}`);
+  function handleThumbnailClick(id: number, isChallenge?: boolean) {
+    if (isChallenge) return navigate(`${paths.CHALLENGE_DETAIL}?id=${id}`);
+    navigate(`/gathering/detail?meetingid=${id}`);
   }
   return (
     <div className={styles.thumbnailContainer}>
@@ -29,7 +32,7 @@ export default function Thumbnail({ data, isHotTopic, isIndexChip }: ThumbnailPr
               <IssueChip />
             </div>
           )}
-          <div className={styles.imgWrapper} onClick={() => handleThumbnailClick(item.id)}>
+          <div className={styles.imgWrapper} onClick={() => handleThumbnailClick(item.id, isChallenge)}>
             <div className={styles.overlay}></div>
             <img className={styles.img} src={item.image} />
           </div>

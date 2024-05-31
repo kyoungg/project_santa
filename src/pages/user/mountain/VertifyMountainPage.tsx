@@ -46,7 +46,7 @@ export default function VertifyMountainPage() {
     <div className={styles.container}>
       {isSuccess ? (
         <>
-          <div className={styles.title}>{MountainData?.data.mountain.name} 인증되었습니다!</div>
+          <div className={styles.title}>{MountainData?.data.mountainName} 인증되었습니다!</div>
           <img className={styles.image} src={SuccessImg} />
           <button
             className={styles.vertifyBtn}
