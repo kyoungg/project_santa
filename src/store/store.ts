@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { GatheringCategoryType } from '../services/gatheringApi';
+import { GatheringCategoryType } from '../types/gatheringTypes';
 //카테고리 상태 관리
 interface CategoryState {
   category: GatheringCategoryType;

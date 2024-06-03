@@ -7,13 +7,14 @@ import styles from '../../styles/gathering/gatheringMain.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import { GatheringCategory } from './components/GatheringCategory';
 import { useEffect, useState } from 'react';
-import { getGatheringListByCategory, GatheringListByCategory } from '/src/services/gatheringApi';
+import { getGatheringListByCategory } from '/src/services/gatheringApi';
 import { useQuery } from '@tanstack/react-query';
 import { useCategoryStore } from '/src/store/store';
 import { MyGatherings } from './components/MyGatherings';
 import { Top3Gatherings } from './components/Top3Gatherings';
 import { useUserInfo } from '/src/utils/useUserInfo';
 import { Alert } from '/src/components/common/Alert';
+import { GatheringListByCategory } from '../../types/gatheringTypes';
 
 const PAGE_SIZE = 10;
 

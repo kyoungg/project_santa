@@ -1,10 +1,9 @@
 import { Chips } from '../../../components/common/Chips';
 import styles from '../../../styles/gathering/gatheringCategory.module.scss';
 import { useCategoryStore } from '/src/store/store';
-import type { GatheringCategoryType } from '/src/services/gatheringApi';
+import { GatheringCategoryType } from '/src/types/gatheringTypes';
 import { useCategoryList } from '/src/utils/useCategoryList';
 import { useEffect, useState } from 'react';
-
 
 export function GatheringCategory() {
   const { category, setCategory } = useCategoryStore();
@@ -12,12 +11,11 @@ export function GatheringCategory() {
 
   const [categories, setCategories] = useState<GatheringCategoryType[]>([]);
 
-
   useEffect(() => {
     if (categoryList) {
-      setCategories([{ id: 0, name: '맞춤추천' }, ...categoryList])
+      setCategories([{ id: 0, name: '맞춤추천' }, ...categoryList]);
     }
-  }, [categoryList])
+  }, [categoryList]);
 
   return (
     <div className={styles.scrollContainer}>
