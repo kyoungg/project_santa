@@ -5,7 +5,7 @@
 - 다양한 종류의 챌린지를 통해 나의 업적을 기록해 보세요
 - 내 순위를 확인하고, 다른 사용자들과 겨뤄보세요.
 
-![산타로고](https://kdt-gitlab.elice.io/cloud_track/class_01/web_project3/team02/santa__front/uploads/dc801ba523de5ecdfa288ded03778468/image.png)
+![산타로고](https://github.com/user-attachments/assets/076149b2-d51d-4acd-aa56-5d3ede309848)
 
 ## 실행 방법
 
